@@ -22,7 +22,9 @@ import {
     Settings,
     Eye,
     Heart,
-    Image as ImageIcon
+    Image as ImageIcon,
+    Sun,
+    Moon
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { playNeonClick } from '../utils/audio';
@@ -43,11 +45,17 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const basePath = isEnterprisePath ? '/empresas' : `/${townId}`;
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [currentTime] = useState(new Date());
-    const themeMode = localStorage.getItem('global_home_theme_mode') || 'dark';
-    const isDayMode = themeMode === 'light' || (themeMode === 'auto' && (() => {
-        const hour = currentTime.getHours();
-        return hour >= 8 && hour < 20;
-    })());
+    const checkIsDayMode = () => {
+        const saved = localStorage.getItem('global_home_theme_mode');
+        return (saved || 'light') === 'light';
+    };
+    const [isDayMode, setIsDayMode] = useState(checkIsDayMode);
+
+    useEffect(() => {
+        const syncTheme = () => setIsDayMode(checkIsDayMode());
+        window.addEventListener('theme-changed', syncTheme);
+        return () => window.removeEventListener('theme-changed', syncTheme);
+    }, []);
     const catalogRef = useRef<HTMLDivElement>(null);
     const offersCarouselRef = useRef<HTMLDivElement>(null);
     const offersTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -356,6 +364,30 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     className="absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
                 >
                     <ArrowLeft size={18} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                </button>
+
+                {/* Botón de alternancia de tema (Sol/Luna) premium */}
+                <button
+                    onClick={() => {
+                        playNeonClick();
+                        const current = localStorage.getItem('global_home_theme_mode') || 'light';
+                        const nextTheme = current === 'light' ? 'dark' : 'light';
+                        localStorage.setItem('global_home_theme_mode', nextTheme);
+                        window.dispatchEvent(new Event('theme-changed'));
+                    }}
+                    className="absolute top-6 left-[72px] z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
+                >
+                    {isDayMode ? (
+                        <Moon 
+                            size={16} 
+                            style={{ color: '#083344' }} 
+                        />
+                    ) : (
+                        <Sun 
+                            size={16} 
+                            style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 6px #22d3ee)' }} 
+                        />
+                    )}
                 </button>
 
                 {gallery.map((img, idx) => (

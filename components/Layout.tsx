@@ -18,11 +18,10 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
     // Helper to check if it is currently day mode
     const checkIsDayMode = (mode: string) => {
         const saved = localStorage.getItem('global_home_theme_mode');
-        const effectiveMode = saved || mode;
+        const effectiveMode = saved || 'light'; // Por defecto es light
         if (effectiveMode === 'light') return true;
         if (effectiveMode === 'dark') return false;
-        const hour = new Date().getHours();
-        return hour >= 8 && hour < 20;
+        return true;
     };
 
     const [isDayMode, setIsDayMode] = React.useState(() => checkIsDayMode(themeMode));

@@ -76,7 +76,7 @@ const GlobalHomePage: React.FC = () => {
 
     // --- ESTADOS DE LA SINFONÍA DEL EDITOR ---
     const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'auto'>(() => {
-        return (localStorage.getItem('global_home_theme_mode') as any) || 'dark';
+        return (localStorage.getItem('global_home_theme_mode') as any) || 'light';
     });
     const [clickCount, setClickCount] = useState(0);
     const [showEditor, setShowEditor] = useState(false);

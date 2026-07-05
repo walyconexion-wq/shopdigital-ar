@@ -4,7 +4,7 @@ import { CATEGORIES } from '../constants';
 import { Shop } from '../types';
 import { TRASLASIERRA_REGION } from '../data/regionalTemplates/traslasierraConfig';
 import { PATAGONIA_7_LAGOS_REGION } from '../data/regionalTemplates/patagonia7LagosConfig';
-import { ChevronLeft, MapPin, Star, BookOpen, ArrowLeft, Eye } from 'lucide-react';
+import { ChevronLeft, MapPin, Star, BookOpen, ArrowLeft, Eye, Sun, Moon } from 'lucide-react';
 import { playNeonClick } from '../utils/audio';
 import { incrementarVisitas } from '../firebase';
 import { useTownLocalities } from '../hooks/useTownLocalities';
@@ -46,11 +46,17 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
 
     const themeColor = globalConfig?.primaryColor || '#22d3ee';
     const themeMode = globalConfig?.themeMode || 'auto';
-    const isDayMode = themeMode === 'light' 
-        ? true 
-        : themeMode === 'dark' 
-            ? false 
-            : new Date().getHours() >= 8 && new Date().getHours() < 20;
+    const checkIsDayMode = () => {
+        const saved = localStorage.getItem('global_home_theme_mode');
+        return (saved || 'light') === 'light';
+    };
+    const [isDayMode, setIsDayMode] = React.useState(checkIsDayMode);
+
+    React.useEffect(() => {
+        const syncTheme = () => setIsDayMode(checkIsDayMode());
+        window.addEventListener('theme-changed', syncTheme);
+        return () => window.removeEventListener('theme-changed', syncTheme);
+    }, []);
 
     const hexToRgba = (hex: string, alpha: number) => {
         try {
@@ -201,6 +207,30 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                             : { color: themeColor, filter: `drop-shadow(0 0 6px ${themeColor})` }
                     } 
                 />
+            </button>
+
+            {/* Botón de alternancia de tema (Sol/Luna) premium */}
+            <button
+                onClick={() => {
+                    playNeonClick();
+                    const current = localStorage.getItem('global_home_theme_mode') || 'light';
+                    const nextTheme = current === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('global_home_theme_mode', nextTheme);
+                    window.dispatchEvent(new Event('theme-changed'));
+                }}
+                className="absolute left-[72px] top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-celeste"
+            >
+                {isDayMode ? (
+                    <Moon 
+                        size={16} 
+                        style={{ color: '#083344' }} 
+                    />
+                ) : (
+                    <Sun 
+                        size={16} 
+                        style={{ color: themeColor, filter: `drop-shadow(0 0 6px ${themeColor})` }} 
+                    />
+                )}
             </button>
 
             <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-0 px-4 mb-2.5">
