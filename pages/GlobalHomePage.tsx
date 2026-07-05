@@ -32,6 +32,17 @@ const STATIC_REGIONS: Region[] = [
         createdAt: '2026-01-01T00:00:00.000Z'
     },
     { 
+        id: 'lomas-de-zamora', 
+        name: 'Lomas de Zamora', 
+        type: 'zona', 
+        towns: ['lomas-de-zamora'], 
+        color: '#22d3ee', 
+        icon: 'building', 
+        isActive: true,
+        provinceId: 'buenos-aires',
+        createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    { 
         id: 'traslasierra', 
         name: 'Traslasierra', 
         type: 'region', 
@@ -158,7 +169,7 @@ const GlobalHomePage: React.FC = () => {
     };
 
     const mapNodes = [
-        { id: 'buenos-aires-sur', label: 'Buenos Aires', x: 190, y: 260, isActive: regions.some(r => r.id === 'buenos-aires-sur' || r.id === 'ezeiza' || r.id === 'esteban-echeverria') },
+        { id: 'buenos-aires-sur', label: 'Buenos Aires', x: 190, y: 260, isActive: regions.some(r => r.id === 'buenos-aires-sur' || r.id === 'ezeiza' || r.id === 'esteban-echeverria' || r.id === 'lomas-de-zamora') },
         { id: 'traslasierra', label: 'Traslasierra', x: 135, y: 180, isActive: regions.some(r => r.id === 'traslasierra') },
         { id: 'calamuchita', label: 'Calamuchita', x: 140, y: 195, isActive: regions.some(r => r.id === 'calamuchita') },
         { id: 'punilla', label: 'Punilla', x: 138, y: 170, isActive: regions.some(r => r.id === 'punilla') },
@@ -182,11 +193,11 @@ const GlobalHomePage: React.FC = () => {
         } catch { return `rgba(0,251,255,${a})`; }
     };
 
-    const localitiesForActiveRegion = activeRegion === 'buenos-aires' 
+    const localitiesForActiveRegion: Array<{ name: string; path: string; isMock?: boolean }> = activeRegion === 'buenos-aires' 
         ? [
             { name: 'Esteban Echeverria', path: '/esteban-echeverria/home' },
             { name: 'Ezeiza', path: '/ezeiza/home' },
-            { name: 'Lomas de zamora', path: '#', isMock: true }
+            { name: 'Lomas de Zamora', path: '/lomas-de-zamora/home' }
           ]
         : activeRegion === 'cordoba'
         ? [

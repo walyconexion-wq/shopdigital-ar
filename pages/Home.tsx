@@ -22,6 +22,7 @@ interface Coordinates {
 const TOWN_COORDINATES: Record<string, Coordinates> = {
     'esteban-echeverria': { lat: -34.82, lon: -58.47 },
     'ezeiza': { lat: -34.85, lon: -58.52 },
+    'lomas-de-zamora': { lat: -34.76, lon: -58.40 },
     'traslasierra': { lat: -31.72, lon: -65.01 },
     'mina-clavero': { lat: -31.72, lon: -65.01 },
     'villa-cura-brochero': { lat: -31.72, lon: -65.01 },
@@ -69,6 +70,8 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
     const themeColor = globalConfig?.primaryColor || globalConfig?.themeColor || '#22d3ee';
     const isInTraslasierra = TRASLASIERRA_REGION.towns.some(t => t.id === townId);
     const isInPatagonia = PATAGONIA_7_LAGOS_REGION.towns.some(t => t.id === townId);
+    const BUENOS_AIRES_SUR_TOWNS = ['esteban-echeverria', 'ezeiza', 'lomas-de-zamora'];
+    const isInBuenosAires = BUENOS_AIRES_SUR_TOWNS.includes(townId);
     const activeTheme = globalConfig?.isChristmasMode ? 'christmas' : (globalConfig?.theme || 'default');
     const mainSubtitle = globalConfig?.mainSubtitle || `${t('Tu guía de ofertas locales')} - ${townId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`;
     const townName = globalConfig?.townName || 'Esteban Echeverría';
@@ -340,6 +343,40 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     </div>
                     <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, ${hexToRgba(themeColor, 0.3)}, transparent)` }}></div>
                 </div>
+
+                {/* Botones de Navegación Buenos Aires Sur (Estilo Blanco, Letras Celestes, Sombreado 3D) */}
+                {isInBuenosAires && (
+                    <div className="w-full mt-6 mb-2">
+                        <div className="grid grid-cols-4 gap-1.5 px-3 max-w-[345px] mx-auto">
+                            {[
+                                { id: 'esteban-echeverria', label: 'Echeverría' },
+                                { id: 'ezeiza', label: 'Ezeiza' },
+                                { id: 'lomas-de-zamora', label: 'Lomas' },
+                                { id: 'home', label: 'Home', isHome: true }
+                            ].map((item) => {
+                                const isActive = !item.isHome && townId === item.id;
+                                return (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => {
+                                            playNeonClick();
+                                            if (item.isHome) {
+                                                navigate('/');
+                                            } else if (!isActive) {
+                                                navigate(`/${item.id}/home`);
+                                            }
+                                        }}
+                                        className={`py-2.5 px-0.5 rounded-xl text-[8px] font-black uppercase tracking-wider text-center transition-all ${
+                                            isActive ? 'btn-3d-blanco-celeste active' : 'btn-3d-blanco-celeste'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
 
                 {/* Botones de Navegación Patagonia (Ubicados donde estaba la telemetría originalmente) */}
                 {isInPatagonia && (

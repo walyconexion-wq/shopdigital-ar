@@ -245,10 +245,15 @@ const TownController: React.FC = () => {
     const isInTraslasierra = TRASLASIERRA_REGION.towns.some(t => t.id === townId);
     const isInPatagonia = PATAGONIA_7_LAGOS_REGION.towns.some(t => t.id === townId);
 
-    // Forzar color celeste (#22d3ee) para Esteban Echeverría para mantener consistencia de branding
-    const baseGlobalConfig = townId === 'esteban-echeverria'
-        ? { ...globalConfig, primaryColor: '#22d3ee', themeColor: '#22d3ee' }
-        : globalConfig;
+    // Forzar color celeste (#22d3ee) y nombre formateado para Esteban Echeverría, Ezeiza y Lomas de Zamora
+    const currentTownName = townId === 'esteban-echeverria' ? "Esteban Echeverría" :
+                            townId === 'ezeiza' ? "Ezeiza" :
+                            townId === 'lomas-de-zamora' ? "Lomas de Zamora" :
+                            townId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+    const baseGlobalConfig = (townId === 'esteban-echeverria' || townId === 'ezeiza' || townId === 'lomas-de-zamora')
+        ? { ...globalConfig, primaryColor: '#22d3ee', themeColor: '#22d3ee', townName: currentTownName }
+        : { ...globalConfig, townName: currentTownName };
 
     // Inyectar configuración regional si aplica
     const effectiveGlobalConfig = isInTraslasierra 
