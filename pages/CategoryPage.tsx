@@ -197,15 +197,11 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
             {/* Botón de retroceso premium con estilo 3D y sombreado celeste de navegación */}
             <button
                 onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                className="absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-celeste"
+                className="absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
             >
                 <ArrowLeft 
                     size={16} 
-                    style={
-                        isDayMode 
-                            ? { color: '#083344' } 
-                            : { color: themeColor, filter: `drop-shadow(0 0 6px ${themeColor})` }
-                    } 
+                    style={{ color: '#0891b2' }} 
                 />
             </button>
 
@@ -218,17 +214,17 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                     localStorage.setItem('global_home_theme_mode', nextTheme);
                     window.dispatchEvent(new Event('theme-changed'));
                 }}
-                className="absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-celeste"
+                className="absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
             >
                 {isDayMode ? (
                     <Moon 
                         size={16} 
-                        style={{ color: '#083344' }} 
+                        style={{ color: '#0891b2' }} 
                     />
                 ) : (
                     <Sun 
                         size={16} 
-                        style={{ color: themeColor, filter: `drop-shadow(0 0 6px ${themeColor})` }} 
+                        style={{ color: '#0891b2' }} 
                     />
                 )}
             </button>

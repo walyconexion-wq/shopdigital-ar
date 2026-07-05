@@ -361,9 +361,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         playNeonClick();
                         navigate(`${basePath}/${categorySlug}`);
                     }}
-                    className="absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
+                    className="absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-blanco-celeste active:scale-90 transition-all"
                 >
-                    <ArrowLeft size={18} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                    <ArrowLeft size={18} style={{ color: '#0891b2' }} strokeWidth={3} />
                 </button>
 
                 {/* Botón de alternancia de tema (Sol/Luna) premium */}
@@ -375,17 +375,17 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         localStorage.setItem('global_home_theme_mode', nextTheme);
                         window.dispatchEvent(new Event('theme-changed'));
                     }}
-                    className="absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
+                    className="absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-blanco-celeste active:scale-90 transition-all"
                 >
                     {isDayMode ? (
                         <Moon 
                             size={16} 
-                            style={{ color: '#083344' }} 
+                            style={{ color: '#0891b2' }} 
                         />
                     ) : (
                         <Sun 
                             size={16} 
-                            style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 6px #22d3ee)' }} 
+                            style={{ color: '#0891b2' }} 
                         />
                     )}
                 </button>
