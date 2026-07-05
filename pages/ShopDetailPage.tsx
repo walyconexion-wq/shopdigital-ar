@@ -375,7 +375,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         localStorage.setItem('global_home_theme_mode', nextTheme);
                         window.dispatchEvent(new Event('theme-changed'));
                     }}
-                    className="absolute top-6 left-[72px] z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
+                    className="absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-celeste active:scale-90 transition-all"
                 >
                     {isDayMode ? (
                         <Moon 

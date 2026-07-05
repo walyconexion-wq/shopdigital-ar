@@ -296,7 +296,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     localStorage.setItem('global_home_theme_mode', nextTheme);
                     window.dispatchEvent(new Event('theme-changed'));
                 }}
-                className="absolute left-[72px] top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-celeste"
+                className="absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-celeste"
             >
                 {isDayMode ? (
                     <Moon 
