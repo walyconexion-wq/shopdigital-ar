@@ -598,7 +598,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
             <div className="mt-12 mb-4 px-14 flex flex-col gap-4 justify-center items-center w-full fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/subscripcion`); }}
-                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-blanco-celeste"
+                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
                 >
                     <Store size={18} style={{ color: '#0891b2' }} strokeWidth={3} />
                     <span>{t('Suscribir Comercio')}</span>
@@ -606,7 +606,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
 
                 <button
                     onClick={handleShare}
-                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-blanco-celeste"
+                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
                 >
                     <Share2 size={16} style={{ color: '#0891b2' }} strokeWidth={3} />
                     <span>Compartir App</span>
