@@ -46,9 +46,9 @@ const ProgressiveShopImage: React.FC<ProgressiveShopImageProps> = ({
                 });
             },
             {
-                // rootMargin: empieza a cargar 200px ANTES de entrar al viewport
-                // Esto elimina el pop-in: la imagen ya está lista cuando llega a la vista
-                rootMargin: '200px 0px',
+                // rootMargin: pre-carga 400px antes en todas las direcciones
+                // El margen horizontal (left/right) cubre el scroll lateral del carrusel
+                rootMargin: '400px 400px',
                 threshold: 0,
             }
         );

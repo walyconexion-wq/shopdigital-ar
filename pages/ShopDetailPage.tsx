@@ -395,6 +395,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         key={idx}
                         src={img}
                         alt={`Cover ${idx}`}
+                        loading={idx === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={idx === 0 ? 'high' : 'low'}
+                        decoding="async"
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                     />
                 ))}
@@ -471,13 +474,14 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
                         <div 
                             className="flex gap-4 px-4 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
+                            style={{ contain: 'layout style', willChange: 'scroll-position' }}
                             ref={offersCarouselRef}
                             onTouchStart={() => isTouchingRef.current = true}
                             onTouchEnd={() => { setTimeout(() => isTouchingRef.current = false, 2000) }}
                             onMouseEnter={() => isTouchingRef.current = true}
                             onMouseLeave={() => isTouchingRef.current = false}
                         >
-                            {[...selectedShop.offers, ...selectedShop.offers].map((offer, idx) => {
+                            {selectedShop.offers.map((offer, idx) => {
                                 // Badges Dinámicos sugeridos por Gemy
                                 const badgeType = idx % 3;
                                 const badgeProps = badgeType === 0 
@@ -493,7 +497,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                                 src={offer.image}
                                                 alt={offer.name}
                                                 className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none"
-                                                priority={idx < 4}
+                                                priority={idx < 6}
                                                 skeletonColor="rgba(255,255,255,0.05)"
                                             />
                                             {/* Dynamic Badge */}
