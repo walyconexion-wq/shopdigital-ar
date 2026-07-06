@@ -392,7 +392,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                                 navigate(`/${item.id}/home`);
                                             }
                                         }}
-                                        className={`py-2.5 px-0.5 rounded-xl text-[8px] font-black uppercase tracking-wider text-center transition-all ${
+                                        className={`relative py-2.5 px-0.5 rounded-xl text-[8px] font-black uppercase tracking-wider text-center transition-all ${
                                             isActive ? 'btn-3d-blanco-celeste active' : 'btn-3d-blanco-celeste'
                                         }`}
                                     >
