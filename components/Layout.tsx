@@ -279,14 +279,12 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
                     className="absolute inset-0"
                     style={{
                         background: shouldApplyDayMode 
-                            ? (isEnterprisePath 
-                                ? `radial-gradient(ellipse at 50% 30%, ${hexToRgba(themeColor, 0.05)} 0%, transparent 65%), linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)`
-                                : `radial-gradient(ellipse at 50% 30%, ${hexToRgba(themeColor, 0.07)} 0%, transparent 65%), linear-gradient(180deg, #ebd7c8 0%, #cda488 50%, #b68d71 100%)`)
+                            ? (isEnterprisePath ? '#f8fafc' : '#cda488')
                             : `radial-gradient(ellipse at 50% 30%, ${hexToRgba(themeColor, 0.08)} 0%, transparent 60%), linear-gradient(180deg, ${bgColor} 0%, ${bgColor} 50%, ${bgColor} 100%)`,
                     }}
                 />
                 {/* Fondo Tecnológico Dinámico */}
-                {techStyle && (
+                {techStyle && !shouldApplyDayMode && (
                     <>
                         <div 
                             className="absolute inset-0 transition-transform duration-75 ease-out" 
@@ -303,7 +301,7 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
                                      backgroundImage: `linear-gradient(${hexToRgba(themeColor, 0.07)} 1px, transparent 1px), linear-gradient(90deg, ${hexToRgba(themeColor, 0.07)} 1px, transparent 1px)`,
                                      backgroundSize: '35px 35px',
                                      transform: `translateY(${scrollTop * 0.08}px) translateZ(0)`
-                                }} 
+                                 }} 
                             />
                         )}
                         {!shouldApplyDayMode && (
@@ -314,7 +312,7 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
                         )}
                     </>
                 )}
-                <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent ${shouldApplyDayMode ? 'to-[#b68d71]/25' : 'to-black/40'}`} />
+                <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent ${shouldApplyDayMode ? '' : 'to-black/40'}`} />
             </div>
 
             <main 

@@ -14,11 +14,17 @@ const ShopMenuPage: React.FC<ShopMenuPageProps> = ({ allShops }) => {
     const navigate = useNavigate();
     const [currentTime] = useState(new Date());
 
-    const themeMode = localStorage.getItem('global_home_theme_mode') || 'dark';
-    const isDayMode = themeMode === 'light' || (themeMode === 'auto' && (() => {
-        const hour = currentTime.getHours();
-        return hour >= 8 && hour < 20;
-    })());
+    const checkIsDayMode = () => {
+        const saved = localStorage.getItem('global_home_theme_mode');
+        return (saved || 'light') === 'light';
+    };
+    const [isDayMode, setIsDayMode] = useState(checkIsDayMode);
+
+    useEffect(() => {
+        const syncTheme = () => setIsDayMode(checkIsDayMode());
+        window.addEventListener('theme-changed', syncTheme);
+        return () => window.removeEventListener('theme-changed', syncTheme);
+    }, []);
 
     const selectedShop = allShops.find(
         (s) => (s.slug || s.id) === shopSlug
