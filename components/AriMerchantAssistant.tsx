@@ -826,8 +826,8 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
                 </div>
             )}
 
-            {/* 💬 Botón WhatsApp flotante — Lado Izquierdo */}
-            {!inline && (
+            {/* 💬 Botón WhatsApp flotante — Lado Izquierdo (Oculto en Interfaz 1) */}
+            {!inline && !window.location.pathname.endsWith('/home') && (
                 <div className="fixed bottom-16 left-5 z-[1000]">
                     <a
                         href="https://wa.me/5491140607059?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20ShopDigital%20%F0%9F%9B%92"

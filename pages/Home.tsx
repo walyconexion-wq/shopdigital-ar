@@ -326,40 +326,55 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 
                 {/* Panel de Telemetría (Subido arriba del título de la guía) */}
                 <div 
-                    className="telemetry-widget mb-6 flex items-center justify-between w-full max-w-[340px] px-4 py-2.5 rounded-2xl border text-[9px] font-black uppercase tracking-widest relative overflow-hidden backdrop-blur-md shadow-lg"
+                    className={`telemetry-widget mb-6 flex items-center justify-between w-full max-w-[340px] px-4 py-2.5 rounded-2xl border text-[9px] font-black uppercase tracking-widest relative overflow-hidden backdrop-blur-md shadow-lg ${
+                        isDayMode ? 'bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]' : ''
+                    }`}
                 >
                     <div className="flex flex-col items-center flex-1">
-                        <span className="text-white/40 text-[6.5px] tracking-[0.25em] mb-0.5">{t('HORA')}</span>
-                        <span className="telemetry-widget-value text-white font-mono text-[10px] tracking-wider">
+                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('HORA')}</span>
+                        <span className={`telemetry-widget-value font-mono text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
                             {currentTimeStr}
                         </span>
                     </div>
-                    <div className="w-[1px] h-5 bg-white/10" />
+                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
                     <div className="flex flex-col items-center flex-1">
-                        <span className="text-white/40 text-[6.5px] tracking-[0.25em] mb-0.5">{t('FECHA')}</span>
-                        <span className="telemetry-widget-value text-white text-[10px] tracking-wider">
+                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('FECHA')}</span>
+                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
                             {currentDateStr}
                         </span>
                     </div>
-                    <div className="w-[1px] h-5 bg-white/10" />
+                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
                     <div className="flex flex-col items-center flex-1">
-                        <span className="text-white/40 text-[6.5px] tracking-[0.25em] mb-0.5">{t('VISITAS')}</span>
-                        <span className="telemetry-widget-value text-white text-[10px] tracking-wider">
+                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('VISITAS')}</span>
+                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
                             👁️ {globalConfig?.visits || 1}
                         </span>
                     </div>
-                    <div className="w-[1px] h-5 bg-white/10" />
+                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
                     <div className="flex flex-col items-center flex-1">
-                        <span className="text-white/40 text-[6.5px] tracking-[0.25em] mb-0.5">{t('CLIMA')}</span>
-                        <span className="telemetry-widget-value text-white text-[10px] tracking-wider">
+                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('CLIMA')}</span>
+                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
                             {getWeatherEmoji(weatherCode)} {temp !== null ? `${temp}°C` : (weatherError ? '18°C' : '...')}
                         </span>
                     </div>
                 </div>
 
-                <h2 className="text-[12px] font-[1000] text-white/90 text-shadow-premium uppercase tracking-[0.35em] text-center leading-none">
-                    {mainSubtitle}
-                </h2>
+                {isDayMode ? (
+                    /* Cartel principal al estilo del título de la Home Global */
+                    <div className="bg-white/45 backdrop-blur-sm border border-white/40 py-3.5 px-6 rounded-[1.8rem] text-center w-full max-w-[310px] mx-auto shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_4px_12px_rgba(88,70,50,0.06)] mb-2">
+                        <h2 className="text-[17px] font-[1000] uppercase tracking-[0.1em] text-[#5c4033] select-none leading-none">
+                            {townName}
+                        </h2>
+                        <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#7a6353]/85 mt-1.5 select-none">
+                            {t('Catálogo Comercial Oficial')}
+                        </p>
+                    </div>
+                ) : (
+                    <h2 className="text-[12px] font-[1000] text-white/90 text-shadow-premium uppercase tracking-[0.35em] text-center leading-none">
+                        {mainSubtitle}
+                    </h2>
+                )}
+                
                 <div className="flex items-center gap-3 mt-4">
                     <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, transparent, ${hexToRgba(themeColor, 0.3)})` }}></div>
                     <div className="flex gap-1.5">
