@@ -572,67 +572,107 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 )}
             </div>
 
-            <div className="grid grid-cols-3 gap-x-4 gap-y-8 px-5 relative z-10">
-                {(globalConfig?.categories || CATEGORIES).filter((c: any) => c.isActive !== false).map((cat: any, index: number) => (
-                    <button
-                        key={cat.id}
-                        onClick={() => { playNeonClick(); navigate(`/${townId}/${cat.slug}`); }}
-                        className="glass-button-3d category-btn aspect-square group backdrop-blur-md border rounded-[1.25rem] transition-all duration-300"
-                        style={{
-                            animation: `fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) ${index * 35}ms both`,
-                            backgroundColor: hexToRgba(themeColor, 0.15),
-                            borderColor: hexToRgba(themeColor, 0.2),
-                            boxShadow: `0 0 15px ${hexToRgba(themeColor, 0.08)}`
-                        }}
-                    >
-                        <div className="mb-1.5 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: themeColor }}>
-                            {cat.iconKey ? resolveIcon(cat.iconKey) : cat.icon}
-                        </div>
-                        <span className="text-[8.5px] text-center font-black uppercase leading-[1.1] tracking-[0.01em] px-0.5 text-white/90 group-hover:text-white transition-colors">
-                            {t(cat.name)}
-                        </span>
-                    </button>
-                ))}
+            {/* Contenedor Claymórfico Esmerilado para Categorías/Rubros */}
+            <div className={`px-5 relative z-10 ${isDayMode ? 'max-w-md mx-auto w-full' : ''}`}>
+                <div className={isDayMode ? 'home-glass-plate w-full grid grid-cols-3 gap-3' : 'grid grid-cols-3 gap-x-4 gap-y-8'}>
+                    {(globalConfig?.categories || CATEGORIES).filter((c: any) => c.isActive !== false).map((cat: any, index: number) => {
+                        const btnStyle = isDayMode 
+                            ? {
+                                animation: `fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) ${index * 35}ms both`,
+                              }
+                            : {
+                                animation: `fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) ${index * 35}ms both`,
+                                backgroundColor: hexToRgba(themeColor, 0.15),
+                                borderColor: hexToRgba(themeColor, 0.2),
+                                boxShadow: `0 0 15px ${hexToRgba(themeColor, 0.08)}`
+                              };
+
+                        return (
+                            <button
+                                key={cat.id}
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/${cat.slug}`); }}
+                                className={`category-btn aspect-square group backdrop-blur-md transition-all duration-300 ${
+                                    isDayMode ? 'home-btn-3d border' : 'glass-button-3d rounded-[1.25rem]'
+                                }`}
+                                style={btnStyle}
+                            >
+                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#7a6353' : themeColor }}>
+                                    {cat.iconKey ? resolveIcon(cat.iconKey) : cat.icon}
+                                </div>
+                                <span className={`text-[8px] text-center font-[1000] uppercase leading-[1.1] tracking-[0.01em] px-0.5 group-hover:text-amber-950 transition-colors ${
+                                    isDayMode ? 'text-[#7a6353]' : 'text-white/90'
+                                }`}>
+                                    {t(cat.name)}
+                                </span>
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
-            <div className="mt-12 mb-4 px-14 flex flex-col gap-4 justify-center items-center w-full fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
+            <div className="mt-8 mb-4 px-10 flex flex-col gap-4.5 justify-center items-center w-full max-w-[380px] mx-auto fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/subscripcion`); }}
-                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
+                    className="relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
                 >
-                    <Store size={18} style={{ color: '#0891b2' }} strokeWidth={3} />
+                    <Store size={16} style={{ color: '#0891b2' }} strokeWidth={3} />
                     <span>{t('Suscribir Comercio')}</span>
                 </button>
 
                 <button
                     onClick={handleShare}
-                    className="relative w-full py-4 rounded-2xl text-[10px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
+                    className="relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
                 >
-                    <Share2 size={16} style={{ color: '#0891b2' }} strokeWidth={3} />
+                    <Share2 size={15} style={{ color: '#0891b2' }} strokeWidth={3} />
                     <span>Compartir App</span>
                 </button>
             </div>
 
-            <footer className="w-full flex flex-col items-center gap-2 pt-6 pb-6 mt-auto border-t border-white/10 relative z-10">
-                <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
-                    © 2026 · ShopDigital
-                </p>
-                <div className="flex items-center gap-4 mt-1">
-                    <p 
-                        onClick={handleWalyClick}
-                        className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none cursor-pointer active:scale-95 transition-transform" 
-                        style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}
-                    >
-                        {isInPatagonia ? 'Patagonia' : townName}
-                    </p>
-                    <span className="text-white/20 text-[8px]">|</span>
-                    <button 
-                        onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                        className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
-                    >
-                        Términos y Condiciones
-                    </button>
-                </div>
+            <footer className="w-full max-w-md mx-auto px-5 z-10 pt-4 pb-4 mt-auto relative">
+                {isDayMode ? (
+                    <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
+                        <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-2.5">
+                            <p 
+                                onClick={handleWalyClick}
+                                className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] select-none cursor-pointer active:scale-95 transition-transform" 
+                            >
+                                {isInPatagonia ? 'Patagonia' : townName}
+                            </p>
+                            <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
+                            >
+                                Términos
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="w-full flex flex-col items-center gap-2 pt-4 pb-4 border-t border-white/10">
+                        <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-4 mt-1">
+                            <p 
+                                onClick={handleWalyClick}
+                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none cursor-pointer active:scale-95 transition-transform" 
+                                style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}
+                            >
+                                {isInPatagonia ? 'Patagonia' : townName}
+                            </p>
+                            <span className="text-white/20 text-[8px]">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
+                            >
+                                Términos y Condiciones
+                            </button>
+                        </div>
+                    </div>
+                )}
             </footer>
         </div>
     );
