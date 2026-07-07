@@ -214,97 +214,97 @@ const GlobalHomePage: React.FC = () => {
             className={`w-full font-sans relative select-none ${isDayMode ? 'bg-[#cda488]' : 'bg-black text-white selection:bg-cyan-500/30 overflow-hidden h-screen'}`}
         >
             {isDayMode ? (
-                <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 relative">
+                <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 justify-between relative">
 
-                    {/* ── Encabezado ── */}
-                    <div className="bg-[#c8b8aa]/55 backdrop-blur-md border border-white/25 py-4 px-6 rounded-[2.5rem] text-center w-full max-w-[310px] mx-auto mt-4 shadow-[0_12px_28px_rgba(88,70,50,0.14)]">
-                        <h1 className="text-[22px] font-[1000] uppercase tracking-[0.1em] text-[#2d1e15] select-none leading-none">
-                            ShopDigital
-                        </h1>
-                        <p className="text-[9.5px] font-black uppercase tracking-[0.25em] text-[#5c4033]/80 mt-1.5 select-none">
-                            Selecciona tu Región
-                        </p>
-                    </div>
+                    {/* ── Encabezado y Botones Enueltos en el Contenedor Claymórfico Grande ── */}
+                    <div className="home-glass-plate w-full mt-4 flex flex-col gap-4 relative z-10">
+                        {/* ── Título Interno Esmerilado ── */}
+                        <div className="bg-white/45 backdrop-blur-sm border border-white/40 py-3.5 px-6 rounded-[1.8rem] text-center w-full max-w-[280px] mx-auto shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_4px_12px_rgba(88,70,50,0.06)]">
+                            <h1 className="text-[20px] font-[1000] uppercase tracking-[0.12em] text-[#5c4033] select-none leading-none">
+                                ShopDigital
+                            </h1>
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#7a6353]/85 mt-1 select-none">
+                                Selecciona tu Región
+                            </p>
+                        </div>
 
-                    {/* ── Fila 1: Selector de Región — botones GRANDES (jerarquía principal) ── */}
-                    <div className="grid grid-cols-3 gap-2.5 w-full mt-5 z-10">
-                        {[
-                            { id: 'buenos-aires' as const, label: 'Buenos Aires' },
-                            { id: 'cordoba' as const, label: 'Córdoba' },
-                            { id: 'patagonia' as const, label: 'Patagonia' }
-                        ].map(reg => {
-                            const isActive = activeRegion === reg.id;
-                            return (
+                        {/* ── Fila 1: Selector de Región — botones GRANDES ── */}
+                        <div className="grid grid-cols-3 gap-2 w-full">
+                            {[
+                                { id: 'buenos-aires' as const, label: 'Buenos Aires' },
+                                { id: 'cordoba' as const, label: 'Córdoba' },
+                                { id: 'patagonia' as const, label: 'Patagonia' }
+                            ].map(reg => {
+                                const isActive = activeRegion === reg.id;
+                                return (
+                                    <button
+                                        key={reg.id}
+                                        onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
+                                        className={`py-3.5 px-1.5 rounded-[1.8rem] text-[8.5px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
+                                            isActive ? 'home-btn-3d-active' : 'home-btn-3d'
+                                        }`}
+                                    >
+                                        {reg.label}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* ── Fila 2: Localidades — botones PEQUEÑOS ── */}
+                        <div className="grid grid-cols-3 gap-2 w-full">
+                            {localitiesForActiveRegion.map(loc => (
                                 <button
-                                    key={reg.id}
-                                    onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
-                                    className={`py-4 px-2 rounded-[1.6rem] text-[10px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
-                                        isActive ? 'home-btn-3d-active' : 'home-btn-3d'
-                                    }`}
+                                    key={loc.name}
+                                    onClick={() => {
+                                        playNeonClick();
+                                        if (loc.isMock) {
+                                            setMockMessage(
+                                                loc.name === 'Lomas de zamora'
+                                                ? "¡Zona Esteban Echeverría y Ezeiza activas! Lomas de Zamora será clonada en la próxima fase de expansión de la red local. 🚀"
+                                                : "¡Zona Traslasierra (Córdoba) y Buenos Aires activas! San Martín de los Andes (Patagonia) es nuestra próxima región a clonar. 🏔️"
+                                            );
+                                        } else {
+                                            navigate(loc.path);
+                                        }
+                                    }}
+                                    className="py-2 px-1 rounded-[1.2rem] text-[7px] leading-tight font-[900] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95"
                                 >
-                                    {reg.label}
+                                    {loc.name}
                                 </button>
-                            );
-                        })}
-                    </div>
-
-                    {/* ── Fila 2: Localidades — botones PEQUEÑOS (jerarquía secundaria) ── */}
-                    <div className="grid grid-cols-3 gap-2 w-full mt-2.5 z-10">
-                        {localitiesForActiveRegion.map(loc => (
-                            <button
-                                key={loc.name}
-                                onClick={() => {
-                                    playNeonClick();
-                                    if (loc.isMock) {
-                                        setMockMessage(
-                                            loc.name === 'Lomas de zamora'
-                                            ? "¡Zona Esteban Echeverría y Ezeiza activas! Lomas de Zamora será clonada en la próxima fase de expansión de la red local. 🚀"
-                                            : "¡Zona Traslasierra (Córdoba) y Buenos Aires activas! San Martín de los Andes (Patagonia) es nuestra próxima región a clonar. 🏔️"
-                                        );
-                                    } else {
-                                        navigate(loc.path);
-                                    }
-                                }}
-                                className="py-2.5 px-1.5 rounded-[1.25rem] text-[7px] leading-tight font-[900] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95"
-                            >
-                                {loc.name}
-                            </button>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     {/* ── Avatar Central ── */}
-                    <div className="flex-1 flex items-end justify-center relative z-0 select-none pointer-events-none overflow-hidden model-floating">
+                    <div className="flex-1 flex items-end justify-center relative z-0 select-none pointer-events-none overflow-hidden mt-2 model-floating">
                         <img
                             src="/ari-pointing.png"
                             alt="ARI Asistente"
-                            className="h-[90%] max-h-[380px] w-auto object-contain object-bottom animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-out"
+                            className="h-[95%] max-h-[340px] w-auto object-contain object-bottom animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-out"
                             loading="eager"
                         />
                     </div>
 
-                    {/* ── Pie de Página con Términos y Condiciones ── */}
-                    <footer className="w-full z-10 pb-3 pt-2">
-                        {/* Separador */}
-                        <div className="w-full border-t border-[#2d1e15]/15 mb-3" />
-
-                        <div className="flex items-center justify-between w-full px-1">
+                    {/* ── Pie de Página con Estilo Esmerilado Claymórfico de la Maqueta ── */}
+                    <footer className="w-full z-10 pt-2 pb-1">
+                        <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
                             <p
                                 onClick={handleCopyrightClick}
-                                className="text-[8.5px] font-black uppercase tracking-[0.3em] text-[#2d1e15]/60 cursor-pointer select-none active:opacity-100 transition-opacity"
+                                className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] cursor-pointer select-none active:opacity-100 transition-opacity"
                             >
                                 © 2026 · ShopDigital
                             </p>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2.5">
                                 <button
                                     onClick={() => { playNeonClick(); navigate('/terminos'); }}
-                                    className="text-[7.5px] font-bold uppercase tracking-[0.2em] text-[#0891b2] underline-offset-2 underline active:opacity-70 transition-opacity select-none"
+                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
                                 >
                                     Términos
                                 </button>
-                                <span className="text-[#2d1e15]/30 text-[8px] select-none">|</span>
+                                <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
                                 <button
                                     onClick={() => { playNeonClick(); navigate('/terminos'); }}
-                                    className="text-[7.5px] font-bold uppercase tracking-[0.2em] text-[#0891b2] underline-offset-2 underline active:opacity-70 transition-opacity select-none"
+                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
                                 >
                                     Condiciones
                                 </button>
