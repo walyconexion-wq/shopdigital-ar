@@ -603,7 +603,7 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
     };
 
     return (
-        <div className={inline ? 'w-full' : 'fixed bottom-6 right-5 z-[1000] flex flex-col items-center gap-3'}>
+        <div className={inline ? 'w-full' : 'fixed bottom-6 right-5 z-[1000]'}>
             {/* ═══ MODO INLINE: Panel siempre abierto, empotrado en la página ═══ */}
             {inline && (
                 <div
@@ -826,27 +826,29 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
                 </div>
             )}
 
-            {/* 💬 Botón WhatsApp flotante — debajo del globito ARI */}
+            {/* 💬 Botón WhatsApp flotante — Lado Izquierdo */}
             {!inline && (
-                <a
-                    href="https://wa.me/5491140607059?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20ShopDigital%20%F0%9F%9B%92"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Contactar por WhatsApp"
-                    className="relative flex items-center justify-center w-14 h-14 rounded-full shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-all hover:scale-110 active:scale-95"
-                    style={{
-                        background: 'linear-gradient(135deg, #25d366 0%, #128c7e 100%)',
-                        boxShadow: '0 4px 20px rgba(37,211,102,0.5), inset 0 1px 1px rgba(255,255,255,0.35)',
-                    }}
-                    onClick={() => playNeonClick()}
-                >
-                    {/* Anillo pulsante verde */}
-                    <span className="absolute inset-0 rounded-full bg-[#25d366] animate-ping opacity-25" />
-                    {/* Ícono WhatsApp SVG oficial */}
-                    <svg viewBox="0 0 32 32" width="28" height="28" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.002 2.667C8.636 2.667 2.667 8.636 2.667 16c0 2.347.63 4.643 1.826 6.656L2.667 29.333l6.871-1.8A13.245 13.245 0 0 0 16.002 29.333C23.368 29.333 29.333 23.364 29.333 16S23.368 2.667 16.002 2.667zm0 24.266a11.013 11.013 0 0 1-5.616-1.542l-.402-.24-4.08 1.07 1.09-3.97-.263-.41A11.013 11.013 0 0 1 5 16c0-6.073 4.93-11.002 11.002-11.002C23.075 4.998 28 9.927 28 16S23.075 26.933 16.002 26.933zm6.044-8.237c-.33-.166-1.956-.966-2.259-1.075-.303-.11-.524-.166-.744.165-.22.33-.855 1.075-1.048 1.296-.193.22-.386.247-.716.082-.33-.165-1.396-.515-2.659-1.643-.983-.877-1.647-1.96-1.84-2.29-.193-.33-.02-.508.145-.673.15-.148.33-.385.496-.578.165-.193.22-.33.33-.55.11-.22.055-.413-.027-.578-.083-.165-.744-1.793-1.02-2.454-.27-.644-.543-.556-.744-.567-.193-.01-.413-.012-.633-.012-.22 0-.578.083-.881.413-.303.33-1.157 1.13-1.157 2.757 0 1.628 1.184 3.2 1.35 3.42.165.22 2.33 3.56 5.646 4.992.789.34 1.405.543 1.885.694.792.252 1.513.216 2.083.131.635-.094 1.956-.8 2.232-1.572.275-.77.275-1.43.192-1.57-.082-.138-.302-.22-.632-.385z"/>
-                    </svg>
-                </a>
+                <div className="fixed bottom-6 left-5 z-[1000]">
+                    <a
+                        href="https://wa.me/5491140607059?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20ShopDigital%20%F0%9F%9B%92"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Contactar por WhatsApp"
+                        className="relative flex items-center justify-center w-14 h-14 rounded-full shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-all hover:scale-110 active:scale-95"
+                        style={{
+                            background: 'linear-gradient(135deg, #25d366 0%, #128c7e 100%)',
+                            boxShadow: '0 4px 20px rgba(37,211,102,0.5), inset 0 1px 1px rgba(255,255,255,0.35)',
+                        }}
+                        onClick={() => playNeonClick()}
+                    >
+                        {/* Anillo pulsante verde */}
+                        <span className="absolute inset-0 rounded-full bg-[#25d366] animate-ping opacity-25" />
+                        {/* Ícono WhatsApp SVG oficial */}
+                        <svg viewBox="0 0 32 32" width="28" height="28" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.002 2.667C8.636 2.667 2.667 8.636 2.667 16c0 2.347.63 4.643 1.826 6.656L2.667 29.333l6.871-1.8A13.245 13.245 0 0 0 16.002 29.333C23.368 29.333 29.333 23.364 29.333 16S23.368 2.667 16.002 2.667zm0 24.266a11.013 11.013 0 0 1-5.616-1.542l-.402-.24-4.08 1.07 1.09-3.97-.263-.41A11.013 11.013 0 0 1 5 16c0-6.073 4.93-11.002 11.002-11.002C23.075 4.998 28 9.927 28 16S23.075 26.933 16.002 26.933zm6.044-8.237c-.33-.166-1.956-.966-2.259-1.075-.303-.11-.524-.166-.744.165-.22.33-.855 1.075-1.048 1.296-.193.22-.386.247-.716.082-.33-.165-1.396-.515-2.659-1.643-.983-.877-1.647-1.96-1.84-2.29-.193-.33-.02-.508.145-.673.15-.148.33-.385.496-.578.165-.193.22-.33.33-.55.11-.22.055-.413-.027-.578-.083-.165-.744-1.793-1.02-2.454-.27-.644-.543-.556-.744-.567-.193-.01-.413-.012-.633-.012-.22 0-.578.083-.881.413-.303.33-1.157 1.13-1.157 2.757 0 1.628 1.184 3.2 1.35 3.42.165.22 2.33 3.56 5.646 4.992.789.34 1.405.543 1.885.694.792.252 1.513.216 2.083.131.635-.094 1.956-.8 2.232-1.572.275-.77.275-1.43.192-1.57-.082-.138-.302-.22-.632-.385z"/>
+                        </svg>
+                    </a>
+                </div>
             )}
             {!inline && isOpen && (
                 <>
