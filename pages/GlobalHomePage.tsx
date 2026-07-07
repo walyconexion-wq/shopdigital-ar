@@ -211,10 +211,10 @@ const GlobalHomePage: React.FC = () => {
 
     return (
         <div 
-            className={`h-screen w-full font-sans relative select-none ${isDayMode ? 'bg-[#cda488] overflow-y-auto' : 'bg-black text-white selection:bg-cyan-500/30 overflow-hidden'}`}
+            className={`w-full font-sans relative select-none ${isDayMode ? 'bg-[#cda488]' : 'bg-black text-white selection:bg-cyan-500/30 overflow-hidden h-screen'}`}
         >
             {isDayMode ? (
-                <div className="w-full max-w-md mx-auto min-h-screen flex flex-col p-5 pb-6 relative">
+                <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 relative">
 
                     {/* ── Encabezado ── */}
                     <div className="bg-[#c8b8aa]/55 backdrop-blur-md border border-white/25 py-4 px-6 rounded-[2.5rem] text-center w-full max-w-[310px] mx-auto mt-4 shadow-[0_12px_28px_rgba(88,70,50,0.14)]">
