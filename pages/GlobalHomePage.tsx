@@ -211,10 +211,10 @@ const GlobalHomePage: React.FC = () => {
 
     return (
         <div 
-            className={`h-screen w-full font-sans overflow-hidden relative select-none ${isDayMode ? 'bg-[#cda488]' : 'bg-black text-white selection:bg-cyan-500/30'}`}
+            className={`h-screen w-full font-sans relative select-none ${isDayMode ? 'bg-[#cda488] overflow-y-auto' : 'bg-black text-white selection:bg-cyan-500/30 overflow-hidden'}`}
         >
             {isDayMode ? (
-                <div className="w-full max-w-md mx-auto h-screen flex flex-col p-5 relative">
+                <div className="w-full max-w-md mx-auto min-h-screen flex flex-col p-5 pb-6 relative">
 
                     {/* ── Encabezado ── */}
                     <div className="bg-[#c8b8aa]/55 backdrop-blur-md border border-white/25 py-4 px-6 rounded-[2.5rem] text-center w-full max-w-[310px] mx-auto mt-4 shadow-[0_12px_28px_rgba(88,70,50,0.14)]">
@@ -226,7 +226,7 @@ const GlobalHomePage: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* ── Fila 1: Selector de Región — 3 botones ── */}
+                    {/* ── Fila 1: Selector de Región — botones GRANDES (jerarquía principal) ── */}
                     <div className="grid grid-cols-3 gap-2.5 w-full mt-5 z-10">
                         {[
                             { id: 'buenos-aires' as const, label: 'Buenos Aires' },
@@ -238,7 +238,7 @@ const GlobalHomePage: React.FC = () => {
                                 <button
                                     key={reg.id}
                                     onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
-                                    className={`py-3.5 px-2 rounded-[1.6rem] text-[8.5px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
+                                    className={`py-4 px-2 rounded-[1.6rem] text-[10px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
                                         isActive ? 'home-btn-3d-active' : 'home-btn-3d'
                                     }`}
                                 >
@@ -248,8 +248,8 @@ const GlobalHomePage: React.FC = () => {
                         })}
                     </div>
 
-                    {/* ── Fila 2: Localidades de la región activa — 3 columnas ── */}
-                    <div className="grid grid-cols-3 gap-2.5 w-full mt-3 z-10">
+                    {/* ── Fila 2: Localidades — botones PEQUEÑOS (jerarquía secundaria) ── */}
+                    <div className="grid grid-cols-3 gap-2 w-full mt-2.5 z-10">
                         {localitiesForActiveRegion.map(loc => (
                             <button
                                 key={loc.name}
@@ -265,7 +265,7 @@ const GlobalHomePage: React.FC = () => {
                                         navigate(loc.path);
                                     }
                                 }}
-                                className="py-4 px-2 rounded-[1.6rem] text-[8px] leading-tight font-[1000] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95"
+                                className="py-2.5 px-1.5 rounded-[1.25rem] text-[7px] leading-tight font-[900] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95"
                             >
                                 {loc.name}
                             </button>
