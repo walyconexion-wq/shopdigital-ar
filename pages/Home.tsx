@@ -359,17 +359,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     </div>
                 </div>
 
-                {isDayMode ? (
-                    /* Cartel principal al estilo del título de la Home Global */
-                    <div className="bg-white/45 backdrop-blur-sm border border-white/40 py-3.5 px-6 rounded-[1.8rem] text-center w-full max-w-[310px] mx-auto shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_4px_12px_rgba(88,70,50,0.06)] mb-2">
-                        <h2 className="text-[17px] font-[1000] uppercase tracking-[0.1em] text-[#5c4033] select-none leading-none">
-                            {townName}
-                        </h2>
-                        <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#7a6353]/85 mt-1.5 select-none">
-                            {t('Catálogo Comercial Oficial')}
-                        </p>
-                    </div>
-                ) : (
+                {isDayMode ? null : (
                     <h2 className="text-[12px] font-[1000] text-white/90 text-shadow-premium uppercase tracking-[0.35em] text-center leading-none">
                         {mainSubtitle}
                     </h2>
@@ -611,11 +601,11 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                 }`}
                                 style={btnStyle}
                             >
-                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#7a6353' : themeColor }}>
+                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#000000' : themeColor }}>
                                     {cat.iconKey ? resolveIcon(cat.iconKey) : cat.icon}
                                 </div>
                                 <span className={`text-[8px] text-center font-[1000] uppercase leading-[1.1] tracking-[0.01em] px-0.5 group-hover:text-amber-950 transition-colors ${
-                                    isDayMode ? 'text-[#7a6353]' : 'text-white/90'
+                                    isDayMode ? 'text-[#000000]' : 'text-white/90'
                                 }`}>
                                     {t(cat.name)}
                                 </span>
