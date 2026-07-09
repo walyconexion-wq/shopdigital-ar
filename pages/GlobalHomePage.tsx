@@ -220,20 +220,20 @@ const GlobalHomePage: React.FC = () => {
                     <div className="home-glass-plate w-full mt-4 flex flex-col gap-4 relative z-10">
                         {/* ── Título Interno Esmerilado ── */}
                         <div className="bg-white/45 backdrop-blur-sm border border-white/40 py-3.5 px-6 rounded-[1.8rem] text-center w-full max-w-[280px] mx-auto shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_4px_12px_rgba(88,70,50,0.06)]">
-                            <h1 className="text-[20px] font-[1000] uppercase tracking-[0.12em] text-[#5c4033] select-none leading-none">
-                                ShopDigital
+                            <h1 className="text-[20px] font-[1000] uppercase tracking-[0.12em] text-[#000000] select-none leading-none">
+                                SHOPDIGITAL
                             </h1>
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#7a6353]/85 mt-1 select-none">
-                                Selecciona tu Región
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#000000] mt-1.5 select-none">
+                                SELECCIONA TU REGIÓN
                             </p>
                         </div>
 
                         {/* ── Fila 1: Selector de Región — botones GRANDES ── */}
                         <div className="grid grid-cols-3 gap-2 w-full">
                             {[
-                                { id: 'buenos-aires' as const, label: 'Buenos Aires' },
-                                { id: 'cordoba' as const, label: 'Córdoba' },
-                                { id: 'patagonia' as const, label: 'Patagonia' }
+                                { id: 'buenos-aires' as const, label: 'BUENOS AIRES', customColorClass: 'text-[#c98858]' },
+                                { id: 'cordoba' as const, label: 'CÓRDOBA', customColorClass: 'text-[#000000]' },
+                                { id: 'patagonia' as const, label: 'PÁTAGONIA', customColorClass: 'text-[#000000]' }
                             ].map(reg => {
                                 const isActive = activeRegion === reg.id;
                                 return (
@@ -242,7 +242,7 @@ const GlobalHomePage: React.FC = () => {
                                         onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
                                         className={`py-3.5 px-1.5 rounded-[1.8rem] text-[8.5px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
                                             isActive ? 'home-btn-3d-active' : 'home-btn-3d'
-                                        }`}
+                                        } ${isActive ? 'text-[#c98858]' : reg.customColorClass}`}
                                     >
                                         {reg.label}
                                     </button>
@@ -252,26 +252,45 @@ const GlobalHomePage: React.FC = () => {
 
                         {/* ── Fila 2: Localidades — botones PEQUEÑOS ── */}
                         <div className="grid grid-cols-3 gap-2 w-full">
-                            {localitiesForActiveRegion.map(loc => (
-                                <button
-                                    key={loc.name}
-                                    onClick={() => {
-                                        playNeonClick();
-                                        if (loc.isMock) {
-                                            setMockMessage(
-                                                loc.name === 'Lomas de zamora'
-                                                ? "¡Zona Esteban Echeverría y Ezeiza activas! Lomas de Zamora será clonada en la próxima fase de expansión de la red local. 🚀"
-                                                : "¡Zona Traslasierra (Córdoba) y Buenos Aires activas! San Martín de los Andes (Patagonia) es nuestra próxima región a clonar. 🏔️"
-                                            );
-                                        } else {
-                                            navigate(loc.path);
-                                        }
-                                    }}
-                                    className="py-2 px-1 rounded-[1.2rem] text-[7px] leading-tight font-[900] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95"
-                                >
-                                    {loc.name}
-                                </button>
-                            ))}
+                            {localitiesForActiveRegion.map(loc => {
+                                const isCarameloLabel = loc.name.toLowerCase().includes('esteban') || 
+                                                        loc.name.toLowerCase().includes('ezeiza') || 
+                                                        loc.name.toLowerCase().includes('lomas');
+                                return (
+                                    <button
+                                        key={loc.name}
+                                        onClick={() => {
+                                            playNeonClick();
+                                            if (loc.isMock) {
+                                                setMockMessage(
+                                                    loc.name === 'Lomas de zamora'
+                                                    ? "¡Zona Esteban Echeverría y Ezeiza activas! Lomas de Zamora será clonada en la próxima fase de expansión de la red local. 🚀"
+                                                    : "¡Zona Traslasierra (Córdoba) y Buenos Aires activas! San Martín de los Andes (Patagonia) es nuestra próxima región a clonar. 🏔️"
+                                                );
+                                            } else {
+                                                navigate(loc.path);
+                                            }
+                                        }}
+                                        className={`py-2.5 px-1 rounded-[1.2rem] text-[7.5px] leading-tight font-[1000] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95 ${
+                                            isCarameloLabel ? 'text-[#c98858]' : 'text-[#000000]'
+                                        }`}
+                                    >
+                                        {loc.name === 'Esteban Echeverria' ? (
+                                            <>
+                                                ESTEBAN<br/>ECHEVERRIA
+                                            </>
+                                        ) : loc.name === 'Ezeiza' ? (
+                                            'EZOZA'
+                                        ) : loc.name === 'Lomas de Zamora' ? (
+                                            <>
+                                                LOMAS DE<br/>ZAMARRA
+                                            </>
+                                        ) : (
+                                            loc.name
+                                        )}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -290,9 +309,9 @@ const GlobalHomePage: React.FC = () => {
                         <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
                             <p
                                 onClick={handleCopyrightClick}
-                                className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] cursor-pointer select-none active:opacity-100 transition-opacity"
+                                className="text-[8px] font-black uppercase tracking-[0.25em] text-[#000000] cursor-pointer select-none active:opacity-100 transition-opacity"
                             >
-                                © 2026 · ShopDigital
+                                © 2026 · SHOPDIGITAL
                             </p>
                             <div className="flex items-center gap-2.5">
                                 <button
