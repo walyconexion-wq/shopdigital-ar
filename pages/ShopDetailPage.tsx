@@ -491,8 +491,14 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                     : { text: '⚡ HOY', bg: 'bg-rose-500/90', shadow: 'shadow-[0_0_10px_rgba(244,63,94,0.8)]' };
 
                                 return (
-                                    <div key={`${offer.id}-${idx}`} className="glass-card-3d offer-card-neon flex-shrink-0 w-44 p-3.5 flex flex-col relative group snap-center cursor-pointer" onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
-                                        <div className="rounded-2xl overflow-hidden aspect-square mb-3.5 border border-white/20 shadow-xl relative">
+                                    <div key={`${offer.id}-${idx}`} className={`flex-shrink-0 w-44 p-3.5 flex flex-col relative group snap-center cursor-pointer ${
+                                        isDayMode 
+                                            ? 'home-glass-plate rounded-[2rem] border' 
+                                            : 'glass-card-3d offer-card-neon'
+                                    }`} onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
+                                        <div className={`rounded-2xl overflow-hidden aspect-square mb-3.5 border shadow-xl relative ${
+                                            isDayMode ? 'border-[#5c4033]/15' : 'border-white/20'
+                                        }`}>
                                             <ProgressiveShopImage
                                                 src={offer.image}
                                                 alt={offer.name}
@@ -506,9 +512,13 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                             </div>
                                         </div>
                                         <div className="px-1 pb-1 text-center pointer-events-none">
-                                            <p className="text-[10px] font-black uppercase tracking-tight text-white mb-3.5 line-clamp-1">{offer.name}</p>
-                                            <div className="glass-action-btn offer-price-tag py-2 px-3 rounded-xl border border-white/10 bg-white/5">
-                                                <span className="text-[12.5px] font-black text-white drop-shadow-md">$ {offer.price.toLocaleString('es-AR')}</span>
+                                            <p className={`text-[10px] font-black uppercase tracking-tight mb-3.5 line-clamp-1 ${
+                                                isDayMode ? 'text-[#5c4033]' : 'text-white'
+                                            }`}>{offer.name}</p>
+                                            <div className={`py-2 px-3 rounded-xl border ${
+                                                isDayMode ? 'bg-[#faf8f5]/80 border-[#5c4033]/25 text-[#5c4033] shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
+                                            }`}>
+                                                <span className="text-[12.5px] font-black drop-shadow-md">$ {offer.price.toLocaleString('es-AR')}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -526,7 +536,11 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 playNeonClick();
                                 window.open(selectedShop.pedidoYaUrl, '_blank', 'noopener,noreferrer');
                             }}
-                            className="w-full bg-[#EA044E]/10 border border-[#EA044E]/50 py-4 rounded-[2rem] flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(234,4,78,0.2)] hover:bg-[#EA044E]/20 active:scale-95 group relative overflow-hidden transition-all"
+                            className={`w-full py-4 rounded-[2rem] flex items-center justify-center gap-3 group relative overflow-hidden transition-all ${
+                                isDayMode 
+                                    ? 'bg-[#EA044E]/10 border border-[#EA044E]/45 hover:bg-[#EA044E]/15 active:scale-95' 
+                                    : 'bg-[#EA044E]/10 border border-[#EA044E]/50 shadow-[0_0_20px_rgba(234,4,78,0.2)] hover:bg-[#EA044E]/20 active:scale-95'
+                            }`}
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-[#EA044E]/0 via-white/10 to-[#EA044E]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                             <ShoppingBag size={18} strokeWidth={2.5} className="text-[#EA044E] group-hover:scale-110 transition-transform" />
@@ -537,23 +551,31 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
                 {/* ---------- DASHBOARD DE CONTACTO ---------- */}
                 <div className="w-full px-5 mb-14">
-                    <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[2rem] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                    <div className={`rounded-[2rem] p-5 ${
+                        isDayMode ? 'home-glass-plate border' : 'bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                    }`}>
                         <div className="flex items-center gap-2 mb-5">
-                            <MessageCircle size={14} className="text-white/60" />
-                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-white/80">Canales de Atención</h3>
+                            <MessageCircle size={14} className={isDayMode ? 'text-[#855b3c]' : 'text-white/60'} />
+                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'text-[#5c4033]' : 'text-white/80'}`}>Canales de Atención</h3>
                         </div>
                         <div className="grid grid-cols-3 gap-3">
-                            <button onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} className="btn-neon-red flex flex-col items-center justify-center gap-2 bg-black/40 border border-[#EA044E]/30 py-4 rounded-[1.25rem] transition-transform active:scale-95 group">
+                            <button onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
+                                isDayMode ? 'bg-[#faf8f5]/80 border border-[#EA044E]/25' : 'btn-neon-red bg-black/40 border border-[#EA044E]/30'
+                            }`}>
                                 <span className="italic text-[20px] font-black text-[#EA044E] drop-shadow-[0_0_8px_rgba(234,4,78,0.8)] group-hover:scale-110 transition-transform">P</span>
-                                <span className="text-[7.5px] tracking-[0.15em] font-bold text-white/90 uppercase">PedidosYa</span>
+                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#EA044E]' : 'text-white/90'}`}>PedidosYa</span>
                             </button>
-                            <button onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} className="btn-neon-green flex flex-col items-center justify-center gap-2 bg-black/40 border border-[#25D366]/30 py-4 rounded-[1.25rem] transition-transform active:scale-95 group">
+                            <button onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
+                                isDayMode ? 'bg-[#faf8f5]/80 border border-[#25D366]/25' : 'btn-neon-green bg-black/40 border border-[#25D366]/30'
+                            }`}>
                                 <MessageCircle size={20} className="text-[#25D366] drop-shadow-[0_0_8px_rgba(37,211,102,0.8)] group-hover:scale-110 transition-transform" fill="currentColor" strokeWidth={0} />
-                                <span className="text-[7.5px] tracking-[0.15em] font-bold text-white/90 uppercase">WhatsApp</span>
+                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#25D366]' : 'text-white/90'}`}>WhatsApp</span>
                             </button>
-                            <button onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} className="btn-neon-blue flex flex-col items-center justify-center gap-2 bg-black/40 border border-[#009EE3]/30 py-4 rounded-[1.25rem] transition-transform active:scale-95 group">
+                            <button onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
+                                isDayMode ? 'bg-[#faf8f5]/80 border border-[#009EE3]/25' : 'btn-neon-blue bg-black/40 border border-[#009EE3]/30'
+                            }`}>
                                 <Handshake size={20} className="text-[#009EE3] drop-shadow-[0_0_8px_rgba(0,158,227,0.8)] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
-                                <span className="text-[7.5px] tracking-[0.15em] font-bold text-white/90 uppercase">M. Pago</span>
+                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#009EE3]' : 'text-white/90'}`}>M. Pago</span>
                             </button>
                         </div>
                     </div>
@@ -567,22 +589,28 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             logEvento('click_vip_access', selectedShop.id);
                             navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
                         }}
-                        className="w-full py-4 text-white btn-3d-celeste flex items-center justify-center gap-3"
+                        className={`w-full py-4 flex items-center justify-center gap-3 ${
+                            isDayMode ? 'home-btn-3d text-[#5c4033] border' : 'btn-3d-celeste text-white'
+                        }`}
                     >
-                        <Star size={16} style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
-                        <span className={`text-[10px] font-[1100] uppercase tracking-[0.25em] ${isDayMode ? '' : 'text-shadow-premium'}`}>Obtener Credencial VIP</span>
+                        <Star size={16} style={isDayMode ? { color: '#c98858' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                        <span className="text-[10px] font-[1100] uppercase tracking-[0.25em]">Obtener Credencial VIP</span>
                     </button>
                 </div>
 
                 {/* ---------- MÓDULO DE UBICACIÓN ---------- */}
                 <div className="w-full px-5 mb-14">
-                    <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[2rem] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                    <div className={`rounded-[2rem] p-5 ${
+                        isDayMode ? 'home-glass-plate border' : 'bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                    }`}>
                         <div className="flex items-center gap-2 mb-5">
-                            <MapPin size={14} className="text-white/60" />
-                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-white/80">Dónde Encontrarnos</h3>
+                            <MapPin size={14} className={isDayMode ? 'text-[#855b3c]' : 'text-white/60'} />
+                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'text-[#5c4033]' : 'text-white/80'}`}>Dónde Encontrarnos</h3>
                         </div>
                         
-                        <div className="w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border border-white/10 group">
+                        <div className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
+                            isDayMode ? 'border-[#5c4033]/15' : 'border-white/10'
+                        }`}>
                             <iframe
                                 title="Ubicación"
                                 src={selectedShop.mapUrl}
@@ -596,24 +624,30 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             <div className="absolute inset-0 pointer-events-none rounded-[1.25rem] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]"></div>
                         </div>
 
-                        <p className="text-[8px] text-center font-bold uppercase tracking-widest mb-5" style={{ color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor, 0.6)})` }}>
+                        <p className={`text-[8px] text-center font-bold uppercase tracking-widest mb-5 ${
+                            isDayMode ? 'text-[#5c4033]' : ''
+                        }`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor, 0.6)})` }}>
                             {selectedShop.address}
                         </p>
 
                         <div className="grid grid-cols-2 gap-3">
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'google_maps' }); handleOpenLink(selectedShop.mapSheetUrl || '#'); }} 
-                                className="py-3 flex items-center justify-center gap-2 text-white btn-3d-celeste"
+                                className={`py-3 flex items-center justify-center gap-2 ${
+                                    isDayMode ? 'home-btn-3d text-[#5c4033] border' : 'btn-3d-celeste text-white'
+                                }`}
                             >
-                                <Navigation size={14} style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
-                                <span className={`text-[8.5px] font-[1100] uppercase tracking-wider ${isDayMode ? '' : 'text-shadow-premium'}`}>Cómo llegar</span>
+                                <Navigation size={14} style={isDayMode ? { color: '#855b3c' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Cómo llegar</span>
                             </button>
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'uber' }); handleOpenLink('https://m.uber.com/ul/'); }} 
-                                className="py-3 flex items-center justify-center gap-2 text-white btn-3d-celeste"
+                                className={`py-3 flex items-center justify-center gap-2 ${
+                                    isDayMode ? 'home-btn-3d text-[#5c4033] border' : 'btn-3d-celeste text-white'
+                                }`}
                             >
-                                <Car size={14} style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
-                                <span className={`text-[8.5px] font-[1100] uppercase tracking-wider ${isDayMode ? '' : 'text-shadow-premium'}`}>Pedir Uber</span>
+                                <Car size={14} style={isDayMode ? { color: '#855b3c' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Pedir Uber</span>
                             </button>
                         </div>
                     </div>
@@ -621,24 +655,36 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
                 {/* ---------- MÓDULO COMUNIDAD ---------- */}
                 <div className="w-full px-5 mb-12">
-                    <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[2rem] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex flex-col gap-4">
+                    <div className={`p-5 flex flex-col gap-4 rounded-[2rem] ${
+                        isDayMode ? 'home-glass-plate border' : 'bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                    }`}>
                         <div className="grid grid-cols-3 gap-3">
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} className="bg-black/40 border border-[#1877F2]/20 py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform">
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
+                                isDayMode ? 'bg-[#faf8f5]/85 border border-[#1877F2]/25 shadow-sm' : 'bg-black/40 border border-[#1877F2]/20'
+                            }`}>
                                 <Facebook size={16} className="text-[#1877F2]" fill="currentColor" strokeWidth={0} />
-                                <span className="text-[7.5px] font-bold uppercase tracking-wider text-white/80">Facebook</span>
+                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#1877F2]' : 'text-white/80'}`}>Facebook</span>
                             </button>
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} className="bg-black/40 border border-[#E4405F]/20 py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform">
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
+                                isDayMode ? 'bg-[#faf8f5]/85 border border-[#E4405F]/25 shadow-sm' : 'bg-black/40 border border-[#E4405F]/20'
+                            }`}>
                                 <Instagram size={16} className="text-[#E4405F]" strokeWidth={2.5} />
-                                <span className="text-[7.5px] font-bold uppercase tracking-wider text-white/80">Instagram</span>
+                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#E4405F]' : 'text-white/80'}`}>Instagram</span>
                             </button>
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} className="bg-black/40 border border-white/20 py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform">
-                                <Music size={16} className="text-white" strokeWidth={2.5} />
-                                <span className="text-[7.5px] font-bold uppercase tracking-wider text-white/80">TikTok</span>
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
+                                isDayMode ? 'bg-[#faf8f5]/85 border border-[#5c4033]/20 shadow-sm' : 'bg-black/40 border border-white/20'
+                            }`}>
+                                <Music size={16} className={isDayMode ? 'text-[#5c4033]' : 'text-white'} strokeWidth={2.5} />
+                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white/80'}`}>TikTok</span>
                             </button>
                         </div>
-                        <button onClick={handleShare} className="w-full bg-gradient-to-r from-emerald-900/40 to-green-900/40 border border-green-500/30 py-3 rounded-[1rem] flex items-center justify-center gap-2 active:scale-95 transition-transform mt-2">
-                            <Share2 size={14} className="text-green-400" />
-                            <span className="text-[9px] font-black uppercase tracking-widest text-green-100">Compartir Catálogo</span>
+                        <button onClick={handleShare} className={`py-3 rounded-[1rem] flex items-center justify-center gap-2 active:scale-95 transition-transform mt-2 ${
+                            isDayMode 
+                                ? 'bg-emerald-500/10 border border-emerald-500/35 text-emerald-800' 
+                                : 'bg-gradient-to-r from-emerald-900/40 to-green-900/40 border border-green-500/30 text-green-100'
+                        }`}>
+                            <Share2 size={14} className={isDayMode ? 'text-emerald-700' : 'text-green-400'} />
+                            <span className="text-[9.5px] font-black uppercase tracking-widest">Compartir Catálogo</span>
                         </button>
                         
                         {/* Botón Gestión Mudo (Lock) */}
@@ -648,11 +694,11 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 handleLockTap();
                             }} className={`flex items-center justify-center gap-1.5 py-2 transition-all duration-300 ${
                                 lockClicks >= 4 
-                                ? 'text-cyan-400 scale-110 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]' 
+                                ? 'text-cyan-600 scale-110 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]' 
                                 : lockClicks >= 2 
-                                ? 'text-white/25'
-                                : 'text-white/15'
-                            }`}>
+                                ? 'opacity-30'
+                                : 'opacity-15'
+                            } ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
                                 <Lock size={lockClicks >= 4 ? 14 : 10} className="transition-all duration-300" />
                                 <span className={`font-bold uppercase tracking-widest transition-all duration-300 ${lockClicks >= 4 ? 'text-[9px]' : 'text-[7px]'}`}>Gestión</span>
                             </button>
@@ -663,8 +709,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 {/* ---------- 📺 MURO VIVO (FEED DINÁMICO) ---------- */}
                 <div className="w-full px-5 mb-14 flex flex-col items-center">
                     <div className="flex items-center gap-2 mb-6">
-                        <ImageIcon size={16} style={{ color: themeColor }} />
-                        <h3 className="font-black text-[11px] uppercase tracking-[0.3em]" style={{ color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
+                        <ImageIcon size={16} style={isDayMode ? { color: '#855b3c' } : { color: themeColor }} />
+                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'text-[#5c4033]' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
                         {broadcasts.length > 0 && (
                             <div className="badge-en-vivo flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5 ml-2">
                                 <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
@@ -674,7 +720,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         )}
                     </div>
 
-                    <div className="w-full aspect-square md:aspect-video rounded-[1.7rem] overflow-hidden relative border isolate bg-zinc-900 group" style={{ borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
+                    <div className={`w-full aspect-square md:aspect-video rounded-[1.7rem] overflow-hidden relative border isolate bg-zinc-900 group ${
+                        isDayMode ? 'border-[#5c4033]/20 shadow-lg' : ''
+                    }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
                         
                         {/* Slide Container */}
                         <div className={`w-full h-full relative ${isGlitching ? 'muro-glitch-active muro-scanline' : ''}`}>
@@ -749,8 +797,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 {/* ---------- REVIEWS AND RATING SECTION ---------- */}
                 <div className="w-full px-5 mb-14 flex flex-col items-center">
                     <div className="flex items-center gap-2 mb-6">
-                        <MessageSquare size={16} style={{ color: themeColor }} />
-                        <h3 className="font-black text-[11px] uppercase tracking-[0.3em]" style={{ color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
+                        <MessageSquare size={16} style={isDayMode ? { color: '#855b3c' } : { color: themeColor }} />
+                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'text-[#5c4033]' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
                     </div>
 
                     {/* Review List */}
@@ -763,52 +811,39 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             { id: '2', authorName: 'Laura G.', rating: 5, text: 'Muy buen servicio, llegó todo rapidísimo y caliente. Un lujo tener algo así en la zona.', date: 'Hace 1 semana' },
                             { id: '3', authorName: 'Diego F.', rating: 4, text: '¡Increíble la calidad! Se nota que le ponen mucha dedicación a lo que hacen.', date: 'Hace 2 semanas' }
                         ]).slice(0, 5).map((review) => (
-                            <div key={review.id} className="glass-card-3d backdrop-blur-sm border rounded-[1.25rem] p-4 flex flex-col gap-2 relative overflow-hidden" style={{ backgroundColor: hexToRgba(themeColor, 0.05), borderColor: hexToRgba(themeColor, 0.2) }}>
+                            <div key={review.id} className={`backdrop-blur-sm border rounded-[1.25rem] p-4 flex flex-col gap-2 relative overflow-hidden ${
+                                isDayMode 
+                                    ? 'home-glass-plate' 
+                                    : 'glass-card-3d bg-white/5 border-white/10'
+                            }`} style={isDayMode ? {} : { backgroundColor: hexToRgba(themeColor, 0.05), borderColor: hexToRgba(themeColor, 0.2) }}>
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 blur-2xl rounded-full" />
                                 <div className="flex justify-between items-center w-full relative z-10">
-                                    <span className="text-[10px] font-black text-white uppercase tracking-wider">{review.authorName}</span>
+                                    <span className={`text-[10px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>{review.authorName}</span>
                                     <div className="flex gap-0.5">
                                         {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={10} className={i < review.rating ? "text-yellow-400 fill-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.6)]" : "text-white/10 fill-white/5"} />
+                                            <Star key={i} size={10} className={i < review.rating ? "text-yellow-400 fill-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.6)]" : `fill-transparent ${isDayMode ? 'text-slate-300' : 'text-white/20'}`} />
                                         ))}
                                     </div>
                                 </div>
-                                <p className="text-[9.5px] text-white/70 italic leading-relaxed relative z-10">"{review.text}"</p>
-                                <span className="text-[7.5px] text-cyan-500/60 font-black uppercase tracking-[0.2em] mt-1 relative z-10">{review.date}</span>
+                                <p className={`text-[9.5px] italic leading-relaxed relative z-10 ${isDayMode ? 'text-[#7a6353]' : 'text-white/70'}`}>"{review.text}"</p>
+                                <span className={`text-[7.5px] font-black uppercase tracking-[0.2em] mt-1 relative z-10 ${isDayMode ? 'text-[#855b3c]' : 'text-cyan-500/60'}`}>{review.date}</span>
                             </div>
                         ))}
                     </div>
 
-                    {/* Actions: View All / Leave Review */}
-                    <div className="grid grid-cols-2 gap-3 w-full">
-                        <button 
-                            className="py-3 flex items-center justify-center gap-2 text-white btn-3d-celeste"
-                        >
-                            <span className={`text-[8px] font-[1100] uppercase tracking-widest ${isDayMode ? '' : 'text-shadow-premium'}`}>Ver Todas</span>
-                        </button>
-                        <button 
-                            className="py-3 flex items-center justify-center gap-2 text-white btn-3d-celeste"
-                        >
-                            <MessageSquare size={12} style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
-                            <span className={`text-[8px] font-[1100] uppercase tracking-widest ${isDayMode ? '' : 'text-shadow-premium'}`}>Dejar Reseña</span>
-                        </button>
-                    </div>
-                </div>
-                {/* ----------------------------------------------- */}
-
-                <div className="w-full flex justify-center mb-8">
                     <button 
                         onClick={() => {
                             playNeonClick();
                             navigate(`${basePath}/${categorySlug}`);
                         }} 
-                        className="w-max py-3 px-8 rounded-full flex items-center gap-2 text-white btn-3d-celeste"
+                        className={`w-max py-3 px-8 rounded-full flex items-center gap-2 ${
+                            isDayMode ? 'home-btn-3d text-[#5c4033] border' : 'btn-3d-celeste text-white'
+                        }`}
                     >
-                        <ArrowLeft size={14} style={{ color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
-                        <span className={`text-[10px] font-[1100] uppercase tracking-widest ${isDayMode ? '' : 'text-shadow-premium'}`}>Regresar</span>
+                        <ArrowLeft size={14} style={isDayMode ? { color: '#855b3c' } : { color: '#22d3ee', filter: 'drop-shadow(0 0 3px rgba(34, 211, 238, 0.6))' }} strokeWidth={3} />
+                        <span className="text-[10px] font-[1100] uppercase tracking-widest">Regresar</span>
                     </button>
                 </div>
-
 
             </div>
 
@@ -816,15 +851,21 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
             {selectedOfferForModal && (
                 <div className="fixed inset-0 z-[1000] flex items-end justify-center p-4 animate-in fade-in duration-300">
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedOfferForModal(null)}></div>
-                    <div className="relative w-full max-w-sm bg-zinc-900 border border-white/10 rounded-[2rem] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-10 duration-300" style={{ boxShadow: `0 0 40px ${hexToRgba(themeColor, 0.15)}` }}>
+                    <div className={`relative w-full max-w-sm border rounded-[2rem] p-6 animate-in slide-in-from-bottom-10 duration-300 ${
+                        isDayMode ? 'home-glass-plate' : 'bg-zinc-900 border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.8)]'
+                    }`} style={isDayMode ? {} : { boxShadow: `0 0 40px ${hexToRgba(themeColor, 0.15)}` }}>
                         <button 
                             onClick={() => setSelectedOfferForModal(null)}
-                            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 border border-white/10 text-white/70 active:scale-90 transition-transform"
+                            className={`absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full border active:scale-90 transition-transform ${
+                                isDayMode ? 'bg-[#faf8f5] border-[#5c4033]/25 text-[#5c4033]' : 'bg-black/50 border-white/10 text-white/70'
+                            }`}
                         >
                             <span className="text-xl leading-none font-light">&times;</span>
                         </button>
                         
-                        <div className="w-full aspect-square rounded-[1.5rem] overflow-hidden border border-white/10 mb-5 relative">
+                        <div className={`w-full aspect-square rounded-[1.5rem] overflow-hidden border mb-5 relative ${
+                            isDayMode ? 'border-[#5c4033]/15' : 'border-white/10'
+                        }`}>
                             <img src={selectedOfferForModal.image} alt={selectedOfferForModal.name} className="w-full h-full object-cover" />
                             <div className={`absolute top-3 left-3 ${selectedOfferForModal.scarcityLabel ? 'bg-orange-500/90 shadow-[0_0_15px_rgba(249,115,22,0.8)]' : 'bg-cyan-500/90 shadow-[0_0_15px_rgba(6,182,212,0.8)]'} text-white text-[9px] font-black px-3 py-1 rounded-full uppercase backdrop-blur-md`}>
                                 {selectedOfferForModal.scarcityLabel || 'Oferta Especial'}
@@ -837,13 +878,17 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             )}
                         </div>
                         
-                        <h2 className="text-[16px] font-black uppercase tracking-[0.1em] text-white leading-tight mb-2 text-center">
+                        <h2 className={`text-[16px] font-[1000] uppercase tracking-[0.1em] leading-tight mb-2 text-center ${
+                            isDayMode ? 'text-[#5c4033]' : 'text-white'
+                        }`}>
                             {selectedOfferForModal.name}
                         </h2>
                         
                         <div className="w-full flex justify-center mb-6">
-                            <div className="glass-action-btn py-2 px-5 rounded-xl border border-white/10 bg-white/5">
-                                <span className="text-[18px] font-black text-white drop-shadow-md">$ {selectedOfferForModal.price.toLocaleString('es-AR')}</span>
+                            <div className={`py-2 px-5 rounded-xl border ${
+                                isDayMode ? 'bg-[#faf8f5] border-[#5c4033]/25 text-[#5c4033] shadow-inner font-[1000]' : 'glass-action-btn border-white/10 bg-white/5 text-white'
+                            }`}>
+                                <span className="text-[18px] font-black drop-shadow-md">$ {selectedOfferForModal.price.toLocaleString('es-AR')}</span>
                             </div>
                         </div>
                         
@@ -889,7 +934,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
                         {/* Texto Legal Scarcity */}
                         {selectedOfferForModal.legalText && (
-                            <p className="mt-4 text-center text-[7.5px] text-white/40 uppercase tracking-widest leading-relaxed px-2">
+                            <p className={`mt-4 text-center text-[7.5px] uppercase tracking-widest leading-relaxed px-2 ${
+                                isDayMode ? 'text-[#7a6353]' : 'text-white/40'
+                            }`}>
                                 * {selectedOfferForModal.legalText}
                             </p>
                         )}

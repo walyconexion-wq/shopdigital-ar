@@ -826,11 +826,15 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
                 </div>
             )}
 
-            {/* 💬 Botón WhatsApp flotante — Lado Izquierdo (Oculto en Interfaz 1 e Interfaz 2) */}
+            {/* 💬 Botón WhatsApp flotante — Lado Izquierdo (Oculto en Interfaz 1, 2 y 3) */}
             {!inline && 
              !window.location.pathname.endsWith('/home') && 
-             // Oculta si la ruta es /:townId/:categorySlug (ej: /ezeiza/gastronomia)
+             // Oculta si la ruta es /:townId/:categorySlug (2 segmentos, Interfaz 2)
              !(window.location.pathname.split('/').filter(Boolean).length === 2 && 
+               !window.location.pathname.includes('/mi-catalogo') &&
+               !window.location.pathname.includes('/red-comercial')) &&
+             // Oculta si la ruta es /:townId/:categorySlug/:shopSlug (3 segmentos, Interfaz 3)
+             !(window.location.pathname.split('/').filter(Boolean).length === 3 && 
                !window.location.pathname.includes('/mi-catalogo') &&
                !window.location.pathname.includes('/red-comercial')) && (
                 <div className="fixed bottom-16 left-5 z-[1000]">
