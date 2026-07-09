@@ -231,23 +231,26 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                 )}
             </button>
 
+            {/* ── Encabezado Principal de Categoría (Estilo Cartel de la Home) ── */}
             <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-0 px-4 mb-2.5">
                 <div
                     onClick={handleTitleClick}
-                    className={`glass-header rounded-3xl p-5 border backdrop-blur-md cursor-pointer select-none active:translate-y-[4px] transition-all w-full text-center ${isDayMode ? 'border-b-[6px] border-slate-300' : 'border-b-[4px] border-white/20'}`}
-                    style={{
+                    className={`glass-header rounded-3xl p-5 border backdrop-blur-md cursor-pointer select-none active:translate-y-[4px] transition-all w-full text-center ${
+                        isDayMode 
+                            ? 'bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]' 
+                            : 'border-b-[4px] border-white/20'
+                    }`}
+                    style={isDayMode ? {} : {
                         borderColor: hexToRgba(themeColor, 0.5),
                         boxShadow: `0 15px 40px ${hexToRgba(themeColor, 0.4)}`,
-                        background: isDayMode 
-                            ? `linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(248,250,252,0.9) 100%)`
-                            : `linear-gradient(135deg, ${hexToRgba(themeColor, 0.15)} 0%, rgba(15,23,42,0.6) 100%)`
+                        background: `linear-gradient(135deg, ${hexToRgba(themeColor, 0.15)} 0%, rgba(15,23,42,0.6) 100%)`
                     }}
                 >
-                    <h2 className={`text-[20px] font-[900] uppercase tracking-[0.25em] leading-none text-center mb-2 ${isDayMode ? 'text-slate-800 drop-shadow-sm' : 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'}`}>
+                    <h2 className={`text-[20px] font-[1000] uppercase tracking-[0.18em] leading-none text-center mb-2 ${isDayMode ? 'text-[#5c4033] drop-shadow-sm' : 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'}`}>
                         {activeSubcategory || selectedCategory.name}
                     </h2>
-                    <div className="h-[1px] w-16 mb-2 mx-auto" style={{ backgroundColor: hexToRgba(themeColor, 0.6), boxShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}` }}></div>
-                    <p className={`text-[8.5px] font-bold uppercase tracking-[0.15em] leading-tight text-center px-6 ${isDayMode ? 'text-slate-600' : 'text-white/90'}`}>
+                    <div className="h-[1px] w-16 mb-2.5 mx-auto" style={{ backgroundColor: isDayMode ? 'rgba(88, 70, 50, 0.25)' : hexToRgba(themeColor, 0.6), boxShadow: isDayMode ? 'none' : `0 0 10px ${hexToRgba(themeColor, 0.8)}` }}></div>
+                    <p className={`text-[8.5px] font-black uppercase tracking-[0.15em] leading-tight text-center px-4 ${isDayMode ? 'text-[#7a6353]/90' : 'text-white/90'}`}>
                         Seleccioná tu comercio y descubrí ofertas magníficas
                     </p>
                 </div>
@@ -277,17 +280,17 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                         {localities.map((loc, idx) => {
                             const isActive = activeLocation === loc;
                             const activeClass = isActive
-                                ? 'active-3d-primary'
-                                : 'inactive-3d';
+                                ? (isDayMode ? 'home-btn-3d-active' : 'active-3d-primary')
+                                : (isDayMode ? 'home-btn-3d' : 'inactive-3d');
                             return (
                                 <button
                                     key={loc}
                                     onClick={() => { playNeonClick(); setActiveLocation(loc); }}
-                                    className={`locality-tab flex-1 min-w-[72px] py-3 px-2 flex flex-col items-center justify-center btn-locality-3d-tab ${activeClass}`}
+                                    className={`locality-tab flex-1 min-w-[72px] py-3 px-2 flex flex-col items-center justify-center rounded-2xl text-[10px] sm:text-[11px] font-[1000] uppercase tracking-widest text-center leading-tight transition-all duration-150 active:translate-y-[2px] ${
+                                        isDayMode ? activeClass : `btn-locality-3d-tab ${activeClass}`
+                                    }`}
                                 >
-                                    <span className={`text-[10px] sm:text-[11px] font-[1000] uppercase tracking-widest text-center leading-tight ${isActive ? 'text-shadow-premium' : ''}`}>
-                                        {loc}
-                                    </span>
+                                    {loc}
                                 </button>
                             );
                         })}
@@ -302,8 +305,8 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                             const btnClass = isDayMode
                                 ? `px-4 py-2.5 rounded-2xl text-[8.5px] font-[1000] uppercase tracking-widest transition-all duration-150 active:translate-y-[4px] ${
                                     isActive 
-                                        ? 'border-sky-400 bg-sky-500/10 text-sky-900 border-b-[4px] border-b-sky-500/40 shadow-sm' 
-                                        : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50 border-b-[4px] border-b-slate-300 shadow-sm'
+                                        ? 'home-btn-3d-active' 
+                                        : 'home-btn-3d'
                                   }`
                                 : `px-4 py-2 rounded-2xl border transition-all duration-300 text-[8.5px] font-black uppercase tracking-widest active:translate-y-[4px] ${
                                     isActive
@@ -312,23 +315,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                                   }`;
 
                             const btnStyle = isDayMode
-                                ? (isActive 
-                                    ? {
-                                        borderWidth: '1.5px',
-                                        borderBottomWidth: '1.5px',
-                                        borderBottomColor: themeColor,
-                                        boxShadow: `0 0 12px ${hexToRgba(themeColor, 0.4)}, inset 0 1px 0 rgba(255,255,255,0.4)`,
-                                        transform: 'translateY(2px)',
-                                        color: themeColor,
-                                        fontWeight: '1000'
-                                      }
-                                    : {
-                                        borderWidth: '1px',
-                                        borderBottomWidth: '4px',
-                                        borderBottomColor: '#cda488',
-                                        boxShadow: '0 4px 8px rgba(88, 70, 50, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95)'
-                                      }
-                                  )
+                                ? {}
                                 : (isActive 
                                     ? {
                                         backgroundColor: hexToRgba(themeColor, 0.35),
@@ -363,19 +350,27 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                 <div className="flex flex-col gap-6" key={activeLocation + activeSubcategory}>
                     {/* Título de Sección con ícono */}
                     <div className="flex items-center gap-3 ml-2">
-                        <div className={`w-8 h-8 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg transition-colors ${activeColors.dot}`}>
-                            <MapPin size={16} className={activeColors.pin} />
+                        <div className={`w-8 h-8 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg transition-colors ${
+                            isDayMode ? 'bg-[#faf8f5]/80 border-slate-200/50' : activeColors.dot
+                        }`}>
+                            <MapPin size={16} className={isDayMode ? 'text-[#855b3c]' : activeColors.pin} />
                         </div>
-                        <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-shadow-premium">
+                        <h3 className={`text-[12px] font-black uppercase tracking-[0.4em] ${isDayMode ? 'text-[#5c4033]' : 'text-shadow-premium'}`}>
                             {isInTraslasierra || isInPatagonia ? townName : activeLocation}
                         </h3>
-                        <div className={`h-[1px] flex-1 opacity-50 transition-colors ${activeColors.line}`}></div>
+                        <div className={`h-[1px] flex-1 opacity-50 transition-colors ${isDayMode ? 'bg-[#5c4033]/20' : activeColors.line}`}></div>
                     </div>
 
                     {groupedShops[activeLocation] && groupedShops[activeLocation].length > 0 ? (
                         groupedShops[activeLocation].map((shop, index) => (
-                            <div key={shop.id} style={{ animationDelay: `${index * 80}ms` }} className={`glass-card-3d ${activeColors.card} overflow-hidden flex flex-row cursor-default fade-up-item w-full items-stretch h-[170px]`}>
-                                <div className="relative w-32 shop-image-wrapper flex-shrink-0 overflow-hidden border-r border-white/20">
+                            <div key={shop.id} style={{ animationDelay: `${index * 80}ms` }} className={`overflow-hidden flex flex-row cursor-default fade-up-item w-full items-stretch h-[170px] ${
+                                isDayMode 
+                                    ? 'home-glass-plate rounded-[2rem] border' 
+                                    : `glass-card-3d ${activeColors.card} border-r border-white/20`
+                            }`}>
+                                <div className={`relative w-32 shop-image-wrapper flex-shrink-0 overflow-hidden border-r ${
+                                    isDayMode ? 'border-[#5c4033]/15' : 'border-white/20'
+                                }`}>
                                     <ProgressiveShopImage
                                         src={shop.bannerImage}
                                         alt={shop.name}
@@ -384,33 +379,38 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                                         skeletonColor={isDayMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'}
                                     />
                                 </div>
-                                <div className={`flex-1 flex flex-col justify-between text-left min-w-0 ${isDayMode ? 'bg-slate-50/50' : 'bg-white/[0.04]'}`}>
+                                <div className={`flex-1 flex flex-col justify-between text-left min-w-0 ${isDayMode ? 'bg-white/45' : 'bg-white/[0.04]'}`}>
                                     <div className="space-y-1.5 overflow-hidden p-4 pb-2">
-                                        <h3 className={`font-[1000] text-[19px] shop-title-text uppercase tracking-tighter leading-none text-shadow-premium ${isDayMode ? 'text-slate-800' : 'text-white'}`}>{String(shop.name || '').replace(/\s*\(.*\)\s*/, '').split('-')[0].trim()}</h3>
-                                        <div className={`flex items-start gap-1 pb-1 shop-address-sub uppercase text-[10px] font-bold tracking-tight leading-snug overflow-hidden ${isDayMode ? 'text-slate-600' : 'text-white/80'}`}>
-                                            <MapPin size={12} strokeWidth={3} className={`flex-shrink-0 mt-0.5 ${isDayMode ? 'text-slate-500' : activeColors.pin}`} />
+                                        <h3 className={`font-[1000] text-[18px] shop-title-text uppercase tracking-tighter leading-none ${isDayMode ? 'text-[#5c4033]' : 'text-white text-shadow-premium'}`}>{String(shop.name || '').replace(/\s*\(.*\)\s*/, '').split('-')[0].trim()}</h3>
+                                        <div className={`flex items-start gap-1 pb-1 shop-address-sub uppercase text-[9px] font-black tracking-tight leading-snug overflow-hidden ${isDayMode ? 'text-[#7a6353]' : 'text-white/80'}`}>
+                                            <MapPin size={11} strokeWidth={3} className={`flex-shrink-0 mt-0.5 ${isDayMode ? 'text-[#855b3c]' : activeColors.pin}`} />
                                             <span className="break-words line-clamp-2">{shop.address}</span>
                                         </div>
                                         <div className="flex justify-between items-end mt-auto pt-1">
                                             <div className="flex flex-col gap-0.5 min-w-0 pr-2">
                                                 <div className="flex items-center gap-1">
-                                                    {[1, 2, 3, 4, 5].map(star => (<Star key={star} size={11} className={`${star <= Math.round(shop.rating) ? 'fill-yellow-400 text-yellow-400' : `fill-transparent ${isDayMode ? 'text-slate-300' : 'text-white/20'}`}`} />))}
+                                                    {[1, 2, 3, 4, 5].map(star => (<Star key={star} size={10} className={`${star <= Math.round(shop.rating) ? 'fill-yellow-400 text-yellow-400' : `fill-transparent ${isDayMode ? 'text-slate-300' : 'text-white/20'}`}`} />))}
                                                     <span className="text-[9px] font-bold text-yellow-400/80 ml-1">{shop.rating}</span>
                                                 </div>
-                                                {shop.specialty && <p className={`text-[8px] font-bold italic tracking-wide leading-tight line-clamp-1 ${isDayMode ? 'text-slate-500' : 'text-white/50'}`}>"{shop.specialty}"</p>}
+                                                {shop.specialty && <p className={`text-[8px] font-bold italic tracking-wide leading-tight line-clamp-1 ${isDayMode ? 'text-[#7a6353]/70' : 'text-white/50'}`}>"{shop.specialty}"</p>}
                                             </div>
-                                            <div className="flex items-center gap-1 flex-shrink-0 px-2 py-1 rounded-md border shadow-inner" style={{ backgroundColor: hexToRgba(themeColor, 0.2), borderColor: hexToRgba(themeColor, 0.3) }}>
-                                                <Eye size={12} style={{ color: themeColor }} />
-                                                <span className="text-[9px] font-black" style={{ color: themeColor }}>{shop.visits || 0} visitas</span>
+                                            <div className="flex items-center gap-1 flex-shrink-0 px-2 py-0.5 rounded-md border shadow-inner" style={{ 
+                                                backgroundColor: isDayMode ? 'rgba(88, 70, 50, 0.08)' : hexToRgba(themeColor, 0.2), 
+                                                borderColor: isDayMode ? 'rgba(88, 70, 50, 0.15)' : hexToRgba(themeColor, 0.3) 
+                                            }}>
+                                                <Eye size={11} style={{ color: isDayMode ? '#7a6353' : themeColor }} />
+                                                <span className="text-[9px] font-black" style={{ color: isDayMode ? '#5c4033' : themeColor }}>{shop.visits || 0} visitas</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="w-full flex justify-center py-3 px-4">
+                                    <div className="w-full flex justify-center py-2.5 px-4">
                                         <button
                                             onClick={() => { playNeonClick(); incrementarVisitas(shop.id); navigate(`/${townId}/${selectedCategory.slug}/${shop.slug || shop.id}`); }}
-                                            className="w-[90%] py-3 px-4 text-[10px] font-[1100] uppercase tracking-[0.2em] flex items-center justify-center gap-2 btn-ver-catalogo-3d"
+                                            className={`w-[90%] py-2.5 px-4 text-[9.5px] font-[1100] uppercase tracking-[0.2em] flex items-center justify-center gap-2 ${
+                                                isDayMode ? 'home-btn-3d' : 'btn-ver-catalogo-3d'
+                                            }`}
                                         >
-                                            <BookOpen size={16} strokeWidth={2.5} className={`${isDayMode ? 'text-cyan-950' : 'text-white'} drop-shadow-md`} />
+                                            <BookOpen size={14} strokeWidth={2.5} className={`${isDayMode ? 'text-[#7a6353]' : 'text-white'} drop-shadow-md`} />
                                             VER CATÁLOGO
                                         </button>
                                     </div>
@@ -418,31 +418,68 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                             </div>
                         ))
                     ) : (
-                        <div className={`py-12 px-6 text-center glass-card-3d rounded-3xl mt-4 ${isDayMode ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'}`}>
-                            <MapPin size={32} className={`mx-auto mb-3 ${isDayMode ? 'text-slate-300' : 'text-white/20'}`} />
-                            <p className={`text-[10px] sm:text-[11px] font-black uppercase tracking-widest leading-relaxed ${isDayMode ? 'text-slate-600' : 'text-white/50'}`}>No hay comercios adheridos <br/>en {activeLocation} para {selectedCategory?.name}</p>
+                        <div className={`py-12 px-6 text-center rounded-3xl mt-4 ${isDayMode ? 'home-glass-plate' : 'glass-card-3d bg-white/5 border-white/10'}`}>
+                            <MapPin size={32} className={`mx-auto mb-3 ${isDayMode ? 'text-[#855b3c]' : 'text-white/20'}`} />
+                            <p className={`text-[10px] sm:text-[11px] font-black uppercase tracking-widest leading-relaxed ${isDayMode ? 'text-[#5c4033]' : 'text-white/50'}`}>No hay comercios adheridos <br/>en {activeLocation} para {selectedCategory?.name}</p>
                         </div>
                     )}
                 </div>
 
                 <div className="w-full flex justify-center mb-8">
-                    <button onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }} className="w-max py-2.5 px-6 rounded-2xl flex items-center gap-2 btn-3d-celeste">
-                        <ArrowLeft size={16} style={isDayMode ? { color: '#083344' } : { color: themeColor }} />
+                    <button onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }} className={`w-max py-2.5 px-6 rounded-2xl flex items-center gap-2 ${
+                        isDayMode ? 'home-btn-3d' : 'btn-3d-celeste'
+                    }`}>
+                        <ArrowLeft size={16} style={isDayMode ? { color: '#7a6353' } : { color: themeColor }} />
                         <span className="text-[10px] font-[1100] uppercase tracking-widest">Regresar</span>
                     </button>
                 </div>
             </div>
 
-            <footer className="w-full flex flex-col items-center gap-2 pt-6 pb-6 mt-auto border-t border-cyan-500/20 relative z-10 bg-black/30 backdrop-blur-sm">
-                <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">© 2026 · ShopDigital</p>
-                <div className="flex items-center gap-4 mt-1">
-                    <p onClick={handleWalyClick} className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none cursor-pointer active:scale-95 transition-transform"
-                        style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}>
-                        {activeSubcategory || selectedCategory.name}
-                    </p>
-                    <span className="text-white/20 text-[8px]">|</span>
-                    <button onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }} className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors">Términos y Condiciones</button>
-                </div>
+            <footer className="w-full max-w-md mx-auto px-5 z-10 pt-4 pb-4 mt-auto relative">
+                {isDayMode ? (
+                    <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
+                        <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-2.5">
+                            <p 
+                                onClick={handleWalyClick}
+                                className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] select-none cursor-pointer active:scale-95 transition-transform" 
+                            >
+                                {activeSubcategory || selectedCategory.name}
+                            </p>
+                            <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
+                            >
+                                Términos
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="w-full flex flex-col items-center gap-2 pt-4 pb-4 border-t border-white/10">
+                        <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-4 mt-1">
+                            <p 
+                                onClick={handleWalyClick}
+                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none cursor-pointer active:scale-95 transition-transform" 
+                                style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}
+                            >
+                                {activeSubcategory || selectedCategory.name}
+                            </p>
+                            <span className="text-white/20 text-[8px]">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
+                            >
+                                Términos y Condiciones
+                            </button>
+                        </div>
+                    </div>
+                )}
             </footer>
         </div>
     );
