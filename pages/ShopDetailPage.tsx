@@ -361,9 +361,12 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         playNeonClick();
                         navigate(`${basePath}/${categorySlug}`);
                     }}
-                    className="absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-blanco-celeste active:scale-90 transition-all"
+                    className={`absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-2xl transition-all ${
+                        isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste active:scale-90'
+                    }`}
+                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
-                    <ArrowLeft size={18} style={{ color: '#0891b2' }} strokeWidth={3} />
+                    <ArrowLeft size={18} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
                 </button>
 
                 {/* Botón de alternancia de tema (Sol/Luna) premium */}
@@ -375,12 +378,15 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         localStorage.setItem('global_home_theme_mode', nextTheme);
                         window.dispatchEvent(new Event('theme-changed'));
                     }}
-                    className="absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-full btn-3d-blanco-celeste active:scale-90 transition-all"
+                    className={`absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-2xl transition-all ${
+                        isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste active:scale-90'
+                    }`}
+                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
                     {isDayMode ? (
                         <Moon 
                             size={16} 
-                            style={{ color: '#0891b2' }} 
+                            style={{ color: '#000000' }} 
                         />
                     ) : (
                         <Sun 
