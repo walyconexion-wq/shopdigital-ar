@@ -269,45 +269,39 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
             <div className="absolute top-20 left-[-10%] w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: hexToRgba(themeColor, 0.1) }} />
             <div className="absolute bottom-20 right-[-10%] w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: hexToRgba(themeColor, 0.1) }} />
             
-            {/* Botón de retroceso premium con estilo 3D y sombreado celeste de navegación */}
-            <button
-                onClick={() => {
-                    playNeonClick();
-                    navigate('/');
-                }}
-                className="absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
-            >
-                <ArrowLeft 
-                    size={16} 
-                    style={{ color: '#0891b2' }} 
-                />
-            </button>
+            {/* Panel de Telemetría (Subido a la parte superior absoluta donde estaban los botones) */}
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2.5rem)] max-w-[340px] px-3.5 py-1.5 rounded-2xl border text-[8.5px] font-black uppercase tracking-widest flex items-center justify-between backdrop-blur-md shadow-md bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]"
+                 style={isDayMode ? {} : { backgroundColor: 'rgba(15,23,42,0.6)', borderColor: 'rgba(34,211,238,0.2)' }}>
+                <div className="flex flex-col items-center flex-1">
+                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('HORA')}</span>
+                    <span className={`font-mono text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                        {currentTimeStr}
+                    </span>
+                </div>
+                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="flex flex-col items-center flex-1">
+                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('FECHA')}</span>
+                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                        {currentDateStr}
+                    </span>
+                </div>
+                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="flex flex-col items-center flex-1">
+                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('VISITAS')}</span>
+                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                        👁️ {globalConfig?.visits || 1}
+                    </span>
+                </div>
+                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="flex flex-col items-center flex-1">
+                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('CLIMA')}</span>
+                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                        {getWeatherEmoji(weatherCode)} {temp !== null ? `${temp}°C` : (weatherError ? '18°C' : '...')}
+                    </span>
+                </div>
+            </div>
 
-            {/* Botón de alternancia de tema (Sol/Luna) premium */}
-            <button
-                onClick={() => {
-                    playNeonClick();
-                    const current = localStorage.getItem('global_home_theme_mode') || 'light';
-                    const nextTheme = current === 'light' ? 'dark' : 'light';
-                    localStorage.setItem('global_home_theme_mode', nextTheme);
-                    window.dispatchEvent(new Event('theme-changed'));
-                }}
-                className="absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
-            >
-                {isDayMode ? (
-                    <Moon 
-                        size={16} 
-                        style={{ color: '#0891b2' }} 
-                    />
-                ) : (
-                    <Sun 
-                        size={16} 
-                        style={{ color: '#0891b2' }} 
-                    />
-                )}
-            </button>
-
-            <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-0 px-4 mb-2.5">
+            <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-12 px-4 mb-2.5">
                 <div 
                     onClick={handleLogoClick}
                     className={`rounded-3xl p-5 border backdrop-blur-md cursor-pointer active:scale-95 transition-all w-full text-center ${
@@ -328,39 +322,41 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
             <div className="flex flex-col items-center mb-10 mt-3 fade-up-item relative z-10 px-6">
                 <div className="h-[1px] w-20 mb-5" style={{ background: `linear-gradient(90deg, transparent, ${hexToRgba(themeColor, 0.5)}, transparent)` }}></div>
                 
-                {/* Panel de Telemetría (Subido arriba del título de la guía) */}
-                <div 
-                    className={`telemetry-widget mb-6 flex items-center justify-between w-full max-w-[340px] px-4 py-2.5 rounded-2xl border text-[9px] font-black uppercase tracking-widest relative overflow-hidden backdrop-blur-md shadow-lg ${
-                        isDayMode ? 'bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]' : ''
-                    }`}
-                >
-                    <div className="flex flex-col items-center flex-1">
-                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('HORA')}</span>
-                        <span className={`telemetry-widget-value font-mono text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
-                            {currentTimeStr}
-                        </span>
-                    </div>
-                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
-                    <div className="flex flex-col items-center flex-1">
-                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('FECHA')}</span>
-                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
-                            {currentDateStr}
-                        </span>
-                    </div>
-                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
-                    <div className="flex flex-col items-center flex-1">
-                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('VISITAS')}</span>
-                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
-                            👁️ {globalConfig?.visits || 1}
-                        </span>
-                    </div>
-                    <div className={`w-[1px] h-5 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
-                    <div className="flex flex-col items-center flex-1">
-                        <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6.5px] tracking-[0.25em] mb-0.5`}>{t('CLIMA')}</span>
-                        <span className={`telemetry-widget-value text-[10px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
-                            {getWeatherEmoji(weatherCode)} {temp !== null ? `${temp}°C` : (weatherError ? '18°C' : '...')}
-                        </span>
-                    </div>
+                {/* Botones de control (Retroceso / Clima) reubicados arriba del título Esteban Echeverría */}
+                <div className="flex items-center justify-between w-full max-w-[340px] mb-6 px-1 z-20">
+                    <button
+                        onClick={() => {
+                            playNeonClick();
+                            navigate('/');
+                        }}
+                        className="py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste text-[9.5px] font-[1000] uppercase tracking-wider text-cyan-900 gap-1.5 shadow-md flex-1 mr-3"
+                    >
+                        <ArrowLeft size={14} style={{ color: '#0891b2' }} />
+                        <span>Volver</span>
+                    </button>
+
+                    <button
+                        onClick={() => {
+                            playNeonClick();
+                            const current = localStorage.getItem('global_home_theme_mode') || 'light';
+                            const nextTheme = current === 'light' ? 'dark' : 'light';
+                            localStorage.setItem('global_home_theme_mode', nextTheme);
+                            window.dispatchEvent(new Event('theme-changed'));
+                        }}
+                        className="py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste text-[9.5px] font-[1000] uppercase tracking-wider text-cyan-900 gap-1.5 shadow-md flex-1"
+                    >
+                        {isDayMode ? (
+                            <>
+                                <Moon size={14} style={{ color: '#0891b2' }} />
+                                <span>Modo Noche</span>
+                            </>
+                        ) : (
+                            <>
+                                <Sun size={14} style={{ color: '#0891b2' }} />
+                                <span>Modo Día</span>
+                            </>
+                        )}
+                    </button>
                 </div>
 
                 {isDayMode ? null : (
