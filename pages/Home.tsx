@@ -310,8 +310,12 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
             <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-0 px-4 mb-2.5">
                 <div 
                     onClick={handleLogoClick}
-                    className="glass-header rounded-3xl p-5 border backdrop-blur-md cursor-pointer active:scale-95 transition-all w-full"
-                    style={{ 
+                    className={`rounded-3xl p-5 border backdrop-blur-md cursor-pointer active:scale-95 transition-all w-full text-center ${
+                        isDayMode 
+                            ? 'bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]' 
+                            : 'glass-header'
+                    }`}
+                    style={isDayMode ? {} : { 
                         borderColor: hexToRgba(themeColor, 0.5),
                         boxShadow: `0 15px 40px ${hexToRgba(themeColor, 0.4)}`,
                         background: `linear-gradient(135deg, ${hexToRgba(themeColor, 0.2)} 0%, rgba(15,23,42,0.6) 100%)`
