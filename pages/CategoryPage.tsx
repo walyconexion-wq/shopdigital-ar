@@ -196,49 +196,8 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                 </div>
             )}
 
-            {/* Botón de retroceso premium con estilo 3D y sombreado celeste de navegación */}
-            <button
-                onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                className={`absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center transition-all ${
-                    isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste'
-                }`}
-                style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
-            >
-                <ArrowLeft 
-                    size={16} 
-                    style={{ color: isDayMode ? '#000000' : '#0891b2' }} 
-                />
-            </button>
-
-            {/* Botón de alternancia de tema (Sol/Luna) premium */}
-            <button
-                onClick={() => {
-                    playNeonClick();
-                    const current = localStorage.getItem('global_home_theme_mode') || 'light';
-                    const nextTheme = current === 'light' ? 'dark' : 'light';
-                    localStorage.setItem('global_home_theme_mode', nextTheme);
-                    window.dispatchEvent(new Event('theme-changed'));
-                }}
-                className={`absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center transition-all ${
-                    isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste'
-                }`}
-                style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
-            >
-                {isDayMode ? (
-                    <Moon 
-                        size={16} 
-                        style={{ color: '#000000' }} 
-                    />
-                ) : (
-                    <Sun 
-                        size={16} 
-                        style={{ color: '#0891b2' }} 
-                    />
-                )}
-            </button>
-
             {/* ── Encabezado Principal de Categoría (Estilo Cartel de la Home) ── */}
-            <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-0 px-4 mb-2.5">
+            <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-4 px-4 mb-2.5">
                 <div
                     onClick={handleTitleClick}
                     className={`glass-header rounded-3xl p-5 border backdrop-blur-md cursor-pointer select-none active:translate-y-[4px] transition-all w-full text-center ${
@@ -262,7 +221,46 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                 </div>
             </header>
 
-            <div className="flex flex-col gap-8 px-2 pt-4 relative z-10">
+            <div className="flex flex-col gap-8 px-2 pt-2 relative z-10">
+                {/* Botones de control (Retroceso / Clima) en línea (estilo Interfaz 1) */}
+                <div className="flex items-center justify-between w-full max-w-[340px] mx-auto px-4 z-20">
+                    <button
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
+                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 mr-3 ${
+                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
+                        }`}
+                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    >
+                        <ArrowLeft size={14} style={{ color: isDayMode ? '#000000' : '#0891b2' }} />
+                        <span>Volver</span>
+                    </button>
+
+                    <button
+                        onClick={() => {
+                            playNeonClick();
+                            const current = localStorage.getItem('global_home_theme_mode') || 'light';
+                            const nextTheme = current === 'light' ? 'dark' : 'light';
+                            localStorage.setItem('global_home_theme_mode', nextTheme);
+                            window.dispatchEvent(new Event('theme-changed'));
+                        }}
+                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 ${
+                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
+                        }`}
+                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    >
+                        {isDayMode ? (
+                            <>
+                                <Moon size={14} style={{ color: '#000000' }} />
+                                <span>Modo Noche</span>
+                            </>
+                        ) : (
+                            <>
+                                <Sun size={14} style={{ color: '#0891b2' }} />
+                                <span>Modo Día</span>
+                            </>
+                        )}
+                    </button>
+                </div>
                 {globalConfig?.isChristmasMode && (
                     <div 
                         className="mt-4 w-[calc(100%-1rem)] max-w-[340px] mx-auto px-4 py-2.5 rounded-2xl border text-center relative overflow-hidden backdrop-blur-md animate-bounce-slow"
