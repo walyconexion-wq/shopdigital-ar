@@ -274,7 +274,7 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
 
                     <div className={`rounded-[2.5rem] p-8 space-y-8 shadow-2xl relative overflow-hidden border ${
                         isDayMode 
-                            ? 'bg-white/85 border-[#cbd5e1] border-b-[6px] border-b-[#cbd5e1]' 
+                            ? 'home-glass-plate border-white/40' 
                             : 'glass-card-3d bg-white/[0.02] border-white/10'
                     }`}>
                         <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl ${
@@ -285,9 +285,9 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                             <div className="group">
                                 <label className={`text-[9px] flex items-center gap-2 font-black uppercase tracking-[0.25em] mb-2 ml-1 transition-colors ${
                                     isDayMode 
-                                        ? 'text-[#5c4033]/60 group-focus-within:text-[#855b3c]' 
+                                        ? 'text-[#000000]/70 group-focus-within:text-[#000000]' 
                                         : 'text-white/30 group-focus-within:text-cyan-400'
-                                }`}>
+                                    }`}>
                                     <User size={12} /> Nombre y Apellido
                                 </label>
                                 <input
@@ -297,19 +297,19 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value.toUpperCase() })}
                                     className={`w-full border p-4 text-sm font-black rounded-2xl transition-all uppercase focus:outline-none ${
                                         isDayMode 
-                                            ? 'bg-[#faf8f5] text-[#2d1e15] border-[#cbd5e1] border-b-[4px] border-b-[#cbd5e1] focus:border-[#a88d75] focus:border-b-[#a88d75]' 
+                                            ? 'bg-white/45 text-black border-white/45 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7)] focus:bg-white/60 focus:border-[#5c4033]/40' 
                                             : 'bg-[#0b1329] text-white border-white/10 border-b-[4px] border-b-white/20 focus:border-cyan-400/50 focus:border-b-cyan-400/50'
                                     }`}
-                                    style={isDayMode ? { color: '#2d1e15', backgroundColor: '#faf8f5' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
+                                    style={isDayMode ? { color: '#000000', backgroundColor: 'rgba(255, 255, 255, 0.45)' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
                                 />
                             </div>
 
                             <div className="group">
                                 <label className={`text-[9px] flex items-center gap-2 font-black uppercase tracking-[0.25em] mb-2 ml-1 transition-colors ${
                                     isDayMode 
-                                        ? 'text-[#5c4033]/60 group-focus-within:text-[#855b3c]' 
+                                        ? 'text-[#000000]/70 group-focus-within:text-[#000000]' 
                                         : 'text-white/30 group-focus-within:text-cyan-400'
-                                }`}>
+                                    }`}>
                                     <Phone size={12} /> WhatsApp (Sin Ceros)
                                 </label>
                                 <input
@@ -320,19 +320,19 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                     className={`w-full border p-4 text-sm font-black rounded-2xl transition-all focus:outline-none ${
                                         isDayMode 
-                                            ? 'bg-[#faf8f5] text-[#2d1e15] border-[#cbd5e1] border-b-[4px] border-b-[#cbd5e1] focus:border-[#a88d75] focus:border-b-[#a88d75]' 
+                                            ? 'bg-white/45 text-black border-white/45 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7)] focus:bg-white/60 focus:border-[#5c4033]/40' 
                                             : 'bg-[#0b1329] text-white border-white/10 border-b-[4px] border-b-white/20 focus:border-cyan-400/50 focus:border-b-cyan-400/50'
                                     }`}
-                                    style={isDayMode ? { color: '#2d1e15', backgroundColor: '#faf8f5' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
+                                    style={isDayMode ? { color: '#000000', backgroundColor: 'rgba(255, 255, 255, 0.45)' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
                                 />
                             </div>
 
                             <div className="group">
                                 <label className={`text-[9px] flex items-center gap-2 font-black uppercase tracking-[0.25em] mb-2 ml-1 transition-colors ${
                                     isDayMode 
-                                        ? 'text-[#5c4033]/60 group-focus-within:text-[#855b3c]' 
+                                        ? 'text-[#000000]/70 group-focus-within:text-[#000000]' 
                                         : 'text-white/30 group-focus-within:text-cyan-400'
-                                }`}>
+                                    }`}>
                                     <Mail size={12} /> Correo Electrónico
                                 </label>
                                 <input
@@ -343,10 +343,10 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     className={`w-full border p-4 text-sm font-bold rounded-2xl transition-all focus:outline-none ${
                                         isDayMode 
-                                            ? 'bg-[#faf8f5] text-[#2d1e15] border-[#cbd5e1] border-b-[4px] border-b-[#cbd5e1] focus:border-[#a88d75] focus:border-b-[#a88d75]' 
+                                            ? 'bg-white/45 text-black border-white/45 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7)] focus:bg-white/60 focus:border-[#5c4033]/40' 
                                             : 'bg-[#0b1329] text-white border-white/10 border-b-[4px] border-b-white/20 focus:border-cyan-400/50 focus:border-b-cyan-400/50'
                                     }`}
-                                    style={isDayMode ? { color: '#2d1e15', backgroundColor: '#faf8f5' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
+                                    style={isDayMode ? { color: '#000000', backgroundColor: 'rgba(255, 255, 255, 0.45)' } : { color: '#ffffff', backgroundColor: '#0b1329' }}
                                 />
                             </div>
                         </div>
@@ -367,9 +367,10 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                             disabled={isSubmitting}
                             className={`w-full py-6 rounded-[2rem] flex flex-col items-center justify-center gap-2 font-[1000] uppercase tracking-[0.2em] text-[11px] border cursor-pointer transition-all ${
                                 isDayMode 
-                                    ? 'bg-gradient-to-b from-[#b58866] to-[#9c7151] hover:from-[#c29673] hover:to-[#a87c5b] text-white border-[#855b3c] border-b-[6px] border-b-[#734b2f] shadow-[0_10px_30px_rgba(140,90,50,0.2)] active:translate-y-[4px] active:border-b-[2px]' 
+                                    ? 'home-btn-3d text-white font-extrabold border-[#855b3c]' 
                                     : 'bg-cyan-600 hover:bg-cyan-500 text-white border-white/20 border-b-[6px] border-b-cyan-800 shadow-[0_10px_40px_rgba(34,211,238,0.2)] active:translate-y-[4px] active:border-b-[2px]'
                             } disabled:opacity-50`}
+                            style={isDayMode ? { backgroundColor: '#a5734e', borderBottomWidth: '6px', borderBottomColor: '#734b2f', textShadow: '0 1px 2px rgba(0,0,0,0.2)' } : {}}
                         >
                             {isSubmitting ? (
                                 <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
@@ -383,7 +384,7 @@ const ClientSubscriptionPage: React.FC<ClientSubscriptionPageProps> = ({ allShop
                         
                         <div className={`mt-8 p-4 rounded-2xl border text-center ${
                             isDayMode 
-                                ? 'bg-white/60 border-black/5' 
+                                ? 'home-glass-plate border-white/35 shadow-sm' 
                                 : 'bg-white/[0.03] border-white/5'
                         }`}>
                             <p className={`text-[7px] uppercase tracking-[0.4em] font-black leading-relaxed ${
