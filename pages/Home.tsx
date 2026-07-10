@@ -372,13 +372,16 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 )}
                 
                 <div className="flex items-center gap-3 mt-4">
-                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, transparent, ${hexToRgba(themeColor, 0.3)})` }}></div>
+                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, transparent, ${isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.3)})` }}></div>
                     <div className="flex gap-1.5">
-                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: hexToRgba(themeColor, 0.2) }}></div>
-                        <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: themeColor, boxShadow: `0 0 8px ${hexToRgba(themeColor, 0.6)}` }}></div>
-                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: hexToRgba(themeColor, 0.2) }}></div>
+                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.2) }}></div>
+                        <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ 
+                            backgroundColor: isDayMode ? '#c98858' : themeColor, 
+                            boxShadow: isDayMode ? '0 0 8px rgba(201, 136, 88, 0.8)' : `0 0 8px ${hexToRgba(themeColor, 0.6)}` 
+                        }}></div>
+                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.2) }}></div>
                     </div>
-                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, ${hexToRgba(themeColor, 0.3)}, transparent)` }}></div>
+                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, ${isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.3)}, transparent)` }}></div>
                 </div>
 
                 {/* Botones de Navegación Buenos Aires Sur (Estilo Blanco, Letras Celestes, Sombreado 3D) */}
