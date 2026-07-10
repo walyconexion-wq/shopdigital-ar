@@ -621,7 +621,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 </div>
             </div>
 
-            <div className="mt-8 mb-4 px-10 flex flex-col gap-4.5 justify-center items-center w-full max-w-[380px] mx-auto fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
+            <div className="mt-8 mb-4 px-10 flex flex-col gap-3.5 justify-center items-center w-full max-w-[310px] mx-auto fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/subscripcion`); }}
                     className={`relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 border ${
@@ -629,7 +629,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     }`}
                     style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
-                    <Store size={16} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
+                    <Store size={16} style={{ color: isDayMode ? '#47def6' : '#0891b2' }} strokeWidth={3} />
                     <span>{t('Suscribir Comercio')}</span>
                 </button>
 
@@ -640,7 +640,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     }`}
                     style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
-                    <Share2 size={15} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
+                    <Share2 size={15} style={{ color: isDayMode ? '#47def6' : '#0891b2' }} strokeWidth={3} />
                     <span>Compartir App</span>
                 </button>
             </div>
