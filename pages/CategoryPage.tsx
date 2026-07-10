@@ -199,11 +199,14 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
             {/* Botón de retroceso premium con estilo 3D y sombreado celeste de navegación */}
             <button
                 onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                className="absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
+                className={`absolute left-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center transition-all ${
+                    isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste'
+                }`}
+                style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
             >
                 <ArrowLeft 
                     size={16} 
-                    style={{ color: '#0891b2' }} 
+                    style={{ color: isDayMode ? '#000000' : '#0891b2' }} 
                 />
             </button>
 
@@ -216,12 +219,15 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                     localStorage.setItem('global_home_theme_mode', nextTheme);
                     window.dispatchEvent(new Event('theme-changed'));
                 }}
-                className="absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste"
+                className={`absolute right-4 top-6 z-30 p-3.5 rounded-2xl cursor-pointer flex items-center justify-center transition-all ${
+                    isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste'
+                }`}
+                style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
             >
                 {isDayMode ? (
                     <Moon 
                         size={16} 
-                        style={{ color: '#0891b2' }} 
+                        style={{ color: '#000000' }} 
                     />
                 ) : (
                     <Sun 
@@ -338,7 +344,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                                             setActiveSubcategory(prev => prev === sub ? '' : sub); 
                                         }}
                                         className={btnClass}
-                                        style={btnStyle}
+                                        style={isDayMode ? { borderBottomWidth: isActive ? '1px' : '4px', borderBottomColor: '#cda488', color: isActive ? '#5c4033' : '#000000' } : btnStyle}
                                     >
                                         {sub}
                                     </button>
@@ -406,11 +412,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                                     <div className="w-full flex justify-center py-2.5 px-4">
                                         <button
                                             onClick={() => { playNeonClick(); incrementarVisitas(shop.id); navigate(`/${townId}/${selectedCategory.slug}/${shop.slug || shop.id}`); }}
-                                            className={`w-[90%] py-2.5 px-4 text-[9.5px] font-[1100] uppercase tracking-[0.2em] flex items-center justify-center gap-2 ${
-                                                isDayMode ? 'home-btn-3d' : 'btn-ver-catalogo-3d'
+                                            className={`w-[90%] py-2.5 px-4 text-[9.5px] font-[1100] uppercase tracking-[0.2em] flex items-center justify-center gap-2 border ${
+                                                isDayMode ? 'home-btn-3d text-black' : 'btn-ver-catalogo-3d'
                                             }`}
+                                            style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                                         >
-                                            <BookOpen size={14} strokeWidth={2.5} className={`${isDayMode ? 'text-[#7a6353]' : 'text-white'} drop-shadow-md`} />
+                                            <BookOpen size={14} strokeWidth={2.5} className={`${isDayMode ? 'text-[#47def6]' : 'text-white'} drop-shadow-md`} />
                                             VER CATÁLOGO
                                         </button>
                                     </div>
@@ -426,10 +433,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
                 </div>
 
                 <div className="w-full flex justify-center mb-8">
-                    <button onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }} className={`w-max py-2.5 px-6 rounded-2xl flex items-center gap-2 ${
-                        isDayMode ? 'home-btn-3d' : 'btn-3d-celeste'
-                    }`}>
-                        <ArrowLeft size={16} style={isDayMode ? { color: '#7a6353' } : { color: themeColor }} />
+                    <button onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }} className={`w-max py-2.5 px-6 rounded-2xl flex items-center gap-2 border ${
+                        isDayMode ? 'home-btn-3d text-black' : 'btn-3d-celeste'
+                    }`}
+                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    >
+                        <ArrowLeft size={16} style={isDayMode ? { color: '#000000' } : { color: themeColor }} />
                         <span className="text-[10px] font-[1100] uppercase tracking-widest">Regresar</span>
                     </button>
                 </div>
