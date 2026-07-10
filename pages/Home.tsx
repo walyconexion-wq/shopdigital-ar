@@ -329,9 +329,12 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                             playNeonClick();
                             navigate('/');
                         }}
-                        className="py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste text-[9.5px] font-[1000] uppercase tracking-wider text-cyan-900 gap-1.5 shadow-md flex-1 mr-3"
+                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 mr-3 ${
+                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
+                        }`}
+                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                     >
-                        <ArrowLeft size={14} style={{ color: '#0891b2' }} />
+                        <ArrowLeft size={14} style={{ color: isDayMode ? '#000000' : '#0891b2' }} />
                         <span>Volver</span>
                     </button>
 
@@ -343,11 +346,14 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                             localStorage.setItem('global_home_theme_mode', nextTheme);
                             window.dispatchEvent(new Event('theme-changed'));
                         }}
-                        className="py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center btn-3d-blanco-celeste text-[9.5px] font-[1000] uppercase tracking-wider text-cyan-900 gap-1.5 shadow-md flex-1"
+                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 ${
+                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
+                        }`}
+                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                     >
                         {isDayMode ? (
                             <>
-                                <Moon size={14} style={{ color: '#0891b2' }} />
+                                <Moon size={14} style={{ color: '#000000' }} />
                                 <span>Modo Noche</span>
                             </>
                         ) : (
@@ -398,8 +404,11 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                             }
                                         }}
                                         className={`relative py-2.5 px-0.5 rounded-xl text-[8px] font-black uppercase tracking-wider text-center transition-all ${
-                                            isActive ? 'btn-3d-blanco-celeste active' : 'btn-3d-blanco-celeste'
+                                            isDayMode 
+                                                ? (isActive ? 'home-btn-3d-active border text-amber-950 font-black shadow-md scale-105' : 'home-btn-3d border text-black/75') 
+                                                : (isActive ? 'btn-3d-blanco-celeste active' : 'btn-3d-blanco-celeste')
                                         }`}
+                                        style={isDayMode ? { borderBottomWidth: isActive ? '1px' : '4px', borderBottomColor: '#cda488' } : {}}
                                     >
                                         {item.label}
                                     </button>
@@ -418,10 +427,10 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
 
                                 // Clases para Modo Día vs Modo Noche (con paddings compactos y texto en 1 línea)
                                 const btnClass = isDayMode
-                                    ? `px-1 py-2.5 rounded-xl text-[7.5px] font-[1000] uppercase tracking-wider transition-all duration-150 active:translate-y-[2px] text-center whitespace-nowrap overflow-hidden ${
+                                    ? `px-1 py-2.5 rounded-xl text-[7.5px] font-[1000] uppercase tracking-wider transition-all duration-150 active:translate-y-[2px] text-center whitespace-nowrap overflow-hidden home-btn-3d border ${
                                         isActive 
-                                            ? 'border-sky-400 bg-sky-500/20 text-sky-950 scale-105 shadow-[0_0_12px_rgba(14,165,233,0.3)]' 
-                                            : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:-translate-y-[1.5px]'
+                                            ? 'home-btn-3d-active text-amber-950 scale-105' 
+                                            : 'text-black/75 hover:-translate-y-[1.5px]'
                                       }`
                                     : `px-1 py-2 rounded-xl border transition-all duration-300 text-[7.5px] font-black uppercase tracking-wider text-center whitespace-nowrap overflow-hidden ${
                                         isActive
@@ -433,19 +442,16 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                 const btnStyle = isDayMode
                                     ? (isActive 
                                         ? {
-                                            borderWidth: '1.5px',
-                                            borderBottomWidth: '1.5px',
-                                            borderBottomColor: themeColor,
-                                            boxShadow: `0 0 12px ${hexToRgba(themeColor, 0.4)}, inset 0 1px 0 rgba(255,255,255,0.4)`,
-                                            transform: 'translateY(2px)',
-                                            color: themeColor,
+                                            borderWidth: '1px',
+                                            borderBottomWidth: '1px',
+                                            borderBottomColor: '#cda488',
+                                            color: '#5c4033',
                                             fontWeight: '1000'
                                           }
                                         : {
                                             borderWidth: '1px',
                                             borderBottomWidth: '4px',
                                             borderBottomColor: '#cda488',
-                                            boxShadow: '0 4px 8px rgba(88, 70, 50, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95)'
                                           }
                                       )
                                     : (isActive 
@@ -516,10 +522,10 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
 
                                 // Clases para Modo Día vs Modo Noche
                                 const btnClass = isDayMode
-                                    ? `px-4 py-2.5 rounded-full text-[8.5px] font-[1000] uppercase tracking-widest transition-all duration-150 active:translate-y-[2px] ${
+                                    ? `px-4 py-2.5 rounded-full text-[8.5px] font-[1000] uppercase tracking-widest transition-all duration-150 active:translate-y-[2px] home-btn-3d border ${
                                         isActive 
-                                            ? 'border-sky-400 bg-sky-500/20 text-sky-950 scale-105 shadow-[0_0_15px_rgba(14,165,233,0.3)]' 
-                                            : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:-translate-y-[1.5px]'
+                                            ? 'home-btn-3d-active text-amber-950 scale-105' 
+                                            : 'text-black/75 hover:-translate-y-[1.5px]'
                                       }`
                                     : `px-4 py-2 rounded-full border transition-all duration-300 text-[8.5px] font-black uppercase tracking-widest ${
                                         isActive
@@ -531,17 +537,14 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                 const btnStyle = isDayMode
                                     ? (isActive 
                                         ? {
-                                            borderWidth: '1.5px',
-                                            borderBottomWidth: '1.5px',
-                                            borderBottomColor: '#0ea5e9',
-                                            boxShadow: `0 0 15px ${hexToRgba(themeColor, 0.4)}, inset 0 1px 0 rgba(255,255,255,0.4)`,
-                                            transform: 'translateY(2px)'
+                                            borderWidth: '1px',
+                                            borderBottomWidth: '1px',
+                                            borderBottomColor: '#cda488',
                                           }
                                         : {
                                             borderWidth: '1px',
                                             borderBottomWidth: '4px',
-                                            borderBottomColor: '#cda488', // Relieve color arcilla/champagne
-                                            boxShadow: '0 6px 12px rgba(88, 70, 50, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95)'
+                                            borderBottomColor: '#cda488',
                                           }
                                       )
                                     : (isActive 
@@ -618,17 +621,23 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
             <div className="mt-8 mb-4 px-10 flex flex-col gap-4.5 justify-center items-center w-full max-w-[380px] mx-auto fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/subscripcion`); }}
-                    className="relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
+                    className={`relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 border ${
+                        isDayMode ? 'home-btn-3d text-black' : 'btn-3d-esmerilado'
+                    }`}
+                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
-                    <Store size={16} style={{ color: '#0891b2' }} strokeWidth={3} />
+                    <Store size={16} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
                     <span>{t('Suscribir Comercio')}</span>
                 </button>
 
                 <button
                     onClick={handleShare}
-                    className="relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 btn-3d-esmerilado"
+                    className={`relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 border ${
+                        isDayMode ? 'home-btn-3d text-black' : 'btn-3d-esmerilado'
+                    }`}
+                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
                 >
-                    <Share2 size={15} style={{ color: '#0891b2' }} strokeWidth={3} />
+                    <Share2 size={15} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
                     <span>Compartir App</span>
                 </button>
             </div>
