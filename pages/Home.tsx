@@ -607,7 +607,7 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                 }`}
                                 style={btnStyle}
                             >
-                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#000000' : themeColor }}>
+                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#47def6' : themeColor }}>
                                     {cat.iconKey ? resolveIcon(cat.iconKey) : cat.icon}
                                 </div>
                                 <span className={`text-[8px] text-center font-[1000] uppercase leading-[1.1] tracking-[0.01em] px-0.5 group-hover:text-amber-950 transition-colors ${
