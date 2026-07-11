@@ -1,3 +1,4 @@
+// ShopDetailPage — Interfaz 3: Catálogo de comercio con estilo White Tech Glassmorphism
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Shop, ProductOffer } from '../types';
