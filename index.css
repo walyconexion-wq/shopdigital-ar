@@ -1,6 +1,68 @@
 /* Index Styles */
 /* All main styles are currently inline in index.html */
 
+:root {
+  --bg-main: linear-gradient(135deg, #f3f6f9 0%, #ebf0f5 100%);
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(16px) saturate(120%);
+  --card-radius: 24px;
+  --button-radius: 50px; /* Estilo pastilla perfecto */
+  
+  /* Sombras para el efecto de relieve 3D */
+  --shadow-soft-3d: 
+    0 8px 32px 0 rgba(165, 180, 200, 0.2),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.70),
+    inset 0 -2px 4px 0 rgba(150, 165, 185, 0.15);
+    
+  --shadow-btn-3d: 
+    0 6px 16px 0 rgba(165, 180, 200, 0.25),
+    inset 0 3px 6px rgba(255, 255, 255, 0.8),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.04);
+}
+
+.glass-section-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft-3d);
+  padding: 20px;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+}
+
+.glass-button-3d {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--button-radius);
+  box-shadow: var(--shadow-btn-3d);
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efecto Hover e Interacción */
+.glass-button-3d:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 20px 0 rgba(165, 180, 200, 0.35);
+}
+
+.glass-button-3d:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* ═══════════════════════════════════════════ */
 /* 🖼️ PROGRESSIVE IMAGE — Skeleton & Shimmer */
 /* ═══════════════════════════════════════════ */
