@@ -310,9 +310,18 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
     return (
         <div 
-          className={`pb-24 animate-in fade-in duration-700 min-h-screen relative ${wallpaperClass} ${isDayMode ? 'day-mode bg-gradient-to-b from-[#f3f6f9] to-[#ebf0f5] text-slate-800' : 'bg-[#060d1a] text-white'}`}
+          className={`pb-24 animate-in fade-in duration-700 min-h-screen relative ${wallpaperClass} ${isDayMode ? 'day-mode bg-gradient-to-b from-[#f3f6f9] to-[#ebf0f5] glass-text-main' : 'bg-[#060d1a] text-white'}`}
           style={isCustomColor ? { backgroundColor: selectedShop.customBackground } : {}}
         >
+            {/* Dynamic Glassmorphism Background Blobs (Day Mode Only) */}
+            {isDayMode && (
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                    <div className="absolute top-[-5%] left-[-20%] w-[70vw] h-[70vw] rounded-full bg-cyan-300/40 mix-blend-multiply filter blur-[80px] opacity-80" />
+                    <div className="absolute top-[20%] right-[-20%] w-[60vw] h-[60vw] rounded-full bg-blue-400/30 mix-blend-multiply filter blur-[100px] opacity-70" />
+                    <div className="absolute bottom-[-5%] left-[10%] w-[80vw] h-[80vw] rounded-full bg-indigo-300/30 mix-blend-multiply filter blur-[120px] opacity-60" />
+                    <div className="absolute top-[60%] right-[10%] w-[50vw] h-[50vw] rounded-full bg-teal-200/30 mix-blend-multiply filter blur-[90px] opacity-70" />
+                </div>
+            )}
 
             {/* OVERLAY ESTACIONAL - particulas flotantes */}
             {activeSeason && (
@@ -471,7 +480,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 navigate(`${basePath}/${categorySlug}/${shopSlug}/menu`);
                             }}
                             className={`w-full py-4 flex items-center justify-center gap-3 font-[1100] uppercase tracking-[0.25em] text-[10px] ${
-                                isDayMode ? 'glass-button-3d text-black' : 'text-white btn-3d-celeste'
+                                isDayMode ? 'glass-button-3d' : 'text-white btn-3d-celeste'
                             }`}
                             style={isDayMode ? { 
                                 background: 'rgba(255, 255, 255, 0.65)', 
@@ -527,10 +536,10 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                         </div>
                                         <div className="px-1 pb-1 text-center pointer-events-none">
                                             <p className={`text-[10px] font-black uppercase tracking-tight mb-3.5 line-clamp-1 ${
-                                                isDayMode ? 'text-slate-800' : 'text-white'
+                                                isDayMode ? 'glass-text-main' : 'text-white'
                                             }`}>{offer.name}</p>
                                             <div className={`py-2 px-3 rounded-xl border ${
-                                                isDayMode ? 'bg-white/45 border-white/60 text-slate-800 shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
+                                                isDayMode ? 'bg-white/45 border-white/60 glass-text-main shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
                                             }`}>
                                                 <span className="text-[12.5px] font-black drop-shadow-sm">$ {offer.price.toLocaleString('es-AR')}</span>
                                             </div>
@@ -574,8 +583,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         isDayMode ? 'glass-section-card' : 'rounded-[2rem] p-5 bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
                     }>
                         <div className="flex items-center gap-2 mb-5">
-                            <MessageCircle size={14} className={isDayMode ? 'text-slate-800/60' : 'text-white/60'} />
-                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'text-slate-800' : 'text-white/80'}`}>Canales de Atención</h3>
+                            <MessageCircle size={14} className={isDayMode ? 'glass-text-main/60' : 'text-white/60'} />
+                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>Canales de Atención</h3>
                         </div>
                         <div className="grid grid-cols-3 gap-3">
                             <button onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
@@ -609,7 +618,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
                         }}
                         className={`w-full py-4 flex items-center justify-center gap-3 ${
-                            isDayMode ? 'glass-button-3d text-black' : 'btn-3d-celeste text-white'
+                            isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
                         }`}
                         style={isDayMode ? { 
                             background: 'rgba(255, 255, 255, 0.65)', 
@@ -628,8 +637,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         isDayMode ? 'glass-section-card' : 'rounded-[2rem] p-5 bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
                     }>
                         <div className="flex items-center gap-2 mb-5">
-                            <MapPin size={14} className={isDayMode ? 'text-slate-800/60' : 'text-white/60'} />
-                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'text-slate-800' : 'text-white/80'}`}>Dónde Encontrarnos</h3>
+                            <MapPin size={14} className={isDayMode ? 'glass-text-main/60' : 'text-white/60'} />
+                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>Dónde Encontrarnos</h3>
                         </div>
                         
                         <div className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
@@ -649,7 +658,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         </div>
 
                         <p className={`text-[8px] text-center font-bold uppercase tracking-widest mb-5 ${
-                            isDayMode ? 'text-slate-800' : ''
+                            isDayMode ? 'glass-text-main' : ''
                         }`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor, 0.6)})` }}>
                             {selectedShop.address}
                         </p>
@@ -658,7 +667,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'google_maps' }); handleOpenLink(selectedShop.mapSheetUrl || '#'); }} 
                                 className={`py-3 flex items-center justify-center gap-2 ${
-                                    isDayMode ? 'glass-button-3d text-black' : 'btn-3d-celeste text-white'
+                                    isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
                                 }`}
                                 style={isDayMode ? { 
                                     background: 'rgba(255, 255, 255, 0.65)', 
@@ -672,7 +681,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'uber' }); handleOpenLink('https://m.uber.com/ul/'); }} 
                                 className={`py-3 flex items-center justify-center gap-2 ${
-                                    isDayMode ? 'glass-button-3d text-black' : 'btn-3d-celeste text-white'
+                                    isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
                                 }`}
                                 style={isDayMode ? { 
                                     background: 'rgba(255, 255, 255, 0.65)', 
@@ -708,8 +717,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
                                 isDayMode ? 'bg-white/45 border border-white/60 shadow-sm' : 'bg-black/40 border border-white/20'
                             }`}>
-                                <Music size={16} className={isDayMode ? 'text-slate-800' : 'text-white'} strokeWidth={2.5} />
-                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-slate-800' : 'text-white/80'}`}>TikTok</span>
+                                <Music size={16} className={isDayMode ? 'glass-text-main' : 'text-white'} strokeWidth={2.5} />
+                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>TikTok</span>
                             </button>
                         </div>
                         <button onClick={handleShare} className={`py-3 rounded-[1rem] flex items-center justify-center gap-2 active:scale-95 transition-transform mt-2 ${
@@ -732,7 +741,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 : lockClicks >= 2 
                                 ? 'opacity-30'
                                 : 'opacity-15'
-                            } ${isDayMode ? 'text-slate-800' : 'text-white'}`}>
+                            } ${isDayMode ? 'glass-text-main' : 'text-white'}`}>
                                 <Lock size={lockClicks >= 4 ? 14 : 10} className="transition-all duration-300" />
                                 <span className={`font-bold uppercase tracking-widest transition-all duration-300 ${lockClicks >= 4 ? 'text-[9px]' : 'text-[7px]'}`}>Gestión</span>
                             </button>
@@ -744,7 +753,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 <div className="w-full px-5 mb-14 flex flex-col items-center">
                     <div className="flex items-center gap-2 mb-6">
                         <ImageIcon size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'text-slate-800' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
+                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
                         {broadcasts.length > 0 && (
                             <div className="badge-en-vivo flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5 ml-2">
                                 <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
@@ -832,7 +841,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 <div className="w-full px-5 mb-14 flex flex-col items-center">
                     <div className="flex items-center gap-2 mb-6">
                         <MessageSquare size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'text-slate-800' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
+                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
                     </div>
 
                     {/* Review List */}
@@ -852,15 +861,15 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             }`} style={isDayMode ? {} : { backgroundColor: hexToRgba(themeColor, 0.05), borderColor: hexToRgba(themeColor, 0.2) }}>
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 blur-2xl rounded-full" />
                                 <div className="flex justify-between items-center w-full relative z-10">
-                                    <span className={`text-[10px] font-black uppercase tracking-wider ${isDayMode ? 'text-slate-800' : 'text-white'}`}>{review.authorName}</span>
+                                    <span className={`text-[10px] font-black uppercase tracking-wider ${isDayMode ? 'glass-text-main' : 'text-white'}`}>{review.authorName}</span>
                                     <div className="flex gap-0.5">
                                         {[...Array(5)].map((_, i) => (
                                             <Star key={i} size={10} className={i < review.rating ? "text-yellow-400 fill-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.6)]" : `fill-transparent ${isDayMode ? 'text-slate-300' : 'text-white/20'}`} />
                                         ))}
                                     </div>
                                 </div>
-                                <p className={`text-[9.5px] italic leading-relaxed relative z-10 ${isDayMode ? 'text-slate-700' : 'text-white/70'}`}>"{review.text}"</p>
-                                <span className={`text-[7.5px] font-black uppercase tracking-[0.2em] mt-1 relative z-10 ${isDayMode ? 'text-slate-800/60' : 'text-cyan-500/60'}`}>{review.date}</span>
+                                <p className={`text-[9.5px] italic leading-relaxed relative z-10 ${isDayMode ? 'glass-text-muted' : 'text-white/70'}`}>"{review.text}"</p>
+                                <span className={`text-[7.5px] font-black uppercase tracking-[0.2em] mt-1 relative z-10 ${isDayMode ? 'glass-text-main/60' : 'text-cyan-500/60'}`}>{review.date}</span>
                             </div>
                         ))}
                     </div>
@@ -871,7 +880,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             navigate(`${basePath}/${categorySlug}`);
                         }} 
                         className={`w-max py-3 px-8 rounded-full flex items-center gap-2 ${
-                            isDayMode ? 'glass-button-3d text-black' : 'btn-3d-celeste text-white'
+                            isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
                         }`}
                         style={isDayMode ? { 
                             background: 'rgba(255, 255, 255, 0.65)', 
