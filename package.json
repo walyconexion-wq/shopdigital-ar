@@ -13,7 +13,6 @@
   "dependencies": {
     "@ai-sdk/google": "3.0.83",
     "ai": "6.0.208",
-    "eve": "^0.11.6",
     "firebase": "^11.10.0",
     "lucide-react": "^0.460.0",
     "qrcode.react": "^4.2.0",
