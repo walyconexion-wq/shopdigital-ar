@@ -472,82 +472,87 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
             <div className="relative z-10 flex flex-col items-center">
 
                 {/* ---------- CATÁLOGO DE OFERTAS ---------- */}
-                <div ref={catalogRef} className="w-full mb-14 mt-2">
-                    <div className="w-full px-5 mb-6 flex flex-col items-center">
+                <div ref={catalogRef} className="w-full mb-14 mt-2 px-4">
+                    <div className={`w-full rounded-[2rem] pt-5 pb-3 flex flex-col relative ${
+                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
+                    }`}>
+                        {/* Título de la Sección */}
+                        <h2 className={`text-[11px] font-[1000] uppercase tracking-widest mb-4 ml-3 ${
+                            isDayMode ? 'glass-text-main' : 'text-white'
+                        }`}>
+                            Nuestro Catálogo
+                        </h2>
+
+                        <div className="w-full relative px-2">
+                            <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
+                            <div 
+                                className="flex gap-4 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
+                                style={{ contain: 'layout style', willChange: 'scroll-position' }}
+                                ref={offersCarouselRef}
+                                onTouchStart={() => isTouchingRef.current = true}
+                                onTouchEnd={() => { setTimeout(() => isTouchingRef.current = false, 2000) }}
+                                onMouseEnter={() => isTouchingRef.current = true}
+                                onMouseLeave={() => isTouchingRef.current = false}
+                            >
+                                {selectedShop.offers.map((offer, idx) => {
+                                    // Badges Dinámicos sugeridos por Gemy
+                                    const badgeType = idx % 3;
+                                    const badgeProps = badgeType === 0 
+                                        ? { text: '🔥 HOT', bg: 'bg-orange-500/90', shadow: 'shadow-[0_0_10px_rgba(249,115,22,0.8)]' }
+                                        : badgeType === 1 
+                                        ? { text: '✨ NUEVO', bg: 'bg-green-500/90', shadow: 'shadow-[0_0_10px_rgba(34,197,94,0.8)]' }
+                                        : { text: '⚡ HOY', bg: 'bg-rose-500/90', shadow: 'shadow-[0_0_10px_rgba(244,63,94,0.8)]' };
+
+                                    return (
+                                        <div key={`${offer.id}-${idx}`} className={`flex-shrink-0 w-40 p-3 flex flex-col relative group snap-center cursor-pointer ${
+                                            isDayMode 
+                                                ? 'bg-white/40 border border-white/50 shadow-sm rounded-[1.5rem]' 
+                                                : 'glass-card-3d offer-card-neon'
+                                        }`} onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
+                                            <div className={`rounded-xl overflow-hidden aspect-square mb-3 border shadow-md relative ${
+                                                isDayMode ? 'border-white/60' : 'border-white/20'
+                                            }`}>
+                                                <ProgressiveShopImage
+                                                    src={offer.image}
+                                                    alt={offer.name}
+                                                    className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none"
+                                                    priority={idx < 6}
+                                                    skeletonColor="rgba(255,255,255,0.05)"
+                                                />
+                                                {/* Dynamic Badge */}
+                                                <div className={`absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-1 rounded-full uppercase backdrop-blur-md ${badgeProps.bg} ${badgeProps.shadow} border border-white/20 pointer-events-none z-10`}>
+                                                    {badgeProps.text}
+                                                </div>
+                                            </div>
+                                            <div className="px-1 pb-1 text-center pointer-events-none">
+                                                <p className={`text-[10px] font-black uppercase tracking-tight mb-2.5 line-clamp-1 ${
+                                                    isDayMode ? 'glass-text-main' : 'text-white'
+                                                }`}>{offer.name}</p>
+                                                <div className={`py-1.5 px-3 rounded-lg border ${
+                                                    isDayMode ? 'bg-white/60 border-white/80 glass-text-main shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
+                                                }`}>
+                                                    <span className="text-[12px] font-black drop-shadow-sm">$ {offer.price.toLocaleString('es-AR')}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Botón de Abrir Catálogo movido a la base del contenedor */}
                         <button
                             onClick={() => {
                                 playNeonClick();
                                 navigate(`${basePath}/${categorySlug}/${shopSlug}/menu`);
                             }}
-                            className={`w-full py-4 flex items-center justify-center gap-3 font-[1100] uppercase tracking-[0.25em] text-[10px] ${
-                                isDayMode ? 'glass-button-3d' : 'text-white btn-3d-celeste'
+                            className={`py-3.5 flex items-center justify-center gap-2.5 font-[1100] uppercase tracking-[0.2em] text-[10px] btn-open-catalog ${
+                                isDayMode ? 'glass-text-main transition-transform active:scale-95' : 'text-white btn-3d-celeste'
                             }`}
-                            style={isDayMode ? { 
-                                background: 'rgba(255, 255, 255, 0.65)', 
-                                border: '1px solid rgba(255, 255, 255, 0.85)',
-                                color: '#00C2FF'
-                            } : {}}
                         >
-                            <ShoppingBag size={16} style={{ color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
+                            <ShoppingBag size={15} style={isDayMode ? { color: '#0891b2' } : { color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
                             <span className={isDayMode ? "" : "text-shadow-premium"}>Abrir Catálogo Completo</span>
                         </button>
-                    </div>
-
-                    <div className="w-full relative">
-                        <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
-                        <div 
-                            className="flex gap-4 px-4 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
-                            style={{ contain: 'layout style', willChange: 'scroll-position' }}
-                            ref={offersCarouselRef}
-                            onTouchStart={() => isTouchingRef.current = true}
-                            onTouchEnd={() => { setTimeout(() => isTouchingRef.current = false, 2000) }}
-                            onMouseEnter={() => isTouchingRef.current = true}
-                            onMouseLeave={() => isTouchingRef.current = false}
-                        >
-                            {selectedShop.offers.map((offer, idx) => {
-                                // Badges Dinámicos sugeridos por Gemy
-                                const badgeType = idx % 3;
-                                const badgeProps = badgeType === 0 
-                                    ? { text: '🔥 HOT', bg: 'bg-orange-500/90', shadow: 'shadow-[0_0_10px_rgba(249,115,22,0.8)]' }
-                                    : badgeType === 1 
-                                    ? { text: '✨ NUEVO', bg: 'bg-green-500/90', shadow: 'shadow-[0_0_10px_rgba(34,197,94,0.8)]' }
-                                    : { text: '⚡ HOY', bg: 'bg-rose-500/90', shadow: 'shadow-[0_0_10px_rgba(244,63,94,0.8)]' };
-
-                                return (
-                                    <div key={`${offer.id}-${idx}`} className={`flex-shrink-0 w-44 p-3.5 flex flex-col relative group snap-center cursor-pointer ${
-                                        isDayMode 
-                                            ? 'glass-section-card' 
-                                            : 'glass-card-3d offer-card-neon'
-                                    }`} onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
-                                        <div className={`rounded-2xl overflow-hidden aspect-square mb-3.5 border shadow-xl relative ${
-                                            isDayMode ? 'border-white/40' : 'border-white/20'
-                                        }`}>
-                                            <ProgressiveShopImage
-                                                src={offer.image}
-                                                alt={offer.name}
-                                                className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none"
-                                                priority={idx < 6}
-                                                skeletonColor="rgba(255,255,255,0.05)"
-                                            />
-                                            {/* Dynamic Badge */}
-                                            <div className={`absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-1 rounded-full uppercase backdrop-blur-md ${badgeProps.bg} ${badgeProps.shadow} border border-white/20 pointer-events-none z-10`}>
-                                                {badgeProps.text}
-                                            </div>
-                                        </div>
-                                        <div className="px-1 pb-1 text-center pointer-events-none">
-                                            <p className={`text-[10px] font-black uppercase tracking-tight mb-3.5 line-clamp-1 ${
-                                                isDayMode ? 'glass-text-main' : 'text-white'
-                                            }`}>{offer.name}</p>
-                                            <div className={`py-2 px-3 rounded-xl border ${
-                                                isDayMode ? 'bg-white/45 border-white/60 glass-text-main shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
-                                            }`}>
-                                                <span className="text-[12.5px] font-black drop-shadow-sm">$ {offer.price.toLocaleString('es-AR')}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
                     </div>
                 </div>
 
