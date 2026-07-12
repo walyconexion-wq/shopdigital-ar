@@ -94,7 +94,7 @@
 
 .glass-text-muted {
   color: #5C6A75 !important; /* Para subtítulos o fechas */
-}}
+}
 
 /* ═══════════════════════════════════════════ */
 /* 🖼️ PROGRESSIVE IMAGE — Skeleton & Shimmer */
@@ -1237,7 +1237,7 @@
 }
 
 .home-btn-3d:hover {
-  top: -2px !important;
+  transform: translateY(-2px) !important;
   background: rgba(255, 255, 255, 0.95) !important;
   color: #5c4033 !important;
   border-color: rgba(255, 255, 255, 0.9) !important;
@@ -1248,7 +1248,7 @@
 }
 
 .home-btn-3d:active {
-  top: 3px !important;
+  transform: translateY(3px) !important;
   box-shadow: 
     inset 0 2px 4px rgba(160, 131, 108, 0.25),
     inset 0 -1px 2px rgba(255, 255, 255, 0.8),
@@ -1294,12 +1294,11 @@
     0 6px 12px rgba(6, 182, 212, 0.1),
     inset 0 1.5px 0 rgba(255, 255, 255, 0.95) !important;
   transition: all 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  top: 0 !important;
   transform: translateY(0) !important;
 }
 
 .btn-3d-blanco-celeste:hover {
-  top: -2px !important;
+  transform: translateY(-2px) !important;
   border-bottom-width: 7px !important;
   border-bottom-color: #0e7490 !important;
   box-shadow: 
@@ -1308,7 +1307,7 @@
 }
 
 .btn-3d-blanco-celeste:active {
-  top: 3.5px !important;
+  transform: translateY(3.5px) !important;
   border-bottom-width: 1.5px !important;
   border-bottom-color: #0891b2 !important;
   box-shadow: 
@@ -1325,7 +1324,6 @@
     inset 0 3px 8px rgba(6, 182, 212, 0.18),
     0 2px 4px rgba(6, 182, 212, 0.05) !important;
   transform: translateY(3.5px) !important;
-  top: 0 !important;
 }
 
 .btn-3d-celeste {
