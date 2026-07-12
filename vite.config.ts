@@ -27,7 +27,7 @@ export default defineConfig({
           if (id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')) {
             return 'vendor-firebase';
           }
-          // ── Enterprise + Admin panels (merged to avoid circular deps) ──────
+          // ── Enterprise, Admin panels & Management (merged to avoid circular deps) ──────
           if (
             id.includes('/pages/Enterprise') ||
             id.includes('/pages/Factory') ||
@@ -38,16 +38,7 @@ export default defineConfig({
             id.includes('AmbassadorRecruitment') ||
             id.includes('AcademyPage') ||
             id.includes('ShopMasterPanelPage') ||
-            id.includes('MarketingPanelPage')
-          ) {
-            return 'chunk-admin';
-          }
-          // ── Búnkers de comando ───────────────────────────────────────────
-          if (id.includes('BunkerPage') || id.includes('bunker-waly') || id.includes('BroadcastPage')) {
-            return 'chunk-bunkers';
-          }
-          // ── Gestión de datos ─────────────────────────────────────────────
-          if (
+            id.includes('MarketingPanelPage') ||
             id.includes('ManagementPage') ||
             id.includes('BillingManagement') ||
             id.includes('InvoiceViewer') ||
@@ -56,7 +47,11 @@ export default defineConfig({
             id.includes('OfferForm') ||
             id.includes('OfferManagement')
           ) {
-            return 'chunk-management';
+            return 'chunk-admin';
+          }
+          // ── Búnkers de comando ───────────────────────────────────────────
+          if (id.includes('BunkerPage') || id.includes('bunker-waly') || id.includes('BroadcastPage')) {
+            return 'chunk-bunkers';
           }
           // ── Credenciales y cliente VIP ───────────────────────────────────
           if (
