@@ -615,25 +615,42 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 </div>
 
                 {/* ---------- CREDENCIAL VIP PREMIUM ---------- */}
-                <div className="w-full px-5 mb-14">
-                    <button
-                        onClick={() => {
-                            playNeonClick();
-                            logEvento('click_vip_access', selectedShop.id);
-                            navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
-                        }}
-                        className={`w-full py-4 flex items-center justify-center gap-3 ${
-                            isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
-                        }`}
-                        style={isDayMode ? { 
-                            background: 'rgba(255, 255, 255, 0.65)', 
-                            border: '1px solid rgba(255, 255, 255, 0.85)',
-                            color: '#00C2FF'
-                        } : {}}
-                    >
-                        <Star size={16} style={{ color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
-                        <span className="text-[10px] font-[1100] uppercase tracking-[0.25em]">Obtener Credencial VIP</span>
-                    </button>
+                <div className="w-full px-4 mb-14">
+                    <div className={`w-full rounded-[2.5rem] pt-8 pb-6 px-6 flex flex-col relative items-center text-center ${
+                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
+                    }`}>
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 blur-3xl rounded-full pointer-events-none" />
+                        
+                        <div className="w-28 h-28 mb-4 relative z-10 drop-shadow-2xl">
+                            {/* Avatar image - Using the provided 3D assistant /luz-avatar.png (or fallback to an existing avatar if not present) */}
+                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]" onError={(e) => { e.currentTarget.src = 'https://cdn3d.iconscout.com/3d/premium/thumb/customer-service-girl-4885375-4074213.png' }} />
+                        </div>
+                        
+                        <h3 className={`text-[13px] font-[1000] uppercase tracking-widest mb-2 z-10 ${
+                            isDayMode ? 'glass-text-main' : 'text-white'
+                        }`}>
+                            Club de Beneficios VIP
+                        </h3>
+                        <p className={`text-[11px] mb-6 leading-relaxed z-10 px-2 ${
+                            isDayMode ? 'glass-text-muted font-medium' : 'text-white/70'
+                        }`}>
+                            Suscribite ahora para desbloquear descuentos y promociones exclusivas.
+                        </p>
+
+                        <button
+                            onClick={() => {
+                                playNeonClick();
+                                logEvento('click_vip_access', selectedShop.id);
+                                navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
+                            }}
+                            className={`w-full py-4 flex items-center justify-center gap-3 font-[1100] uppercase tracking-[0.2em] text-[10px] z-10 transition-transform active:scale-95 ${
+                                isDayMode ? 'glass-button-3d text-slate-700' : 'btn-3d-celeste text-white'
+                            }`}
+                        >
+                            <Star size={16} className={isDayMode ? 'text-slate-700' : 'text-[#00C2FF] drop-shadow-[0_0_3px_rgba(0,194,255,0.6)]'} strokeWidth={3} />
+                            <span className={isDayMode ? "" : "text-shadow-premium"}>Obtener Credencial VIP</span>
+                        </button>
+                    </div>
                 </div>
 
                 {/* ---------- MÓDULO DE UBICACIÓN ---------- */}
