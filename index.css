@@ -1231,8 +1231,6 @@
     /* Sombra proyectada suave 3D */
     0 6px 12px rgba(88, 70, 50, 0.14) !important;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  position: relative !important;
-  top: 0 !important;
   transform: translateY(0) !important;
 }
 
@@ -1268,8 +1266,6 @@
     /* Brillo Neón Naranja/Caramelo exterior */
     0 0 16px rgba(201, 136, 88, 0.45),
     0 8px 18px rgba(201, 136, 88, 0.25) !important;
-  position: relative !important;
-  top: 0 !important;
 }
 
 /* Animación Flotante de Modelo */
