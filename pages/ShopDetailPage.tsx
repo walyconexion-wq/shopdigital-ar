@@ -25,7 +25,9 @@ import {
     Heart,
     Image as ImageIcon,
     Sun,
-    Moon
+    Moon,
+    Camera,
+    ShieldCheck
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { playNeonClick } from '../utils/audio';
@@ -63,6 +65,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const isTouchingRef = useRef(false);
     const [selectedOfferForModal, setSelectedOfferForModal] = useState<ProductOffer | null>(null);
     const [selectedMuroItemForModal, setSelectedMuroItemForModal] = useState<any | null>(null);
+    const [currentReviewSlide, setCurrentReviewSlide] = useState(0);
+    const reviewTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const { user, login } = useAuth();
     const [lockClicks, setLockClicks] = useState(0);
     const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -198,6 +202,24 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
         }, 5000);
         return () => { if (slideTimerRef.current) clearInterval(slideTimerRef.current); };
     }, [muroItems.length]);
+
+    // Mock reviews con fotos de clientes
+    const mockReviews = useMemo(() => [
+        { id: '1', authorName: 'Carlos M.', rating: 5, text: 'Vinimos en familia a cenar y fue espectacular. Los chicos se divirtieron, la comida increíble. ¡Volvemos seguro!', date: '12/07/2026 - 19:30hs', imageUrl: 'https://images.unsplash.com/photo-1529543544282-ea99407407c1?w=600&h=750&fit=crop' },
+        { id: '2', authorName: 'Laura G.', rating: 5, text: 'Pedimos delivery y llegó todo perfecto, calentito y bien presentado. Un lujo tener este servicio en la zona.', date: '10/07/2026 - 21:15hs', imageUrl: 'https://images.unsplash.com/photo-1545987796-200d7e8b5fa9?w=600&h=750&fit=crop' },
+        { id: '3', authorName: 'Diego F.', rating: 4, text: '¡Increíble la calidad! Se nota la dedicación en cada plato. Las cervezas artesanales son un golazo.', date: '08/07/2026 - 20:45hs', imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=750&fit=crop' },
+        { id: '4', authorName: 'Sofía R.', rating: 5, text: 'Festejamos el cumple de mi nena acá y fue todo soñado. La atención personalizada, la torta perfecta. ¡Gracias!', date: '05/07/2026 - 18:00hs', imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=750&fit=crop' },
+        { id: '5', authorName: 'Martín P.', rating: 5, text: 'Almuerzo ejecutivo de 10. Rápido, abundante y a muy buen precio. Lo recomiendo para la hora del laburo.', date: '03/07/2026 - 13:20hs', imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=750&fit=crop' }
+    ], []);
+
+    // Auto-slideshow para reviews cada 6 segundos
+    useEffect(() => {
+        if (mockReviews.length <= 1) return;
+        reviewTimerRef.current = setInterval(() => {
+            setCurrentReviewSlide(prev => (prev + 1) % mockReviews.length);
+        }, 6000);
+        return () => { if (reviewTimerRef.current) clearInterval(reviewTimerRef.current); };
+    }, [mockReviews.length]);
 
     const handleLikeFeed = async () => {
         if (hasLikedFeed || !selectedShop) return;
@@ -896,43 +918,107 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
 
-                {/* ---------- REVIEWS AND RATING SECTION ---------- */}
-                <div className="w-full px-5 mb-14 flex flex-col items-center">
-                    <div className="flex items-center gap-2 mb-6">
-                        <MessageSquare size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
-                    </div>
+                {/* ---------- OPINIONES DE CLIENTES (CARRUSEL DINÁMICO) ---------- */}
+                <div className="w-full px-4 mb-14">
+                    <div className={`w-full rounded-[2.5rem] pt-6 pb-5 px-3 flex flex-col relative ${
+                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
+                    }`}>
+                        {/* Título */}
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                            <MessageSquare size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
+                            <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
+                        </div>
 
-                    {/* Review List */}
-                    <div className="flex flex-col gap-3 w-full mb-6 relative">
-                        {/* Decorative glow behind reviews */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 blur-3xl rounded-full pointer-events-none" style={{ backgroundColor: hexToRgba(themeColor, 0.05) }} />
-                        
-                        {(selectedShop.reviews || [
-                            { id: '1', authorName: 'Carlos M.', rating: 5, text: 'Excelente atención y los productos de primera calidad. Vuelvo seguro. Recomendado al 100%.', date: 'Hace 2 días' },
-                            { id: '2', authorName: 'Laura G.', rating: 5, text: 'Muy buen servicio, llegó todo rapidísimo y caliente. Un lujo tener algo así en la zona.', date: 'Hace 1 semana' },
-                            { id: '3', authorName: 'Diego F.', rating: 4, text: '¡Increíble la calidad! Se nota que le ponen mucha dedicación a lo que hacen.', date: 'Hace 2 semanas' }
-                        ]).slice(0, 5).map((review) => (
-                            <div key={review.id} className={`backdrop-blur-sm border rounded-[1.25rem] p-4 flex flex-col gap-2 relative overflow-hidden ${
-                                isDayMode 
-                                    ? 'glass-section-card shadow-sm border-white/40' 
-                                    : 'glass-card-3d bg-white/5 border-white/10'
-                            }`} style={isDayMode ? {} : { backgroundColor: hexToRgba(themeColor, 0.05), borderColor: hexToRgba(themeColor, 0.2) }}>
-                                <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 blur-2xl rounded-full" />
-                                <div className="flex justify-between items-center w-full relative z-10">
-                                    <span className={`text-[10px] font-black uppercase tracking-wider ${isDayMode ? 'glass-text-main' : 'text-white'}`}>{review.authorName}</span>
-                                    <div className="flex gap-0.5">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={10} className={i < review.rating ? "text-yellow-400 fill-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.6)]" : `fill-transparent ${isDayMode ? 'text-slate-300' : 'text-white/20'}`} />
-                                        ))}
-                                    </div>
+                        {/* Carrusel de Reseñas con Fotos */}
+                        <div className={`w-full aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden relative border isolate bg-zinc-900 group ${
+                            isDayMode ? 'border-white/40 shadow-lg' : ''
+                        }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
+                            {/* Foto del cliente como fondo */}
+                            <img
+                                key={`review-img-${currentReviewSlide}`}
+                                src={mockReviews[currentReviewSlide]?.imageUrl}
+                                alt={`Reseña de ${mockReviews[currentReviewSlide]?.authorName}`}
+                                className="w-full h-full object-cover muro-fade-in"
+                                loading="lazy"
+                            />
+
+                            {/* Overlay con datos de la reseña */}
+                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent pt-24 pb-8 px-6 z-20 flex flex-col items-start text-left">
+                                {/* Estrellas */}
+                                <div className="flex gap-1 mb-2">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} size={14} className={i < mockReviews[currentReviewSlide]?.rating ? 'text-yellow-400 fill-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.7)]' : 'text-white/20 fill-transparent'} />
+                                    ))}
                                 </div>
-                                <p className={`text-[9.5px] italic leading-relaxed relative z-10 ${isDayMode ? 'glass-text-muted' : 'text-white/70'}`}>"{review.text}"</p>
-                                <span className={`text-[7.5px] font-black uppercase tracking-[0.2em] mt-1 relative z-10 ${isDayMode ? 'glass-text-main/60' : 'text-cyan-500/60'}`}>{review.date}</span>
+                                {/* Nombre */}
+                                <h4 className="text-white font-[1000] text-[15px] uppercase tracking-widest mb-1 drop-shadow-md">
+                                    {mockReviews[currentReviewSlide]?.authorName}
+                                </h4>
+                                {/* Texto de la reseña */}
+                                <p className="text-white/85 font-medium text-[12px] leading-relaxed italic line-clamp-3 mb-2 drop-shadow">
+                                    "{mockReviews[currentReviewSlide]?.text}"
+                                </p>
+                                {/* Fecha y hora */}
+                                <span className="text-white/50 text-[9px] font-black uppercase tracking-[0.25em]">
+                                    📅 {mockReviews[currentReviewSlide]?.date}
+                                </span>
                             </div>
-                        ))}
-                    </div>
 
+                            {/* Dots de paginación */}
+                            {mockReviews.length > 1 && (
+                                <div className="absolute top-4 right-4 flex gap-1.5 pointer-events-none z-20">
+                                    {mockReviews.map((_, i) => (
+                                        <div key={i} className={`rounded-full backdrop-blur-md shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-500 ${
+                                            i === currentReviewSlide
+                                            ? 'w-4 h-1.5 bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.6)]'
+                                            : 'w-1.5 h-1.5 bg-white/30'
+                                        }`}></div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Badge "Verificado" */}
+                            <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 bg-green-500/20 border border-green-400/40 rounded-full px-3 py-1.5 backdrop-blur-md shadow-lg">
+                                <ShieldCheck size={12} className="text-green-400" />
+                                <span className="text-[8px] font-black text-green-400 uppercase tracking-widest">Cliente Verificado</span>
+                            </div>
+                        </div>
+
+                        {/* Botón Dejar tu comentario */}
+                        <button
+                            onClick={() => {
+                                playNeonClick();
+                                if (!user) {
+                                    alert('📋 Para dejar tu opinión y foto, primero debés suscribirte como cliente desde la sección Credencial VIP.');
+                                    return;
+                                }
+                                alert('📸 ¡Gracias por querer compartir tu experiencia! Próximamente podrás subir tu foto y comentario.');
+                            }}
+                            className={`w-full mt-4 py-3.5 px-6 rounded-full backdrop-blur-md border text-[10px] font-[1000] uppercase tracking-widest flex items-center justify-center gap-2.5 transition-all active:scale-95 shadow-lg ${
+                                isDayMode
+                                ? 'bg-white/40 border-white/70 text-slate-700 hover:bg-white/60'
+                                : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                            }`}
+                        >
+                            <Camera size={16} /> Dejar tu comentario
+                        </button>
+
+                        {/* Aviso de moderación */}
+                        <div className={`mt-3 rounded-2xl p-3.5 flex items-start gap-3 ${
+                            isDayMode ? 'bg-sky-50/60 border border-sky-200/50' : 'bg-white/5 border border-white/10'
+                        }`}>
+                            <ShieldCheck size={18} className={isDayMode ? 'text-sky-500 flex-shrink-0 mt-0.5' : 'text-cyan-400 flex-shrink-0 mt-0.5'} />
+                            <p className={`text-[8.5px] leading-relaxed ${
+                                isDayMode ? 'text-slate-500' : 'text-white/50'
+                            }`}>
+                                <strong className={isDayMode ? 'text-slate-700' : 'text-white/70'}>Moderado por Ari & Eve.</strong> Todas las fotos y comentarios son revisados antes de publicarse. No se permite contenido ofensivo, obsceno o inapropiado. Para comentar debes estar suscripto como cliente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Botón Regresar */}
+                <div className="w-full px-5 mb-14 flex justify-center">
                     <button 
                         onClick={() => {
                             playNeonClick();
