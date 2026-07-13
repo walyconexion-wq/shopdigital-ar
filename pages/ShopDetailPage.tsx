@@ -27,7 +27,13 @@ import {
     Sun,
     Moon,
     Camera,
-    ShieldCheck
+    ShieldCheck,
+    Gamepad2,
+    Sparkles,
+    Palette,
+    Play,
+    HelpCircle,
+    Puzzle
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { playNeonClick } from '../utils/audio';
@@ -914,6 +920,189 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                     </span>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ---------- 🎈 ZONA KIDS ---------- */}
+                <div className="w-full px-4 mb-14">
+                    <div className={`w-full rounded-[2.5rem] pt-6 pb-5 px-3 flex flex-col relative overflow-hidden ${
+                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
+                    }`}>
+                        {/* Globos decorativos flotantes */}
+                        <div className="absolute -top-4 -left-2 w-10 h-12 rounded-full bg-red-400/30 blur-sm animate-bounce" style={{ animationDuration: '3s', animationDelay: '0s' }} />
+                        <div className="absolute -top-2 right-8 w-8 h-10 rounded-full bg-yellow-400/30 blur-sm animate-bounce" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+                        <div className="absolute top-6 -right-1 w-9 h-11 rounded-full bg-green-400/25 blur-sm animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }} />
+                        <div className="absolute top-20 left-4 w-7 h-9 rounded-full bg-purple-400/20 blur-sm animate-bounce" style={{ animationDuration: '4.5s', animationDelay: '2s' }} />
+                        <div className="absolute bottom-12 right-4 w-8 h-10 rounded-full bg-pink-400/25 blur-sm animate-bounce" style={{ animationDuration: '3.2s', animationDelay: '1.5s' }} />
+                        <div className="absolute bottom-4 left-10 w-6 h-8 rounded-full bg-cyan-400/20 blur-sm animate-bounce" style={{ animationDuration: '5s', animationDelay: '0.8s' }} />
+
+                        {/* Título */}
+                        <div className="flex items-center justify-center gap-2.5 mb-5 relative z-10">
+                            <span className="text-[22px]">🎈</span>
+                            <h3 className={`font-[1000] text-[13px] uppercase tracking-[0.3em] ${
+                                isDayMode ? 'glass-text-main' : ''
+                            }`} style={isDayMode ? {} : { 
+                                background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #FF6BCB)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                filter: 'drop-shadow(0 0 8px rgba(255,107,107,0.4))'
+                            }}>Zona Kids</h3>
+                            <span className="text-[22px]">🎈</span>
+                        </div>
+
+                        {/* Subtítulo */}
+                        <p className={`text-center text-[10px] font-bold mb-5 relative z-10 ${
+                            isDayMode ? 'text-slate-500' : 'text-white/50'
+                        }`}>
+                            🎉 ¡Diversión asegurada mientras la familia disfruta! 🎉
+                        </p>
+
+                        {/* Grid de actividades */}
+                        <div className="grid grid-cols-2 gap-3 relative z-10">
+                            {/* Card 1: Juegos */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('🎮 ¡Próximamente! Estamos preparando juegos increíbles.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #FF6B6B22, #FF6B6B08)',
+                                    borderColor: 'rgba(255,107,107,0.3)',
+                                    boxShadow: '0 4px 20px rgba(255,107,107,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-red-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-red-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <Gamepad2 size={24} className="text-red-400 drop-shadow-[0_0_6px_rgba(255,107,107,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-red-500' : 'text-red-400'
+                                }`}>Juegos</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>Mini-juegos divertidos para toda la familia</span>
+                            </button>
+
+                            {/* Card 2: Adivinanzas */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('🧩 ¡Próximamente! Adivinanzas geniales en camino.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #FFD93D22, #FFD93D08)',
+                                    borderColor: 'rgba(255,217,61,0.3)',
+                                    boxShadow: '0 4px 20px rgba(255,217,61,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-yellow-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <HelpCircle size={24} className="text-yellow-400 drop-shadow-[0_0_6px_rgba(255,217,61,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-yellow-600' : 'text-yellow-400'
+                                }`}>Adivinanzas</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>Desafíos para pensar y divertirse</span>
+                            </button>
+
+                            {/* Card 3: Videos */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('🎬 ¡Próximamente! Videos divertidos y educativos.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #6BCB7722, #6BCB7708)',
+                                    borderColor: 'rgba(107,203,119,0.3)',
+                                    boxShadow: '0 4px 20px rgba(107,203,119,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-green-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <Play size={24} className="text-green-400 drop-shadow-[0_0_6px_rgba(107,203,119,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-green-600' : 'text-green-400'
+                                }`}>Videos</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>Contenido divertido y seguro para ver</span>
+                            </button>
+
+                            {/* Card 4: Colorear */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('🎨 ¡Próximamente! Dibujos para colorear y crear.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #4D96FF22, #4D96FF08)',
+                                    borderColor: 'rgba(77,150,255,0.3)',
+                                    boxShadow: '0 4px 20px rgba(77,150,255,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-blue-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <Palette size={24} className="text-blue-400 drop-shadow-[0_0_6px_rgba(77,150,255,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-blue-600' : 'text-blue-400'
+                                }`}>Colorear</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>Dibujá y pintá con tu imaginación</span>
+                            </button>
+
+                            {/* Card 5: Cartas / Memoria */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('🃏 ¡Próximamente! Juego de memoria y cartas.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #FF6BCB22, #FF6BCB08)',
+                                    borderColor: 'rgba(255,107,203,0.3)',
+                                    boxShadow: '0 4px 20px rgba(255,107,203,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-pink-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-pink-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <Puzzle size={24} className="text-pink-400 drop-shadow-[0_0_6px_rgba(255,107,203,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-pink-600' : 'text-pink-400'
+                                }`}>Memoria</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>Encontrá los pares y ganá puntos</span>
+                            </button>
+
+                            {/* Card 6: Sorpresas / Más */}
+                            <button
+                                onClick={() => { playNeonClick(); alert('✨ ¡Más sorpresas en camino! Seguí explorando.'); }}
+                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
+                                style={{
+                                    background: 'linear-gradient(135deg, #A855F722, #A855F708)',
+                                    borderColor: 'rgba(168,85,247,0.3)',
+                                    boxShadow: '0 4px 20px rgba(168,85,247,0.1)'
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-2xl bg-purple-400/20 flex items-center justify-center shadow-md relative z-10">
+                                    <Sparkles size={24} className="text-purple-400 drop-shadow-[0_0_6px_rgba(168,85,247,0.6)]" />
+                                </div>
+                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
+                                    isDayMode ? 'text-purple-600' : 'text-purple-400'
+                                }`}>Sorpresas</span>
+                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
+                                    isDayMode ? 'text-slate-400' : 'text-white/40'
+                                }`}>¡Próximamente más diversión!</span>
+                            </button>
+                        </div>
+
+                        {/* Nota para padres */}
+                        <div className={`mt-4 rounded-2xl p-3.5 flex items-start gap-3 relative z-10 ${
+                            isDayMode ? 'bg-amber-50/60 border border-amber-200/50' : 'bg-white/5 border border-white/10'
+                        }`}>
+                            <ShieldCheck size={18} className={isDayMode ? 'text-amber-500 flex-shrink-0 mt-0.5' : 'text-yellow-400 flex-shrink-0 mt-0.5'} />
+                            <p className={`text-[8.5px] leading-relaxed ${
+                                isDayMode ? 'text-slate-500' : 'text-white/50'
+                            }`}>
+                                <strong className={isDayMode ? 'text-slate-700' : 'text-white/70'}>Contenido seguro para toda la familia.</strong> Todas las actividades son supervisadas y moderadas por nuestro equipo. Diversión sin preocupaciones. 🎈
+                            </p>
                         </div>
                     </div>
                 </div>
