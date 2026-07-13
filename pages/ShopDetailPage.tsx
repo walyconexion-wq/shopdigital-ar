@@ -621,9 +621,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     }`}>
                         <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 blur-3xl rounded-full pointer-events-none" />
                         
-                        <div className="w-28 h-28 mb-4 relative z-10 drop-shadow-2xl">
-                            {/* Avatar image - Using the provided 3D assistant /luz-avatar.png (or fallback to an existing avatar if not present) */}
-                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]" onError={(e) => { e.currentTarget.src = 'https://cdn3d.iconscout.com/3d/premium/thumb/customer-service-girl-4885375-4074213.png' }} />
+                        <div className="w-32 h-44 mb-2 relative z-10 drop-shadow-2xl">
+                            {/* Avatar image - Using the provided 3D assistant /luz-avatar.png */}
+                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]" />
                         </div>
                         
                         <h3 className={`text-[13px] font-[1000] uppercase tracking-widest mb-2 z-10 ${
