@@ -1229,6 +1229,47 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
             </div>
 
+            {/* PIE DE PÁGINA (Footer) — Términos y Condiciones */}
+            <footer className="w-full max-w-md mx-auto px-5 z-10 pt-4 pb-4 mt-auto relative">
+                {isDayMode ? (
+                    <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
+                        <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-2.5">
+                            <p className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] select-none">
+                                {selectedShop?.name?.split('-')[0]?.trim() || 'Catálogo'}
+                            </p>
+                            <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
+                            >
+                                Términos
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="w-full flex flex-col items-center gap-2 pt-4 pb-4 border-t border-white/10">
+                        <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-4 mt-1">
+                            <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none" style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}>
+                                {selectedShop?.name?.split('-')[0]?.trim() || 'Catálogo'}
+                            </p>
+                            <span className="text-white/20 text-[8px]">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
+                            >
+                                Términos y Condiciones
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </footer>
+
             {/* Modal de Oferta (Fase 4) */}
             {selectedOfferForModal && (
                 <div className="fixed inset-0 z-[1000] flex items-end justify-center p-4 animate-in fade-in duration-300">
