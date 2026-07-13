@@ -105,20 +105,25 @@
       gap: 0.75rem;
     }
 
+    /* ✅ FIX MOBILE SCROLL: opacity-0 base eliminado para evitar el bug de
+       elementos que desaparecen al scrollear en Android. La animación solo
+       ocurre al montar el componente (animation-fill-mode: both + forwards) */
     .fade-up-item {
-      animation: fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      opacity: 0;
+      animation: fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
+      will-change: opacity, transform;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(12px) translateZ(0);
       }
-
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) translateZ(0);
       }
     }
 

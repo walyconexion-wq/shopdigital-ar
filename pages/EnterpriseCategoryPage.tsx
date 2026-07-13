@@ -307,7 +307,7 @@ const EnterpriseCategoryPage: React.FC<EnterpriseCategoryPageProps> = ({ allShop
                             <div
                                 key={enterprise.id}
                                 style={{ 
-                                    animationDelay: `${index * 80}ms`, 
+                                    animationDelay: `${Math.min(index * 40, 200)}ms`, 
                                     borderBottomWidth: '5px', 
                                     borderBottomColor: isDayMode ? 'rgba(8, 145, 178, 0.45)' : hexToRgba(primaryColor, 0.3) 
                                 }}

@@ -367,7 +367,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
 
                     {groupedShops[activeLocation] && groupedShops[activeLocation].length > 0 ? (
                         groupedShops[activeLocation].map((shop, index) => (
-                            <div key={shop.id} style={{ animationDelay: `${index * 80}ms` }} className={`overflow-hidden flex flex-row cursor-default fade-up-item w-full items-stretch h-[170px] ${
+                            <div key={shop.id} style={{ animationDelay: `${Math.min(index * 40, 200)}ms` }} className={`overflow-hidden flex flex-row cursor-default fade-up-item w-full items-stretch h-[170px] ${
                                 isDayMode 
                                     ? 'home-glass-plate rounded-[2rem] border' 
                                     : `glass-card-3d ${activeColors.card} border-r border-white/20`
