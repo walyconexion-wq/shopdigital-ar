@@ -62,6 +62,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const offersTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const isTouchingRef = useRef(false);
     const [selectedOfferForModal, setSelectedOfferForModal] = useState<ProductOffer | null>(null);
+    const [selectedMuroItemForModal, setSelectedMuroItemForModal] = useState<any | null>(null);
     const { user, login } = useAuth();
     const [lockClicks, setLockClicks] = useState(0);
     const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -146,11 +147,19 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
     // Mezclar feed local + broadcasts globales
     const muroItems = useMemo(() => {
-        const localItems = feedGallery.map(url => ({
+        const mockAds = [
+            { title: 'Menú del Día', desc: '¡Aprovechá nuestro menú ejecutivo a un precio súper especial!' },
+            { title: 'Promo Cervezas', desc: 'Llevate 2x1 en tus bebidas favoritas durante todo el finde.' },
+            { title: 'Recital de Axel', desc: 'Show en vivo en Lomas este sábado. ¡Reservá tu mesa ahora!' },
+            { title: 'Novedades', desc: 'Descubrí lo nuevo que tenemos para vos en nuestro local.' }
+        ];
+
+        const localItems = feedGallery.map((url, idx) => ({
             url,
             type: /\.(mp4|webm|mov)($|\?)/i.test(url) ? 'video' as const : 'image' as const,
             isBroadcast: false,
-            title: ''
+            title: mockAds[idx % mockAds.length].title,
+            description: mockAds[idx % mockAds.length].desc
         }));
         // Filtrar broadcasts por categoría del comercio
         const shopCategory = selectedShop?.category?.toLowerCase() || '';
@@ -772,89 +781,117 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 </div>
 
                 {/* ---------- 📺 MURO VIVO (FEED DINÁMICO) ---------- */}
-                <div className="w-full px-5 mb-14 flex flex-col items-center">
-                    <div className="flex items-center gap-2 mb-6">
-                        <ImageIcon size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                        <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
-                        {broadcasts.length > 0 && (
-                            <div className="badge-en-vivo flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5 ml-2">
-                                <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                                <div className="w-2 h-2 rounded-full bg-red-500 absolute" />
-                                <span className="text-[7px] font-black text-red-400 uppercase tracking-widest">En Vivo</span>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className={`w-full aspect-square md:aspect-video rounded-[1.7rem] overflow-hidden relative border isolate bg-zinc-900 group ${
-                        isDayMode ? 'border-white/40 shadow-lg' : ''
-                    }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
-                        
-                        {/* Slide Container */}
-                        <div className={`w-full h-full relative ${isGlitching ? 'muro-glitch-active muro-scanline' : ''}`}>
-                            {muroItems.length > 0 ? (
-                                <>
-                                    {muroItems[currentSlide]?.type === 'video' ? (
-                                        <video
-                                            key={`vid-${currentSlide}`}
-                                            src={muroItems[currentSlide].url}
-                                            className="w-full h-full object-cover muro-fade-in"
-                                            autoPlay muted loop playsInline
-                                        />
-                                    ) : (
-                                        <img 
-                                            key={`img-${currentSlide}`}
-                                            src={muroItems[currentSlide]?.url} 
-                                            className="w-full h-full object-cover muro-fade-in" 
-                                            alt={`Slide ${currentSlide + 1}`} 
-                                            loading="lazy" 
-                                        />
-                                    )}
-                                    {/* Broadcast overlay label */}
-                                    {muroItems[currentSlide]?.isBroadcast && (
-                                        <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/60 border border-red-500/30 rounded-full px-2.5 py-1 backdrop-blur-md">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                                            <span className="text-[7px] font-black text-red-400 uppercase tracking-widest">📡 Transmisión</span>
-                                        </div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className="w-full h-full flex flex-col items-center justify-center bg-black/50 text-white/40 relative">
-                                    <div className="absolute inset-0 bg-cyan-500/5 blur-3xl pointer-events-none" />
-                                    <ImageIcon size={32} className="mb-2 opacity-50" />
-                                    <p className="text-[10px] uppercase font-black tracking-widest text-center px-4">Próximamente nuevas publicidades</p>
+                <div className="w-full px-4 mb-14">
+                    <div className={`w-full rounded-[2.5rem] pt-6 pb-4 px-3 flex flex-col relative ${
+                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
+                    }`}>
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                            <ImageIcon size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
+                            <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
+                            {broadcasts.length > 0 && (
+                                <div className="badge-en-vivo flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5 ml-2">
+                                    <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                                    <div className="w-2 h-2 rounded-full bg-red-500 absolute" />
+                                    <span className="text-[7px] font-black text-red-400 uppercase tracking-widest">En Vivo</span>
                                 </div>
                             )}
                         </div>
 
-                        {/* Dots de paginación activos */}
-                        {muroItems.length > 1 && (
-                            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 pointer-events-none z-10">
-                                {muroItems.map((item, i) => (
-                                    <div key={i} className={`rounded-full backdrop-blur-md shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-500 ${
-                                        i === currentSlide 
-                                        ? `w-4 h-1.5 ${item.isBroadcast ? 'bg-red-400 shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]'}` 
-                                        : 'w-1.5 h-1.5 bg-white/30'
-                                    }`}></div>
-                                ))}
-                            </div>
-                        )}
+                        <div className={`w-full aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden relative border isolate bg-zinc-900 group ${
+                            isDayMode ? 'border-white/40 shadow-lg' : ''
+                        }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
+                            
+                            {/* Slide Container */}
+                            <div className={`w-full h-full relative ${isGlitching ? 'muro-glitch-active muro-scanline' : ''}`}>
+                                {muroItems.length > 0 ? (
+                                    <>
+                                        {muroItems[currentSlide]?.type === 'video' ? (
+                                            <video
+                                                key={`vid-${currentSlide}`}
+                                                src={muroItems[currentSlide].url}
+                                                className="w-full h-full object-cover muro-fade-in"
+                                                autoPlay muted loop playsInline
+                                            />
+                                        ) : (
+                                            <img 
+                                                key={`img-${currentSlide}`}
+                                                src={muroItems[currentSlide]?.url} 
+                                                className="w-full h-full object-cover muro-fade-in" 
+                                                alt={`Slide ${currentSlide + 1}`} 
+                                                loading="lazy" 
+                                            />
+                                        )}
+                                        {/* Broadcast overlay label */}
+                                        {muroItems[currentSlide]?.isBroadcast && (
+                                            <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 bg-black/60 border border-red-500/30 rounded-full px-3 py-1.5 backdrop-blur-md shadow-lg">
+                                                <div className="w-2 h-2 rounded-full bg-red-500" />
+                                                <span className="text-[8px] font-black text-red-400 uppercase tracking-widest">📡 Transmisión</span>
+                                            </div>
+                                        )}
 
-                        {/* Like Button */}
-                        <div className="absolute top-3 right-3 z-20">
-                            <button
-                                onClick={handleLikeFeed}
-                                disabled={hasLikedFeed}
-                                className={`glass-action-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full border backdrop-blur-md transition-all duration-300 ${
-                                    hasLikedFeed 
-                                    ? 'bg-rose-500/30 border-rose-400/50 shadow-[0_0_15px_rgba(244,63,94,0.4)]' 
-                                    : 'bg-black/40 border-white/20 hover:bg-black/60 hover:border-white/40'
-                                }`}
-                            >
-                                <Heart size={14} className={`${hasLikedFeed ? 'fill-rose-400 text-rose-400' : 'text-white'} transition-colors duration-300`} />
-                                <span className={`text-[10px] font-black tracking-widest ${hasLikedFeed ? 'text-rose-400 drop-shadow-[0_0_5px_rgba(244,63,94,0.8)]' : 'text-white'}`}>
-                                    {feedLikesCount}
-                                </span>
-                            </button>
+                                        {/* Overlay con texto y botón Ampliar */}
+                                        {muroItems[currentSlide] && (
+                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-20 pb-8 px-6 z-20 flex flex-col items-start text-left pointer-events-auto">
+                                                <h4 className="text-white font-[1000] text-[14px] uppercase tracking-widest mb-1.5 drop-shadow-md leading-tight">
+                                                    {muroItems[currentSlide].title || 'Novedades'}
+                                                </h4>
+                                                <p className="text-white/80 font-medium text-[11px] leading-relaxed line-clamp-2 mb-4 drop-shadow">
+                                                    {muroItems[currentSlide].description || 'Descubrí las últimas novedades y promociones.'}
+                                                </p>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        playNeonClick();
+                                                        setSelectedMuroItemForModal(muroItems[currentSlide]);
+                                                    }}
+                                                    className={`self-start py-2.5 px-5 rounded-full backdrop-blur-md border text-[10px] font-[1000] uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95 shadow-lg ${
+                                                        isDayMode ? 'bg-white/30 border-white/60 text-slate-800 hover:bg-white/50' : 'bg-black/40 border-white/30 text-white hover:bg-black/60'
+                                                    }`}
+                                                >
+                                                    <Eye size={14} /> Ampliar
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center bg-black/50 text-white/40 relative">
+                                        <div className="absolute inset-0 bg-cyan-500/5 blur-3xl pointer-events-none" />
+                                        <ImageIcon size={32} className="mb-2 opacity-50" />
+                                        <p className="text-[10px] uppercase font-black tracking-widest text-center px-4">Próximamente nuevas publicidades</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Dots de paginación activos */}
+                            {muroItems.length > 1 && (
+                                <div className="absolute top-4 right-4 flex justify-center gap-1.5 pointer-events-none z-20">
+                                    {muroItems.map((item, i) => (
+                                        <div key={i} className={`rounded-full backdrop-blur-md shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-500 ${
+                                            i === currentSlide 
+                                            ? `w-4 h-1.5 ${item.isBroadcast ? 'bg-red-400 shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]'}` 
+                                            : 'w-1.5 h-1.5 bg-white/30'
+                                        }`}></div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Like Button */}
+                            <div className="absolute bottom-4 right-4 z-20 pointer-events-auto">
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); handleLikeFeed(); }}
+                                    disabled={hasLikedFeed}
+                                    className={`glass-action-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full border backdrop-blur-md transition-all duration-300 ${
+                                        hasLikedFeed 
+                                        ? 'bg-rose-500/30 border-rose-400/50 shadow-[0_0_15px_rgba(244,63,94,0.4)]' 
+                                        : 'bg-black/40 border-white/20 hover:bg-black/60 hover:border-white/40'
+                                    }`}
+                                >
+                                    <Heart size={14} className={`${hasLikedFeed ? 'fill-rose-400 text-rose-400' : 'text-white'} transition-colors duration-300`} />
+                                    <span className={`text-[10px] font-black tracking-widest ${hasLikedFeed ? 'text-rose-400 drop-shadow-[0_0_5px_rgba(244,63,94,0.8)]' : 'text-white'}`}>
+                                        {feedLikesCount}
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1010,6 +1047,38 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 * {selectedOfferForModal.legalText}
                             </p>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* Modal para ampliar Novedad */}
+            {selectedMuroItemForModal && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 animate-in fade-in duration-300">
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setSelectedMuroItemForModal(null)}></div>
+                    <div className="relative w-full max-w-md bg-zinc-900 border border-white/20 rounded-[2.5rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-300">
+                        <button 
+                            onClick={() => setSelectedMuroItemForModal(null)}
+                            className="absolute top-4 right-4 w-8 h-8 z-20 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/30 active:scale-90 transition-transform text-white"
+                        >
+                            <span className="font-black text-[12px]">X</span>
+                        </button>
+                        
+                        <div className="w-full aspect-[4/5] relative bg-black">
+                            {selectedMuroItemForModal.type === 'video' ? (
+                                <video src={selectedMuroItemForModal.url} className="w-full h-full object-cover" autoPlay controls playsInline />
+                            ) : (
+                                <img src={selectedMuroItemForModal.url} alt="Novedad" className="w-full h-full object-cover" />
+                            )}
+                        </div>
+                        
+                        <div className="p-6 bg-gradient-to-t from-zinc-900 via-zinc-900/90 to-transparent absolute bottom-0 left-0 right-0 pt-20">
+                            <h4 className="text-white font-[1000] text-[18px] uppercase tracking-widest mb-3 drop-shadow-md">
+                                {selectedMuroItemForModal.title || 'Novedades'}
+                            </h4>
+                            <p className="text-white/80 font-medium text-[13px] leading-relaxed drop-shadow mb-2">
+                                {selectedMuroItemForModal.description || 'Descubrí las últimas novedades y promociones en nuestro muro.'}
+                            </p>
+                        </div>
                     </div>
                 </div>
             )}
