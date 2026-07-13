@@ -1,6 +1,26 @@
 /* Index Styles */
 /* All main styles are currently inline in index.html */
 
+/* ===== MOBILE SCROLL PERFORMANCE ===== */
+/* Promueve todos los contenedores scrolleables a su propia capa GPU */
+.no-scrollbar,
+[class*='overflow-y-auto'],
+[class*='overflow-x-auto'] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Estabiliza alturas de tarjetas para evitar reflow al scrollear */
+.glass-card-3d,
+.glass-card-neon,
+.home-glass-plate {
+  min-height: 170px;
+  will-change: auto;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 :root {
   --bg-main: linear-gradient(135deg, #f3f6f9 0%, #ebf0f5 100%);
   --glass-bg: rgba(255, 255, 255, 0.45);

@@ -69,6 +69,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const offersCarouselRef = useRef<HTMLDivElement>(null);
     const offersTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const isTouchingRef = useRef(false);
+    const mapRef = useRef<HTMLDivElement>(null);
     const [selectedOfferForModal, setSelectedOfferForModal] = useState<ProductOffer | null>(null);
     const [selectedMuroItemForModal, setSelectedMuroItemForModal] = useState<any | null>(null);
     const [currentReviewSlide, setCurrentReviewSlide] = useState(0);
@@ -76,6 +77,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const { user, login } = useAuth();
     const [lockClicks, setLockClicks] = useState(0);
     const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [mapVisible, setMapVisible] = useState(false);
 
     const ROOT_EMAIL = 'walyconexion@gmail.com';
 
@@ -277,6 +279,22 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
             logEvento('view_shop', selectedShop.id, { nombre_local: selectedShop.name });
         }
     }, [selectedShop?.id]);
+
+    // Lazy map: activate iframe only when user scrolls near the map section
+    useEffect(() => {
+        if (!mapRef.current) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setMapVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '200px', threshold: 0 }
+        );
+        observer.observe(mapRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     const scrollToCatalog = () => {
         playNeonClick();
@@ -700,19 +718,26 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>Dónde Encontrarnos</h3>
                         </div>
                         
-                        <div className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
+                        <div ref={mapRef} className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
                             isDayMode ? 'border-white/40' : 'border-white/10'
                         }`}>
-                            <iframe
-                                title="Ubicación"
-                                src={selectedShop.mapUrl}
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen={false}
-                                loading="lazy"
-                                className="rounded-[1.25rem] invert-[95%] hue-rotate-180 contrast-[120%] saturate-[200%] brightness-[85%] opacity-90 pointer-events-auto transition-all group-hover:opacity-100"
-                            ></iframe>
+                            {mapVisible ? (
+                                <iframe
+                                    title="Ubicación"
+                                    src={selectedShop.mapUrl}
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: 0 }}
+                                    allowFullScreen={false}
+                                    loading="lazy"
+                                    className="rounded-[1.25rem] invert-[95%] hue-rotate-180 contrast-[120%] saturate-[200%] brightness-[85%] opacity-90 pointer-events-auto transition-all group-hover:opacity-100"
+                                />
+                            ) : (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-40">
+                                    <MapPin size={28} className="text-white" />
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-white">Cargando mapa...</span>
+                                </div>
+                            )}
                             <div className="absolute inset-0 pointer-events-none rounded-[1.25rem] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]"></div>
                         </div>
 

@@ -340,6 +340,17 @@
 
     .fade-up-item {
       animation: fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      contain: layout style paint;
+    }
+
+    /* ✅ CLS Fix: Altura mínima fija en todas las tarjetas para evitar layout shift */
+    .glass-card-3d,
+    .glass-card-neon,
+    .home-glass-plate {
+      min-height: 170px;
+      contain: layout style paint;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 170px;
     }
 
     /* Tarjeta Vidrio 3D - Interfaz 2 */

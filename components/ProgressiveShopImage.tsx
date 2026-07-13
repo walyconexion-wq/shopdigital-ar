@@ -73,6 +73,16 @@ const ProgressiveShopImage: React.FC<ProgressiveShopImageProps> = ({
         setLoaded(true); // Ocultar el skeleton aunque haya error
     };
 
+    const buildMobileUrl = (url: string): string => {
+        if (!url) return url;
+        // Solo optimiza URLs de Unsplash — para Firebase Storage y otras fuentes, pasa sin cambios
+        if (url.includes('unsplash.com') && !url.includes('&w=')) {
+            const separator = url.includes('?') ? '&' : '?';
+            return `${url}${separator}w=400&q=70&fm=webp`;
+        }
+        return url;
+    };
+
     return (
         <div ref={containerRef} className={`relative overflow-hidden ${className}`} style={{ backgroundColor: skeletonColor }}>
             {/* Skeleton shimmer — visible mientras la imagen no carga */}
@@ -99,7 +109,7 @@ const ProgressiveShopImage: React.FC<ProgressiveShopImageProps> = ({
             {inView && !error && (
                 <img
                     ref={imgRef}
-                    src={src}
+                    src={buildMobileUrl(src)}
                     alt={alt}
                     // Para priority: eager + high. Para el resto: lazy nativo del navegador
                     loading={priority ? 'eager' : 'lazy'}
