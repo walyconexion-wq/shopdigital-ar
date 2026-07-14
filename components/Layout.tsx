@@ -195,7 +195,7 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
             style={{ 
                 ...containerStyle, 
                 backgroundColor: shouldApplyDayMode 
-                    ? (isEnterprisePath ? '#f8fafc' : '#cda488') 
+                    ? (isEnterprisePath ? '#f8fafc' : '#1cc2ca') 
                     : bgColor 
             }}
         >
