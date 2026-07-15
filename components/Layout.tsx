@@ -279,7 +279,7 @@ const Layout: React.FC<LayoutProps> = ({ allShops = [], globalConfig }) => {
                     className="absolute inset-0"
                     style={{
                         background: shouldApplyDayMode 
-                            ? (isEnterprisePath ? '#f8fafc' : '#cda488')
+                            ? (isEnterprisePath ? '#f8fafc' : '#17c2ca')
                             : `radial-gradient(ellipse at 50% 30%, ${hexToRgba(themeColor, 0.08)} 0%, transparent 60%), linear-gradient(180deg, ${bgColor} 0%, ${bgColor} 50%, ${bgColor} 100%)`,
                     }}
                 />
