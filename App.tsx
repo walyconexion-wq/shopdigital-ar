@@ -39,6 +39,7 @@ const TermsPage               = React.lazy(() => import('./pages/TermsPage'));
 const EventLandingPage        = React.lazy(() => import('./pages/EventLandingPage'));
 const ShopMenuPage            = React.lazy(() => import('./pages/ShopMenuPage'));
 const BusinessLandingPage     = React.lazy(() => import('./pages/BusinessLandingPage'));
+const MuroNovedades           = React.lazy(() => import('./components/MuroNovedades'));
 
 // Suscripciones y onboarding
 const SubscriptionPage        = React.lazy(() => import('./pages/SubscriptionPage'));

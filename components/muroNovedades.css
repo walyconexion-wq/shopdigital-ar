@@ -1,0 +1,260 @@
+/* ============================================================
+   MURO DE NOVEDADES — GLASSMORPHISM 3D "PASTILLA BLANCA"
+   Diseñado para ShopDigital.ar / Búnker de Melisa
+   ============================================================ */
+
+.muro-wrapper {
+  width: 100%;
+  padding: 0 0 120px;
+  animation: muroFadeIn 0.5s ease-out both;
+}
+
+@keyframes muroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.muro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 20px;
+}
+
+.muro-titulo {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.muro-titulo span {
+  color: #00f2ff;
+  text-shadow: 0 0 15px rgba(0, 242, 255, 0.8);
+}
+
+.muro-badge {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #00f2ff;
+  background: rgba(0, 242, 255, 0.08);
+  border: 1px solid rgba(0, 242, 255, 0.25);
+  border-radius: 100px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+.muro-filtros {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+}
+
+.filtro-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filtro-btn.activo {
+  background: rgba(0, 242, 255, 0.12);
+  border-color: #00f2ff;
+  color: #ffffff;
+}
+
+.muro-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.novedad-card {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card-imagen-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.card-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-imagen-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.7) 100%);
+}
+
+.card-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.card-emoji {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-size: 28px;
+}
+
+.card-body {
+  padding: 16px 18px 18px;
+}
+
+.card-categoria-pill {
+  font-size: 8.5px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.card-titulo {
+  font-size: 17px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.card-microcopy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 14px;
+}
+
+.btn-ampliar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 900;
+  color: #ffffff;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 32px 32px 0 0;
+  background: rgba(12, 12, 24, 0.95);
+  padding-bottom: 24px;
+}
+
+.modal-imagen {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.modal-body {
+  padding: 20px 22px 28px;
+}
+
+.modal-tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.modal-titulo {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.modal-microcopy {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 22px;
+}
+
+.btn-modal-accion {
+  width: 100%;
+  padding: 16px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #000000;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn-modal-cerrar {
+  width: 100%;
+  padding: 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+
+.skeleton-card {
+  border-radius: 28px;
+  background: rgba(255,255,255,0.03);
+  padding: 16px;
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 140px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.skeleton-line {
+  height: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 100px;
+}
