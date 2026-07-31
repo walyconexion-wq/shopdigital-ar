@@ -41,6 +41,7 @@ import { useAuth } from '../components/AuthContext';
 import { incrementarLikesFeed, suscribirseABroadcast, Broadcast } from '../firebase';
 import { logEvento } from '../services/telemetry';
 import ProgressiveShopImage from '../components/ProgressiveShopImage';
+import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
 
 interface ShopDetailPageProps {
     allShops: Shop[];
@@ -365,19 +366,9 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
     const isLightWallpaper = isCustomColor ? isLightColor(selectedShop.customBackground!) : false;
 
     return (
-        <div 
-          className={`pb-24 animate-in fade-in duration-700 min-h-screen relative ${wallpaperClass} ${isDayMode ? 'day-mode bg-gradient-to-b from-[#f3f6f9] to-[#ebf0f5] glass-text-main' : 'bg-[#060d1a] text-white'}`}
-          style={isCustomColor ? { backgroundColor: selectedShop.customBackground } : {}}
-        >
-            {/* Dynamic Glassmorphism Background Blobs (Day Mode Only) */}
-            {isDayMode && (
-                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                    <div className="absolute top-[-5%] left-[-20%] w-[70vw] h-[70vw] rounded-full bg-cyan-300/40 mix-blend-multiply filter blur-[80px] opacity-80" />
-                    <div className="absolute top-[20%] right-[-20%] w-[60vw] h-[60vw] rounded-full bg-blue-400/30 mix-blend-multiply filter blur-[100px] opacity-70" />
-                    <div className="absolute bottom-[-5%] left-[10%] w-[80vw] h-[80vw] rounded-full bg-indigo-300/30 mix-blend-multiply filter blur-[120px] opacity-60" />
-                    <div className="absolute top-[60%] right-[10%] w-[50vw] h-[50vw] rounded-full bg-teal-200/30 mix-blend-multiply filter blur-[90px] opacity-70" />
-                </div>
-            )}
+        <div className="pb-24 animate-in fade-in duration-700 min-h-screen relative bg-transparent text-[#2c2440]">
+            {/* Fondo Ciber-Digital de Circuitos Animados */}
+            <CyberCircuitBackground />
 
             {/* OVERLAY ESTACIONAL - particulas flotantes */}
             {activeSeason && (
@@ -420,22 +411,20 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 <meta name="twitter:image" content={selectedShop.bannerImage || selectedShop.image} />
             </Helmet>
 
-            <div className="relative w-full h-[360px] bg-black overflow-hidden">
-                {/* Back Button Overlay */}
+            {/* Cabecera / Portada con Imagen y Botones Neumórficos */}
+            <div className="relative w-full h-[360px] bg-black overflow-hidden shadow-md">
+                {/* Botón Volver Neumórfico 3D */}
                 <button
                     onClick={() => {
                         playNeonClick();
                         navigate(`${basePath}/${categorySlug}`);
                     }}
-                    className={`absolute top-6 left-5 z-[60] w-10 h-10 flex items-center justify-center rounded-2xl transition-all ${
-                        isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste active:scale-90'
-                    }`}
-                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    className="neu-btn-3d absolute top-6 left-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
                 >
-                    <ArrowLeft size={18} style={{ color: isDayMode ? '#000000' : '#0891b2' }} strokeWidth={3} />
+                    <ArrowLeft size={18} className="text-[#ff6b6b]" strokeWidth={2.5} />
                 </button>
 
-                {/* Botón de alternancia de tema (Sol/Luna) premium */}
+                {/* Botón Modo Noche/Día Neumórfico 3D */}
                 <button
                     onClick={() => {
                         playNeonClick();
@@ -444,21 +433,12 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         localStorage.setItem('global_home_theme_mode', nextTheme);
                         window.dispatchEvent(new Event('theme-changed'));
                     }}
-                    className={`absolute top-6 right-5 z-[60] w-10 h-10 flex items-center justify-center rounded-2xl transition-all ${
-                        isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste active:scale-90'
-                    }`}
-                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    className="neu-btn-3d absolute top-6 right-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
                 >
                     {isDayMode ? (
-                        <Moon 
-                            size={16} 
-                            style={{ color: '#000000' }} 
-                        />
+                        <Moon size={17} className="text-[#2c2440]" />
                     ) : (
-                        <Sun 
-                            size={16} 
-                            style={{ color: '#0891b2' }} 
-                        />
+                        <Sun size={17} className="text-[#ff6b6b]" />
                     )}
                 </button>
 
@@ -473,76 +453,52 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                     />
                 ))}
-                {/* Gradiente sutil solo en los bordes para lectura de texto, el centro queda 100% visible */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/50"></div>
 
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[90%] flex flex-col items-center">
-                    {/* 💡 LETRERO NEÓN 3D — Nombre del Comercio */}
-                    <div className="relative" style={{ '--neon-color': themeColor } as React.CSSProperties}>
-                        {globalConfig?.isChristmasMode && (
-                            <svg className="absolute -top-4 left-[-15px] w-9 h-9 z-[60] pointer-events-none drop-shadow-[0_0_8px_rgba(239,68,68,0.6)] rotate-[-15deg]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 14C18 10 16 5 11 3C10.5 4 9 6.5 9 8C9 9 9.5 9.5 9 10C8 11 6.5 12 5.5 14C4 17 6.5 18 11 18C15.5 18 18 17 18 14Z" fill="#ef4444"/>
-                                <path d="M4 17C4 16 5 15.5 11 15.5C17 15.5 18 16 18 17C18 18 16.5 19 11 19C5.5 19 4 18 4 17Z" fill="#ffffff"/>
-                                <circle cx="10" cy="3.5" r="2.5" fill="#ffffff"/>
-                            </svg>
-                        )}
-                        {/* Capa de resplandor trasero (profundidad 3D) */}
-                        <h1
-                            aria-hidden="true"
-                            className="neon-sign-title neon-sign-glow text-[36px] text-center pointer-events-none select-none"
-                            style={{ color: themeColor }}
-                        >
+                {/* Placa Neumórfica de Nombre y Zona en Portada */}
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[90%] max-w-[345px] flex flex-col items-center">
+                    <div className="neu-plate w-full py-4 px-6 text-center border border-white/60">
+                        <h1 className="text-[22px] font-[900] uppercase tracking-wider text-[#2c2440] leading-none mb-1">
                             {String(selectedShop.name || '').replace(/\s*\(.*\)\s*/, '').split('-')[0].trim()}
                         </h1>
-                        {/* Capa principal del letrero */}
-                        <h1 
-                            className="neon-sign-title neon-warm-up text-[36px] text-center pointer-events-auto cursor-default"
-                            onClick={(e) => e.preventDefault()}
-                        >
-                            {String(selectedShop.name || '').replace(/\s*\(.*\)\s*/, '').split('-')[0].trim()}
-                        </h1>
+                        <div className="flex items-center justify-center gap-1.5 mt-2">
+                            <MapPin size={12} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#4a3d6a]">
+                                {selectedShop.zone || 'Tu zona'}
+                            </span>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-1.5 mt-1 opacity-90">
-                        <MapPin size={10} className="text-red-400" strokeWidth={3} />
-                        <span className="text-[8.5px] font-black uppercase tracking-[0.3em] text-white/80 text-shadow-premium">
-                            {selectedShop.zone || 'Tu zona'}
-                        </span>
-                    </div>
-                    <div className="w-12 h-[1px] bg-white/40 mx-auto mt-2.5 shadow-[0_0_10px_rgba(255,255,255,0.6)]"></div>
                 </div>
 
-                {/* Contador de Visitas Portada (Esquina Inferior Izquierda) */}
-                <div className="absolute bottom-5 left-5 z-40 flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-lg border shadow-inner backdrop-blur-sm" style={{ borderColor: hexToRgba(themeColor, 0.2) }}>
-                    <Eye size={12} style={{ color: themeColor }} />
-                    <span className="text-[10px] font-black tracking-widest uppercase" style={{ color: themeColor }}>{selectedShop.visits || 0} visitas</span>
+                {/* Contador de Visitas Portada Neumórfico */}
+                <div className="neu-inset-title absolute bottom-4 left-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
+                    <Eye size={12} className="text-[#4a3d6a]" />
+                    <span>{selectedShop.visits || 0} visitas</span>
                 </div>
 
-                {/* Contador de Suscriptores Portada (Esquina Inferior Derecha) */}
-                <div className="absolute bottom-5 right-5 z-40 flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-lg border shadow-inner backdrop-blur-sm" style={{ borderColor: hexToRgba(themeColor, 0.2) }}>
-                    <Users size={12} style={{ color: themeColor }} />
-                    <span className="text-[10px] font-black tracking-widest uppercase" style={{ color: themeColor }}>{selectedShop.subscribers || 0} suscriptores</span>
+                {/* Contador de Suscriptores Portada Neumórfico */}
+                <div className="neu-inset-title absolute bottom-4 right-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
+                    <Users size={12} className="text-[#ff6b6b]" />
+                    <span>{selectedShop.subscribers || 0} suscriptores</span>
                 </div>
-
             </div>
 
             <div className="relative z-10 flex flex-col items-center">
 
-                {/* ---------- CATÁLOGO DE OFERTAS ---------- */}
-                <div ref={catalogRef} className="w-full mb-14 mt-2 px-4">
-                    <div className={`w-full rounded-[2rem] pt-5 pb-3 flex flex-col relative ${
-                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
-                    }`}>
+                {/* ---------- CATÁLOGO DE OFERTAS NEUMÓRFICO CREMA HD ---------- */}
+                <div ref={catalogRef} className="w-full mb-8 mt-4 px-4 max-w-[365px] mx-auto">
+                    <div className="neu-plate w-full p-4 flex flex-col relative border border-white/60">
                         {/* Título de la Sección */}
-                        <h2 className={`text-[11px] font-[1000] uppercase tracking-widest mb-4 ml-3 ${
-                            isDayMode ? 'glass-text-main' : 'text-white'
-                        }`}>
-                            Nuestro Catálogo
-                        </h2>
+                        <div className="neu-inset-title py-2 px-4 mb-4 flex items-center justify-between">
+                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#2c2440]">
+                                Nuestro Catálogo
+                            </span>
+                            <ShoppingBag size={14} className="text-[#ff6b6b]" />
+                        </div>
 
-                        <div className="w-full relative px-2">
-                            <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
+                        <div className="w-full relative">
                             <div 
-                                className="flex gap-4 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
+                                className="flex gap-3 pb-3 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
                                 style={{ contain: 'layout style', willChange: 'scroll-position' }}
                                 ref={offersCarouselRef}
                                 onTouchStart={() => isTouchingRef.current = true}
@@ -551,43 +507,30 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 onMouseLeave={() => isTouchingRef.current = false}
                             >
                                 {selectedShop.offers.map((offer, idx) => {
-                                    // Badges Dinámicos sugeridos por Gemy
-                                    const badgeType = idx % 3;
-                                    const badgeProps = badgeType === 0 
-                                        ? { text: '🔥 HOT', bg: 'bg-orange-500/90', shadow: 'shadow-[0_0_10px_rgba(249,115,22,0.8)]' }
-                                        : badgeType === 1 
-                                        ? { text: '✨ NUEVO', bg: 'bg-green-500/90', shadow: 'shadow-[0_0_10px_rgba(34,197,94,0.8)]' }
-                                        : { text: '⚡ HOY', bg: 'bg-rose-500/90', shadow: 'shadow-[0_0_10px_rgba(244,63,94,0.8)]' };
-
                                     return (
-                                        <div key={`${offer.id}-${idx}`} className={`flex-shrink-0 w-40 p-3 flex flex-col relative group snap-center cursor-pointer ${
-                                            isDayMode 
-                                                ? 'bg-white/40 border border-white/50 shadow-sm rounded-[1.5rem]' 
-                                                : 'glass-card-3d offer-card-neon'
-                                        }`} onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
-                                            <div className={`rounded-xl overflow-hidden aspect-square mb-3 border shadow-md relative ${
-                                                isDayMode ? 'border-white/60' : 'border-white/20'
-                                            }`}>
+                                        <div 
+                                            key={`${offer.id}-${idx}`} 
+                                            className="neu-btn-3d flex-shrink-0 w-40 p-3 flex flex-col relative group snap-center cursor-pointer border border-white/70"
+                                            onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}
+                                        >
+                                            <div className="rounded-xl overflow-hidden aspect-square mb-2.5 border border-[#b4a594]/30 shadow-inner relative">
                                                 <ProgressiveShopImage
                                                     src={offer.image}
                                                     alt={offer.name}
-                                                    className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none"
+                                                    className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none object-cover"
                                                     priority={idx < 6}
-                                                    skeletonColor="rgba(255,255,255,0.05)"
+                                                    skeletonColor="rgba(0,0,0,0.05)"
                                                 />
-                                                {/* Dynamic Badge */}
-                                                <div className={`absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-1 rounded-full uppercase backdrop-blur-md ${badgeProps.bg} ${badgeProps.shadow} border border-white/20 pointer-events-none z-10`}>
-                                                    {badgeProps.text}
+                                                <div className="absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-0.5 rounded-full uppercase bg-[#ff6b6b] shadow-md border border-white/40 pointer-events-none z-10">
+                                                    🔥 HOT
                                                 </div>
                                             </div>
-                                            <div className="px-1 pb-1 text-center pointer-events-none">
-                                                <p className={`text-[10px] font-black uppercase tracking-tight mb-2.5 line-clamp-1 ${
-                                                    isDayMode ? 'glass-text-main' : 'text-white'
-                                                }`}>{offer.name}</p>
-                                                <div className={`py-1.5 px-3 rounded-lg border ${
-                                                    isDayMode ? 'bg-white/60 border-white/80 glass-text-main shadow-inner font-extrabold' : 'glass-action-btn offer-price-tag border-white/10 bg-white/5 text-white'
-                                                }`}>
-                                                    <span className="text-[12px] font-black drop-shadow-sm">$ {offer.price.toLocaleString('es-AR')}</span>
+                                            <div className="px-0.5 text-center pointer-events-none">
+                                                <p className="text-[10px] font-black uppercase tracking-tight mb-2 line-clamp-1 text-[#2c2440]">
+                                                    {offer.name}
+                                                </p>
+                                                <div className="neu-inset-title py-1 px-2.5 text-center">
+                                                    <span className="text-[12px] font-black text-[#ff6b6b]">$ {offer.price.toLocaleString('es-AR')}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -596,100 +539,64 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             </div>
                         </div>
 
-                        {/* Botón de Abrir Catálogo movido a la base del contenedor */}
+                        {/* Botón de Abrir Catálogo Completo Neumórfico 3D */}
                         <button
                             onClick={() => {
                                 playNeonClick();
                                 navigate(`${basePath}/${categorySlug}/${shopSlug}/menu`);
                             }}
-                            className={`py-3.5 flex items-center justify-center gap-2.5 font-[1100] uppercase tracking-[0.2em] text-[10px] btn-open-catalog ${
-                                isDayMode ? 'glass-text-main transition-transform active:scale-95' : 'text-white btn-3d-celeste'
-                            }`}
+                            className="neu-btn-3d w-full py-3.5 mt-3 flex items-center justify-center gap-2.5 font-black uppercase tracking-[0.2em] text-[9.5px]"
                         >
-                            <ShoppingBag size={15} style={isDayMode ? { color: '#0891b2' } : { color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
-                            <span className={isDayMode ? "" : "text-shadow-premium"}>Abrir Catálogo Completo</span>
+                            <ShoppingBag size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <span>Abrir Catálogo Completo</span>
                         </button>
                     </div>
                 </div>
 
-                {/* ---------- INTEGRACIÓN PEDIDOSYA ---------- */}
-                {selectedShop.pedidoYaUrl && (
-                    <div className="w-full px-5 mb-14">
-                        <button
-                            onClick={() => {
-                                playNeonClick();
-                                window.open(selectedShop.pedidoYaUrl, '_blank', 'noopener,noreferrer');
-                            }}
-                            className={`w-full py-4 rounded-[2rem] flex items-center justify-center gap-3 group relative overflow-hidden transition-all ${
-                                isDayMode 
-                                    ? 'glass-button-3d w-full shadow-lg border' 
-                                    : 'bg-[#EA044E]/10 border border-[#EA044E]/50 shadow-[0_0_20px_rgba(234,4,78,0.2)] hover:bg-[#EA044E]/20 active:scale-95'
-                            }`}
-                            style={isDayMode ? { 
-                                background: 'rgba(255, 255, 255, 0.65)', 
-                                border: '1px solid rgba(255, 255, 255, 0.85)',
-                                color: '#00C2FF'
-                            } : {}}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#EA044E]/0 via-white/10 to-[#EA044E]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                            <ShoppingBag size={18} strokeWidth={2.5} className="text-[#EA044E] group-hover:scale-110 transition-transform" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#EA044E] drop-shadow-md">Pedir por PedidoYa</span>
-                        </button>
-                    </div>
-                )}
-
-                {/* ---------- DASHBOARD DE CONTACTO ---------- */}
-                <div className="w-full px-5 mb-14">
-                    <div className={
-                        isDayMode ? 'glass-section-card' : 'rounded-[2rem] p-5 bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-                    }>
-                        <div className="flex items-center gap-2 mb-5">
-                            <MessageCircle size={14} className={isDayMode ? 'glass-text-main/60' : 'text-white/60'} />
-                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>Canales de Atención</h3>
+                {/* ---------- DASHBOARD DE CONTACTO NEUMÓRFICO ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-4 border border-white/60">
+                        <div className="flex items-center gap-2 mb-4">
+                            <MessageCircle size={14} className="text-[#ff6b6b]" />
+                            <h3 className="font-extrabold text-[9.5px] uppercase tracking-[0.25em] text-[#2c2440]">Canales de Atención</h3>
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
-                            <button onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
-                                isDayMode ? 'bg-white/45 border border-white/60' : 'btn-neon-red bg-black/40 border border-[#EA044E]/30'
-                            }`}>
-                                <span className="italic text-[20px] font-black text-[#EA044E] drop-shadow-[0_0_8px_rgba(234,4,78,0.8)] group-hover:scale-110 transition-transform">P</span>
-                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#EA044E]' : 'text-white/90'}`}>PedidosYa</span>
+                        <div className="grid grid-cols-3 gap-2.5">
+                            <button 
+                                onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} 
+                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
+                            >
+                                <span className="italic text-[18px] font-black text-[#EA044E]">P</span>
+                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">PedidosYa</span>
                             </button>
-                            <button onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
-                                isDayMode ? 'bg-white/45 border border-white/60' : 'btn-neon-green bg-black/40 border border-[#25D366]/30'
-                            }`}>
-                                <MessageCircle size={20} className="text-[#25D366] drop-shadow-[0_0_8px_rgba(37,211,102,0.8)] group-hover:scale-110 transition-transform" fill="currentColor" strokeWidth={0} />
-                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#25D366]' : 'text-white/90'}`}>WhatsApp</span>
+                            <button 
+                                onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} 
+                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
+                            >
+                                <MessageCircle size={18} className="text-[#25D366]" fill="currentColor" strokeWidth={0} />
+                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">WhatsApp</span>
                             </button>
-                            <button onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem] transition-transform active:scale-95 group ${
-                                isDayMode ? 'bg-white/45 border border-white/60' : 'btn-neon-blue bg-black/40 border border-[#009EE3]/30'
-                            }`}>
-                                <Handshake size={20} className="text-[#009EE3] drop-shadow-[0_0_8px_rgba(0,158,227,0.8)] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
-                                <span className={`text-[7.5px] tracking-[0.15em] font-black uppercase ${isDayMode ? 'text-[#009EE3]' : 'text-white/90'}`}>M. Pago</span>
+                            <button 
+                                onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} 
+                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
+                            >
+                                <Handshake size={18} className="text-[#009EE3]" strokeWidth={2.5} />
+                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">M. Pago</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* ---------- CREDENCIAL VIP PREMIUM ---------- */}
-                <div className="w-full px-4 mb-14">
-                    <div className={`w-full rounded-[2.5rem] pt-8 pb-6 px-6 flex flex-col relative items-center text-center ${
-                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
-                    }`}>
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 blur-3xl rounded-full pointer-events-none" />
-                        
-                        <div className="w-32 h-44 mb-2 relative z-10 drop-shadow-2xl">
-                            {/* Avatar image - Using the provided 3D assistant /luz-avatar.png */}
-                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]" />
+                {/* ---------- CREDENCIAL VIP PREMIUM NEUMÓRFICA ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-6 flex flex-col items-center text-center relative border border-white/60">
+                        <div className="w-28 h-36 mb-2 relative z-10 drop-shadow-xl">
+                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)]" />
                         </div>
                         
-                        <h3 className={`text-[13px] font-[1000] uppercase tracking-widest mb-2 z-10 ${
-                            isDayMode ? 'glass-text-main' : 'text-white'
-                        }`}>
+                        <h3 className="text-[12px] font-black uppercase tracking-widest mb-1.5 text-[#2c2440]">
                             Club de Beneficios VIP
                         </h3>
-                        <p className={`text-[11px] mb-6 leading-relaxed z-10 px-2 ${
-                            isDayMode ? 'glass-text-muted font-medium' : 'text-white/70'
-                        }`}>
+                        <p className="text-[10px] mb-4 leading-relaxed px-2 text-[#4a3d6a] font-extrabold">
                             Suscribite ahora para desbloquear descuentos y promociones exclusivas.
                         </p>
 
@@ -699,29 +606,23 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 logEvento('click_vip_access', selectedShop.id);
                                 navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
                             }}
-                            className={`w-full py-4 flex items-center justify-center gap-3 font-[1100] uppercase tracking-[0.2em] text-[10px] z-10 transition-transform active:scale-95 ${
-                                isDayMode ? 'glass-button-3d text-slate-700' : 'btn-3d-celeste text-white'
-                            }`}
+                            className="neu-btn-3d w-full py-3.5 flex items-center justify-center gap-2.5 font-black uppercase tracking-[0.2em] text-[9.5px]"
                         >
-                            <Star size={16} className={isDayMode ? 'text-slate-700' : 'text-[#00C2FF] drop-shadow-[0_0_3px_rgba(0,194,255,0.6)]'} strokeWidth={3} />
-                            <span className={isDayMode ? "" : "text-shadow-premium"}>Obtener Credencial VIP</span>
+                            <Star size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <span>Obtener Credencial VIP</span>
                         </button>
                     </div>
                 </div>
 
-                {/* ---------- MÓDULO DE UBICACIÓN ---------- */}
-                <div className="w-full px-5 mb-14">
-                    <div className={
-                        isDayMode ? 'glass-section-card' : 'rounded-[2rem] p-5 bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-                    }>
-                        <div className="flex items-center gap-2 mb-5">
-                            <MapPin size={14} className={isDayMode ? 'glass-text-main/60' : 'text-white/60'} />
-                            <h3 className={`font-black text-[10px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>Dónde Encontrarnos</h3>
+                {/* ---------- MÓDULO DE UBICACIÓN NEUMÓRFICO ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-4 border border-white/60">
+                        <div className="flex items-center gap-2 mb-3.5">
+                            <MapPin size={14} className="text-[#ff6b6b]" />
+                            <h3 className="font-extrabold text-[9.5px] uppercase tracking-[0.25em] text-[#2c2440]">Dónde Encontrarnos</h3>
                         </div>
                         
-                        <div ref={mapRef} className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
-                            isDayMode ? 'border-white/40' : 'border-white/10'
-                        }`}>
+                        <div ref={mapRef} className="w-full h-44 overflow-hidden bg-[#e6e2dc] relative mb-3 rounded-2xl border border-[#b4a594]/30 shadow-inner">
                             {mapVisible ? (
                                 <iframe
                                     title="Ubicación"
@@ -731,117 +632,80 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                     style={{ border: 0 }}
                                     allowFullScreen={false}
                                     loading="lazy"
-                                    className="rounded-[1.25rem] invert-[95%] hue-rotate-180 contrast-[120%] saturate-[200%] brightness-[85%] opacity-90 pointer-events-auto transition-all group-hover:opacity-100"
+                                    className="rounded-2xl pointer-events-auto transition-all"
                                 />
                             ) : (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-40">
-                                    <MapPin size={28} className="text-white" />
-                                    <span className="text-[9px] font-black uppercase tracking-widest text-white">Cargando mapa...</span>
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-60">
+                                    <MapPin size={26} className="text-[#2c2440]" />
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">Cargando mapa...</span>
                                 </div>
                             )}
-                            <div className="absolute inset-0 pointer-events-none rounded-[1.25rem] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]"></div>
                         </div>
 
-                        <p className={`text-[8px] text-center font-bold uppercase tracking-widest mb-5 ${
-                            isDayMode ? 'glass-text-main' : ''
-                        }`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor, 0.6)})` }}>
+                        <p className="text-[8.5px] text-center font-extrabold uppercase tracking-wider mb-4 text-[#2c2440]">
                             {selectedShop.address}
                         </p>
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-2.5">
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'google_maps' }); handleOpenLink(selectedShop.mapSheetUrl || '#'); }} 
-                                className={`py-3 flex items-center justify-center gap-2 ${
-                                    isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
-                                }`}
-                                style={isDayMode ? { 
-                                    background: 'rgba(255, 255, 255, 0.65)', 
-                                    border: '1px solid rgba(255, 255, 255, 0.85)',
-                                    color: '#2c3e50'
-                                } : {}}
+                                className="neu-btn-3d py-3 flex items-center justify-center gap-2 text-[#2c2440]"
                             >
-                                <Navigation size={14} style={{ color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
-                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Cómo llegar</span>
+                                <Navigation size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                                <span className="text-[8.5px] font-black uppercase tracking-wider">Cómo llegar</span>
                             </button>
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'uber' }); handleOpenLink('https://m.uber.com/ul/'); }} 
-                                className={`py-3 flex items-center justify-center gap-2 ${
-                                    isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
-                                }`}
-                                style={isDayMode ? { 
-                                    background: 'rgba(255, 255, 255, 0.65)', 
-                                    border: '1px solid rgba(255, 255, 255, 0.85)',
-                                    color: '#2c3e50'
-                                } : {}}
+                                className="neu-btn-3d py-3 flex items-center justify-center gap-2 text-[#2c2440]"
                             >
-                                <Car size={14} style={{ color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
-                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Pedir Uber</span>
+                                <Car size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                                <span className="text-[8.5px] font-black uppercase tracking-wider">Pedir Uber</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* ---------- MÓDULO COMUNIDAD ---------- */}
-                <div className="w-full px-5 mb-12">
-                    <div className={
-                        isDayMode ? 'glass-section-card flex flex-col gap-4' : 'p-5 flex flex-col gap-4 rounded-[2rem] bg-white/[0.02] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-                    }>
-                        <div className="grid grid-cols-3 gap-3">
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
-                                isDayMode ? 'bg-white/45 border border-white/60 shadow-sm' : 'bg-black/40 border border-[#1877F2]/20'
-                            }`}>
+                {/* ---------- MÓDULO COMUNIDAD NEUMÓRFICO ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-4 flex flex-col gap-3 border border-white/60">
+                        <div className="grid grid-cols-3 gap-2">
+                            <button 
+                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} 
+                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
+                            >
                                 <Facebook size={16} className="text-[#1877F2]" fill="currentColor" strokeWidth={0} />
-                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#1877F2]' : 'text-white/80'}`}>Facebook</span>
+                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">Facebook</span>
                             </button>
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
-                                isDayMode ? 'bg-white/45 border border-white/60 shadow-sm' : 'bg-black/40 border border-[#E4405F]/20'
-                            }`}>
+                            <button 
+                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} 
+                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
+                            >
                                 <Instagram size={16} className="text-[#E4405F]" strokeWidth={2.5} />
-                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'text-[#E4405F]' : 'text-white/80'}`}>Instagram</span>
+                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">Instagram</span>
                             </button>
-                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} className={`py-3 rounded-[1rem] flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform ${
-                                isDayMode ? 'bg-white/45 border border-white/60 shadow-sm' : 'bg-black/40 border border-white/20'
-                            }`}>
-                                <Music size={16} className={isDayMode ? 'glass-text-main' : 'text-white'} strokeWidth={2.5} />
-                                <span className={`text-[7.5px] font-black uppercase tracking-wider ${isDayMode ? 'glass-text-main' : 'text-white/80'}`}>TikTok</span>
-                            </button>
-                        </div>
-                        <button onClick={handleShare} className={`py-3 rounded-[1rem] flex items-center justify-center gap-2 active:scale-95 transition-transform mt-2 ${
-                            isDayMode 
-                                ? 'bg-emerald-500/10 border border-emerald-500/35 text-emerald-800 shadow-sm' 
-                                : 'bg-gradient-to-r from-emerald-900/40 to-green-900/40 border border-green-500/30 text-green-100'
-                        }`}>
-                            <Share2 size={14} className={isDayMode ? 'text-emerald-700' : 'text-green-400'} />
-                            <span className="text-[9.5px] font-black uppercase tracking-widest">Compartir Catálogo</span>
-                        </button>
-                        
-                        {/* Botón Gestión Mudo (Lock) */}
-                        <div className="w-full flex justify-center mt-2">
-                            <button onClick={() => {
-                                playNeonClick();
-                                handleLockTap();
-                            }} className={`flex items-center justify-center gap-1.5 py-2 transition-all duration-300 ${
-                                lockClicks >= 4 
-                                ? 'text-cyan-600 scale-110 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]' 
-                                : lockClicks >= 2 
-                                ? 'opacity-30'
-                                : 'opacity-15'
-                            } ${isDayMode ? 'glass-text-main' : 'text-white'}`}>
-                                <Lock size={lockClicks >= 4 ? 14 : 10} className="transition-all duration-300" />
-                                <span className={`font-bold uppercase tracking-widest transition-all duration-300 ${lockClicks >= 4 ? 'text-[9px]' : 'text-[7px]'}`}>Gestión</span>
+                            <button 
+                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} 
+                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
+                            >
+                                <Music size={16} className="text-[#2c2440]" strokeWidth={2.5} />
+                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">TikTok</span>
                             </button>
                         </div>
-                    </div>
-                </div>
 
+                        <button 
+                            onClick={handleShare} 
+                            className="neu-btn-3d w-full py-3 flex items-center justify-center gap-2 mt-1 text-[#2c2440]"
+                        >
+                            <Share2 size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <span className="text-[9px] font-black uppercase tracking-widest">Compartir Catálogo</span>
+                        </button>
+                    </div>
                 {/* ---------- 📺 MURO VIVO (FEED DINÁMICO) ---------- */}
-                <div className="w-full px-4 mb-14">
-                    <div className={`w-full rounded-[2.5rem] pt-6 pb-4 px-3 flex flex-col relative ${
-                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
-                    }`}>
-                        <div className="flex items-center justify-center gap-2 mb-4">
-                            <ImageIcon size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                            <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Muro de Novedades</h3>
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-4 border border-white/60">
+                        <div className="flex items-center justify-center gap-2 mb-3">
+                            <ImageIcon size={16} className="text-[#ff6b6b]" />
+                            <h3 className="font-extrabold text-[10px] uppercase tracking-[0.25em] text-[#2c2440]">Muro de Novedades</h3>
                             {broadcasts.length > 0 && (
                                 <div className="badge-en-vivo flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5 ml-2">
                                     <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
@@ -851,11 +715,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             )}
                         </div>
 
-                        <div className={`w-full aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden relative border isolate bg-zinc-900 group ${
-                            isDayMode ? 'border-white/40 shadow-lg' : ''
-                        }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
-                            
-                            {/* Slide Container */}
+                        <div className="w-full aspect-[4/5] md:aspect-video rounded-2xl overflow-hidden relative border border-[#b4a594]/30 bg-black group">
                             <div className={`w-full h-full relative ${isGlitching ? 'muro-glitch-active muro-scanline' : ''}`}>
                                 {muroItems.length > 0 ? (
                                     <>
@@ -1424,6 +1284,29 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
             )}
+                <footer className="w-full max-w-[365px] mx-auto px-4 z-10 pt-2 pb-2 mt-auto relative">
+                    <div className="neu-footer flex items-center justify-between w-full">
+                        <p className="text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#2c2440] select-none">
+                            © 2026 · ShopDigital
+                        </p>
+                        <div className="flex items-center gap-3">
+                            <p 
+                                onClick={handleWalyClick}
+                                className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#2c2440] hover:text-[#ff6b6b] select-none cursor-pointer active:scale-95 transition-all" 
+                            >
+                                {selectedShop.name}
+                            </p>
+                            <span className="text-[#b4a594]/50 text-[7px] select-none">|</span>
+                            <button 
+                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                                className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] active:opacity-75 transition-all select-none"
+                            >
+                                Términos
+                            </button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
     );
 };
