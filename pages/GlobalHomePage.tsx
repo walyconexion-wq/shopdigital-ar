@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle } from 'lucide-react';
+import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle, Plane } from 'lucide-react';
 import { suscribirseARegiones } from '../firebase';
 import { Region, Shop } from '../types';
 import { playNeonClick } from '../utils/audio';
@@ -220,46 +220,50 @@ const GlobalHomePage: React.FC = () => {
             {isDayMode ? (
                 <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 justify-between relative">
 
-                    {/* ── Encabezado y Botones Enueltos en el Contenedor Claymórfico Grande ── */}
-                    <div className="home-glass-plate w-full mt-4 flex flex-col gap-4 relative z-10">
-                        {/* ── Título Interno Esmerilado ── */}
-                        <div className="bg-white/45 backdrop-blur-sm border border-white/40 py-3.5 px-6 rounded-[1.8rem] text-center w-full max-w-[280px] mx-auto shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_4px_12px_rgba(88,70,50,0.06)]">
-                            <h1 className="text-[20px] font-[1000] uppercase tracking-[0.12em] text-[#000000] select-none leading-none">
+                    {/* ── Encabezado y Botones Enueltos en el Contenedor Neumórfico Crema ── */}
+                    <div className="neu-plate w-full mt-4 flex flex-col gap-3.5 relative z-10">
+                        {/* ── Título Interno Hundido (Inset Neumórfico) ── */}
+                        <div className="neu-inset-title py-3 px-6 text-center w-full max-w-[300px] mx-auto flex flex-col items-center justify-center">
+                            <h1 className="text-[19px] font-[900] uppercase tracking-[0.1em] text-[#2c2440] select-none leading-none">
                                 SHOPDIGITAL
                             </h1>
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#000000] mt-1.5 select-none">
-                                SELECCIONA TU REGIÓN
-                            </p>
+                            <div className="flex items-center justify-center gap-1 mt-1 select-none">
+                                <span className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-[#4a3d6a]">
+                                    SELECCIONA TU REGIÓN
+                                </span>
+                                <MapPin size={11} className="text-[#4a3d6a]" />
+                            </div>
                         </div>
 
-                        {/* ── Fila 1: Selector de Región — botones GRANDES ── */}
-                        <div className="grid grid-cols-3 gap-2 w-full">
+                        {/* ── Fila 1: Selector de Región — botones Neumórficos 3D ── */}
+                        <div className="grid grid-cols-3 gap-2.5 w-full">
                             {[
-                                { id: 'buenos-aires' as const, label: 'BUENOS AIRES', customColorClass: 'text-[#c98858]' },
-                                { id: 'cordoba' as const, label: 'CÓRDOBA', customColorClass: 'text-[#000000]' },
-                                { id: 'patagonia' as const, label: 'PÁTAGONIA', customColorClass: 'text-[#000000]' }
+                                { id: 'buenos-aires' as const, label: 'BUENOS AIRES', icon: null },
+                                { id: 'cordoba' as const, label: 'CÓRDOBA', icon: null },
+                                { id: 'patagonia' as const, label: 'PATAGONIA', icon: <Mountain size={14} className="opacity-70 flex-shrink-0" /> }
                             ].map(reg => {
                                 const isActive = activeRegion === reg.id;
                                 return (
                                     <button
                                         key={reg.id}
                                         onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
-                                        className={`py-3.5 px-1.5 rounded-[1.8rem] text-[8.5px] font-[1000] uppercase tracking-wide text-center transition-all active:scale-95 ${
-                                            isActive ? 'home-btn-3d-active' : 'home-btn-3d'
-                                        } ${isActive ? 'text-[#c98858]' : reg.customColorClass}`}
+                                        className={`py-3 px-2 text-[8px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all ${
+                                            isActive ? 'neu-btn-3d-active' : 'neu-btn-3d'
+                                        }`}
                                     >
-                                        {reg.label}
+                                        <span>{reg.label}</span>
+                                        {reg.icon}
                                     </button>
                                 );
                             })}
                         </div>
 
-                        {/* ── Fila 2: Localidades — botones PEQUEÑOS ── */}
-                        <div className="grid grid-cols-3 gap-2 w-full">
+                        {/* ── Fila 2: Localidades — botones Neumórficos 3D ── */}
+                        <div className="grid grid-cols-3 gap-2.5 w-full">
                             {localitiesForActiveRegion.map(loc => {
-                                const isCarameloLabel = loc.name.toLowerCase().includes('esteban') || 
-                                                        loc.name.toLowerCase().includes('ezeiza') || 
-                                                        loc.name.toLowerCase().includes('lomas');
+                                const locLower = loc.name.toLowerCase();
+                                const isEzeiza = locLower.includes('ezeiza');
+                                const isLomas = locLower.includes('lomas');
                                 return (
                                     <button
                                         key={loc.name}
@@ -275,23 +279,21 @@ const GlobalHomePage: React.FC = () => {
                                                 navigate(loc.path);
                                             }
                                         }}
-                                        className={`py-2.5 px-1 rounded-[1.2rem] text-[7.5px] leading-tight font-[1000] uppercase tracking-wide text-center home-btn-3d transition-all active:scale-95 ${
-                                            isCarameloLabel ? 'text-[#c98858]' : 'text-[#000000]'
-                                        }`}
+                                        className="neu-btn-3d py-2.5 px-1.5 text-[7.5px] leading-tight font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all"
                                     >
-                                        {loc.name === 'Esteban Echeverria' ? (
-                                            <>
-                                                ESTEBAN<br/>ECHEVERRIA
-                                            </>
-                                        ) : loc.name === 'Ezeiza' ? (
-                                            'EZOZA'
-                                        ) : loc.name === 'Lomas de Zamora' ? (
-                                            <>
-                                                LOMAS DE<br/>ZAMARRA
-                                            </>
-                                        ) : (
-                                            loc.name
-                                        )}
+                                        <span>
+                                            {loc.name === 'Esteban Echeverria' ? (
+                                                <>ESTEBAN<br/>ECHEVERRIA</>
+                                            ) : loc.name === 'Ezeiza' ? (
+                                                'EZEIZA'
+                                            ) : loc.name === 'Lomas de Zamora' ? (
+                                                <>LOMAS DE<br/>ZAMARRA</>
+                                            ) : (
+                                                loc.name
+                                            )}
+                                        </span>
+                                        {isEzeiza && <Plane size={13} className="opacity-70 flex-shrink-0 ml-0.5" />}
+                                        {isLomas && <Building2 size={13} className="opacity-70 flex-shrink-0 ml-0.5" />}
                                     </button>
                                 );
                             })}
