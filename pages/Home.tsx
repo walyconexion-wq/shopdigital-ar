@@ -9,6 +9,7 @@ import { useAuth } from '../components/AuthContext';
 import { TRASLASIERRA_REGION } from '../data/regionalTemplates/traslasierraConfig';
 import { PATAGONIA_7_LAGOS_REGION } from '../data/regionalTemplates/patagonia7LagosConfig';
 import { useLanguage } from '../components/LanguageContext';
+import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
 
 interface HomeProps {
     globalConfig?: any;
@@ -246,95 +247,64 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
 
     return (
         <div className="flex flex-col pt-8 pb-12 animate-in fade-in duration-700 relative overflow-hidden min-h-screen bg-transparent">
-            <style>
-                {`
-                @keyframes seasonalFall {
-                    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-                    10% { opacity: 0.2; }
-                    90% { opacity: 0.2; }
-                    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-                }
-                @keyframes bounceSlow {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-6px); }
-                }
-                .animate-bounce-slow {
-                    animation: bounceSlow 3s ease-in-out infinite;
-                }
-                `}
-            </style>
+            {/* Fondo Ciber-Digital de Circuitos Animados */}
+            <CyberCircuitBackground />
             
             <SeasonalDecoration />
 
-            <div className="absolute top-20 left-[-10%] w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: hexToRgba(themeColor, 0.1) }} />
-            <div className="absolute bottom-20 right-[-10%] w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: hexToRgba(themeColor, 0.1) }} />
-            
-            {/* Panel de Telemetría (Subido a la parte superior absoluta donde estaban los botones) */}
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2.5rem)] max-w-[340px] px-3.5 py-1.5 rounded-2xl border text-[8.5px] font-black uppercase tracking-widest flex items-center justify-between backdrop-blur-md shadow-md bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]"
-                 style={isDayMode ? {} : { backgroundColor: 'rgba(15,23,42,0.6)', borderColor: 'rgba(34,211,238,0.2)' }}>
+            {/* Panel de Telemetría Neumórfico Crema HD (Hora, Fecha, Visitas, Clima) */}
+            <div className="neu-inset-title absolute top-5 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2.5rem)] max-w-[345px] px-3.5 py-2 text-[8.5px] font-extrabold uppercase tracking-widest flex items-center justify-between">
                 <div className="flex flex-col items-center flex-1">
-                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('HORA')}</span>
-                    <span className={`font-mono text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                    <span className="text-[#4a3d6a] text-[6.5px] tracking-[0.2em] mb-0.5">{t('HORA')}</span>
+                    <span className="font-mono text-[9.5px] tracking-wider text-[#2c2440]">
                         {currentTimeStr}
                     </span>
                 </div>
-                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="w-[1px] h-4 bg-[#b4a594]/30" />
                 <div className="flex flex-col items-center flex-1">
-                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('FECHA')}</span>
-                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                    <span className="text-[#4a3d6a] text-[6.5px] tracking-[0.2em] mb-0.5">{t('FECHA')}</span>
+                    <span className="text-[9.5px] tracking-wider text-[#2c2440]">
                         {currentDateStr}
                     </span>
                 </div>
-                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="w-[1px] h-4 bg-[#b4a594]/30" />
                 <div className="flex flex-col items-center flex-1">
-                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('VISITAS')}</span>
-                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                    <span className="text-[#4a3d6a] text-[6.5px] tracking-[0.2em] mb-0.5">{t('VISITAS')}</span>
+                    <span className="text-[9.5px] tracking-wider text-[#2c2440]">
                         👁️ {globalConfig?.visits || 1}
                     </span>
                 </div>
-                <div className={`w-[1px] h-4 ${isDayMode ? 'bg-[#5c4033]/15' : 'bg-white/10'}`} />
+                <div className="w-[1px] h-4 bg-[#b4a594]/30" />
                 <div className="flex flex-col items-center flex-1">
-                    <span className={`${isDayMode ? 'text-[#7a6353]/70' : 'text-white/40'} text-[6px] tracking-[0.2em] mb-0.5`}>{t('CLIMA')}</span>
-                    <span className={`text-[9px] tracking-wider ${isDayMode ? 'text-[#5c4033]' : 'text-white'}`}>
+                    <span className="text-[#4a3d6a] text-[6.5px] tracking-[0.2em] mb-0.5">{t('CLIMA')}</span>
+                    <span className="text-[9.5px] tracking-wider text-[#2c2440]">
                         {getWeatherEmoji(weatherCode)} {temp !== null ? `${temp}°C` : (weatherError ? '18°C' : '...')}
                     </span>
                 </div>
             </div>
 
-            <header className="flex-shrink-0 w-full max-w-[340px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-12 px-4 mb-2.5">
+            {/* Header del Nombre de la Zona (Placa Neumórfica Crema HD) */}
+            <header className="flex-shrink-0 w-full max-w-[345px] mx-auto relative z-20 transition-all duration-700 bg-transparent pt-14 px-4 mb-3">
                 <div 
                     onClick={handleLogoClick}
-                    className={`rounded-3xl p-5 border backdrop-blur-md cursor-pointer active:scale-95 transition-all w-full text-center ${
-                        isDayMode 
-                            ? 'bg-white/45 border-white/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_12px_rgba(88,70,50,0.06)]' 
-                            : 'glass-header'
-                    }`}
-                    style={isDayMode ? {} : { 
-                        borderColor: hexToRgba(themeColor, 0.5),
-                        boxShadow: `0 15px 40px ${hexToRgba(themeColor, 0.4)}`,
-                        background: `linear-gradient(135deg, ${hexToRgba(themeColor, 0.2)} 0%, rgba(15,23,42,0.6) 100%)`
-                    }}
+                    className="neu-plate cursor-pointer active:scale-95 transition-all w-full text-center py-5 px-6"
                 >
                     <Logo />
                 </div>
             </header>
 
-            <div className="flex flex-col items-center mb-10 mt-3 fade-up-item relative z-10 px-6">
-                <div className="h-[1px] w-20 mb-5" style={{ background: `linear-gradient(90deg, transparent, ${hexToRgba(themeColor, 0.5)}, transparent)` }}></div>
+            <div className="flex flex-col items-center mb-6 mt-1 fade-up-item relative z-10 px-6">
                 
-                {/* Botones de control (Retroceso / Clima) reubicados arriba del título Esteban Echeverría */}
-                <div className="flex items-center justify-between w-full max-w-[340px] mb-6 px-1 z-20">
+                {/* Botones de control (Volver / Modo Noche) Neumórficos 3D */}
+                <div className="flex items-center justify-between w-full max-w-[345px] mb-4 px-1 z-20 gap-3">
                     <button
                         onClick={() => {
                             playNeonClick();
                             navigate('/');
                         }}
-                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 mr-3 ${
-                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
-                        }`}
-                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                        className="neu-btn-3d py-3 px-6 text-[9px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1.5 flex-1"
                     >
-                        <ArrowLeft size={14} style={{ color: isDayMode ? '#000000' : '#0891b2' }} />
+                        <ArrowLeft size={14} className="text-[#ff6b6b]" />
                         <span>Volver</span>
                     </button>
 
@@ -346,48 +316,26 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                             localStorage.setItem('global_home_theme_mode', nextTheme);
                             window.dispatchEvent(new Event('theme-changed'));
                         }}
-                        className={`py-3 px-6 rounded-2xl cursor-pointer flex items-center justify-center text-[9.5px] font-[1000] uppercase tracking-wider gap-1.5 shadow-md flex-1 ${
-                            isDayMode ? 'home-btn-3d border' : 'btn-3d-blanco-celeste text-cyan-900'
-                        }`}
-                        style={isDayMode ? { color: '#000000', borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                        className="neu-btn-3d py-3 px-6 text-[9px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1.5 flex-1"
                     >
                         {isDayMode ? (
                             <>
-                                <Moon size={14} style={{ color: '#000000' }} />
+                                <Moon size={14} className="text-[#2c2440]" />
                                 <span>Modo Noche</span>
                             </>
                         ) : (
                             <>
-                                <Sun size={14} style={{ color: '#0891b2' }} />
+                                <Sun size={14} className="text-[#ff6b6b]" />
                                 <span>Modo Día</span>
                             </>
                         )}
                     </button>
                 </div>
 
-                {isDayMode ? null : (
-                    <h2 className="text-[12px] font-[1000] text-white/90 text-shadow-premium uppercase tracking-[0.35em] text-center leading-none">
-                        {mainSubtitle}
-                    </h2>
-                )}
-                
-                <div className="flex items-center gap-3 mt-4">
-                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, transparent, ${isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.3)})` }}></div>
-                    <div className="flex gap-1.5">
-                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.2) }}></div>
-                        <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ 
-                            backgroundColor: isDayMode ? '#c98858' : themeColor, 
-                            boxShadow: isDayMode ? '0 0 8px rgba(201, 136, 88, 0.8)' : `0 0 8px ${hexToRgba(themeColor, 0.6)}` 
-                        }}></div>
-                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.2) }}></div>
-                    </div>
-                    <div className="h-[1px] w-6" style={{ background: `linear-gradient(90deg, ${isDayMode ? 'rgba(201, 136, 88, 0.3)' : hexToRgba(themeColor, 0.3)}, transparent)` }}></div>
-                </div>
-
-                {/* Botones de Navegación Buenos Aires Sur (Estilo Blanco, Letras Celestes, Sombreado 3D) */}
+                {/* Botones de Navegación Buenos Aires Sur (Neumórficos 3D) */}
                 {isInBuenosAires && (
-                    <div className="w-full mt-6 mb-2">
-                        <div className="grid grid-cols-4 gap-1.5 px-3 max-w-[345px] mx-auto">
+                    <div className="w-full mt-2 mb-2">
+                        <div className="grid grid-cols-4 gap-2 px-1 max-w-[345px] mx-auto">
                             {[
                                 { id: 'esteban-echeverria', label: 'Echeverría' },
                                 { id: 'ezeiza', label: 'Ezeiza' },
@@ -406,12 +354,9 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                                 navigate(`/${item.id}/home`);
                                             }
                                         }}
-                                        className={`relative py-2.5 px-0.5 rounded-xl text-[8px] font-black uppercase tracking-wider text-center transition-all ${
-                                            isDayMode 
-                                                ? (isActive ? 'home-btn-3d-active border text-amber-950 font-black shadow-md scale-105' : 'home-btn-3d border text-black/75') 
-                                                : (isActive ? 'btn-3d-blanco-celeste active' : 'btn-3d-blanco-celeste')
+                                        className={`py-2.5 px-0.5 text-[8px] font-extrabold uppercase tracking-wider text-center transition-all ${
+                                            isActive ? 'neu-btn-3d-active' : 'neu-btn-3d'
                                         }`}
-                                        style={isDayMode ? { borderBottomWidth: isActive ? '1px' : '4px', borderBottomColor: '#cda488' } : {}}
                                     >
                                         {item.label}
                                     </button>
@@ -421,56 +366,12 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                     </div>
                 )}
 
-                {/* Botones de Navegación Patagonia (Ubicados donde estaba la telemetría originalmente) */}
+                {/* Botones de Navegación Patagonia (Neumórficos 3D) */}
                 {isInPatagonia && (
-                    <div className="w-full mt-6 mb-2">
-                        <div className="grid grid-cols-3 gap-2.5 px-4 max-w-[340px] mx-auto">
+                    <div className="w-full mt-2 mb-2">
+                        <div className="grid grid-cols-3 gap-2 px-1 max-w-[345px] mx-auto">
                             {PATAGONIA_7_LAGOS_REGION.towns.map((town) => {
                                 const isActive = townId === town.id;
-
-                                // Clases para Modo Día vs Modo Noche (con paddings compactos y texto en 1 línea)
-                                const btnClass = isDayMode
-                                    ? `px-1 py-2.5 rounded-xl text-[7.5px] font-[1000] uppercase tracking-wider transition-all duration-150 active:translate-y-[2px] text-center whitespace-nowrap overflow-hidden home-btn-3d border ${
-                                        isActive 
-                                            ? 'home-btn-3d-active text-amber-950 scale-105' 
-                                            : 'text-black/75 hover:-translate-y-[1.5px]'
-                                      }`
-                                    : `px-1 py-2 rounded-xl border transition-all duration-300 text-[7.5px] font-black uppercase tracking-wider text-center whitespace-nowrap overflow-hidden ${
-                                        isActive
-                                            ? 'backdrop-blur-md text-white scale-105 animate-pulse'
-                                            : 'backdrop-blur-sm text-white/90 hover:text-white hover:scale-105 active:scale-95'
-                                      }`;
-
-                                // Estilos en línea específicos para relieve y glow
-                                const btnStyle = isDayMode
-                                    ? (isActive 
-                                        ? {
-                                            borderWidth: '1px',
-                                            borderBottomWidth: '1px',
-                                            borderBottomColor: '#cda488',
-                                            color: '#5c4033',
-                                            fontWeight: '1000'
-                                          }
-                                        : {
-                                            borderWidth: '1px',
-                                            borderBottomWidth: '4px',
-                                            borderBottomColor: '#cda488',
-                                          }
-                                      )
-                                    : (isActive 
-                                        ? {
-                                            backgroundColor: hexToRgba(themeColor, 0.35),
-                                            borderColor: '#ffffff',
-                                            boxShadow: `0 0 15px ${hexToRgba(themeColor, 0.8)}, inset 0 0 8px ${hexToRgba(themeColor, 0.5)}`,
-                                            textShadow: `0 0 6px ${hexToRgba(themeColor, 0.9)}`
-                                          } 
-                                        : {
-                                            backgroundColor: hexToRgba(themeColor, 0.1),
-                                            borderColor: hexToRgba(themeColor, 0.3),
-                                            boxShadow: `0 0 8px ${hexToRgba(themeColor, 0.1)}`
-                                          }
-                                      );
-
                                 return (
                                     <button
                                         key={town.id}
@@ -478,92 +379,24 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                             playNeonClick();
                                             if (!isActive) navigate(`/${town.id}/home`);
                                         }}
-                                        className={btnClass}
-                                        style={btnStyle}
+                                        className={`py-2.5 px-1 text-[7.5px] font-extrabold uppercase tracking-wider text-center transition-all whitespace-nowrap overflow-hidden ${
+                                            isActive ? 'neu-btn-3d-active' : 'neu-btn-3d'
+                                        }`}
                                     >
-                                        {town.id === 'san-martin-de-los-andes' ? 'San Martín' : town.id === 'villa-la-angostura' ? 'V. La Angostura' : 'Bariloche'}
+                                        {town.id === 'san-martin-de-los-andes' ? 'San Martín' : town.id === 'villa-la-angostura' ? 'V. Angostura' : 'Bariloche'}
                                     </button>
                                 );
                             })}
                         </div>
                     </div>
                 )}
-                                {globalConfig?.isChristmasMode && (
-                    <div 
-                        className="mt-6 w-full max-w-[340px] px-4 py-3 rounded-2xl border text-center relative overflow-hidden backdrop-blur-md animate-bounce-slow"
-                        style={{
-                            background: `linear-gradient(135deg, rgba(220, 38, 38, 0.3) 0%, rgba(20, 83, 45, 0.3) 100%)`,
-                            borderColor: '#ef4444',
-                            boxShadow: '0 0 15px rgba(239, 68, 68, 0.5), inset 0 0 10px rgba(34, 197, 94, 0.3)',
-                        }}
-                    >
-                        {/* Christmas Lights decoration */}
-                        <div className="absolute top-0 left-0 right-0 flex justify-around opacity-80 select-none text-[8px] tracking-[0.1em] pointer-events-none">
-                            <span>🔴</span><span>🟢</span><span>🔵</span><span>🟡</span><span>🔴</span><span>🟢</span><span>🔵</span><span>🟡</span>
-                        </div>
-                        <h3 className="text-[13px] font-black text-white tracking-[0.15em] uppercase text-shadow-premium flex items-center justify-center gap-1.5 pt-1.5">
-                            🎄 ¡Feliz Navidad en {townName}! 🎅
-                        </h3>
-                        <p className="text-[8.5px] font-black text-emerald-300 tracking-[0.1em] uppercase mt-1">
-                            Disfrutá los catálogos y ofertas locales
-                        </p>
-                    </div>
-                )}
 
-                {/* Chips Regionales para Traslasierra */}
+                {/* Chips Regionales para Traslasierra (Neumórficos 3D) */}
                 {isInTraslasierra && (
-                    <div className="w-full mt-6 mb-2">
-                        <div className="flex flex-wrap justify-center gap-2.5 px-2 pb-2 max-w-[95%] mx-auto">
+                    <div className="w-full mt-2 mb-2">
+                        <div className="flex flex-wrap justify-center gap-2 px-1 max-w-[345px] mx-auto">
                             {TRASLASIERRA_REGION.towns.map((town) => {
                                 const isActive = townId === town.id;
-                                const themeMode = globalConfig?.themeMode || 'auto';
-                                const isDayMode = themeMode === 'light' 
-                                    ? true 
-                                    : themeMode === 'dark' 
-                                        ? false 
-                                        : new Date().getHours() >= 8 && new Date().getHours() < 20;
-
-                                // Clases para Modo Día vs Modo Noche
-                                const btnClass = isDayMode
-                                    ? `px-4 py-2.5 rounded-full text-[8.5px] font-[1000] uppercase tracking-widest transition-all duration-150 active:translate-y-[2px] home-btn-3d border ${
-                                        isActive 
-                                            ? 'home-btn-3d-active text-amber-950 scale-105' 
-                                            : 'text-black/75 hover:-translate-y-[1.5px]'
-                                      }`
-                                    : `px-4 py-2 rounded-full border transition-all duration-300 text-[8.5px] font-black uppercase tracking-widest ${
-                                        isActive
-                                            ? 'backdrop-blur-md text-white scale-105 animate-pulse'
-                                            : 'backdrop-blur-sm text-white/90 hover:text-white hover:scale-105 active:scale-95'
-                                      }`;
-
-                                // Estilos en línea específicos para relieve y glow
-                                const btnStyle = isDayMode
-                                    ? (isActive 
-                                        ? {
-                                            borderWidth: '1px',
-                                            borderBottomWidth: '1px',
-                                            borderBottomColor: '#cda488',
-                                          }
-                                        : {
-                                            borderWidth: '1px',
-                                            borderBottomWidth: '4px',
-                                            borderBottomColor: '#cda488',
-                                          }
-                                      )
-                                    : (isActive 
-                                        ? {
-                                            backgroundColor: hexToRgba(themeColor, 0.35),
-                                            borderColor: '#ffffff',
-                                            boxShadow: `0 0 20px ${hexToRgba(themeColor, 0.8)}, inset 0 0 10px ${hexToRgba(themeColor, 0.5)}`,
-                                            textShadow: `0 0 8px ${hexToRgba(themeColor, 0.9)}`
-                                          } 
-                                        : {
-                                            backgroundColor: hexToRgba(themeColor, 0.1),
-                                            borderColor: hexToRgba(themeColor, 0.3),
-                                            boxShadow: `0 0 10px ${hexToRgba(themeColor, 0.1)}`
-                                          }
-                                      );
-
                                 return (
                                     <button
                                         key={town.id}
@@ -571,8 +404,9 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                                             playNeonClick();
                                             if (!isActive) navigate(`/${town.id}/home`);
                                         }}
-                                        className={btnClass}
-                                        style={btnStyle}
+                                        className={`py-2 px-3.5 text-[8px] font-extrabold uppercase tracking-wider text-center transition-all ${
+                                            isActive ? 'neu-btn-3d-active' : 'neu-btn-3d'
+                                        }`}
                                     >
                                         {town.name}
                                     </button>
@@ -583,36 +417,23 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 )}
             </div>
 
-            {/* Contenedor Claymórfico Esmerilado para Categorías/Rubros */}
-            <div className={`px-5 relative z-10 ${isDayMode ? 'max-w-md mx-auto w-full' : ''}`}>
-                <div className={isDayMode ? 'home-glass-plate w-full grid grid-cols-3 gap-3' : 'grid grid-cols-3 gap-x-4 gap-y-8'}>
+            {/* Contenedor Neumórfico Crema HD para la Grilla de Categorías */}
+            <div className="px-4 relative z-10 max-w-[365px] mx-auto w-full">
+                <div className="neu-plate w-full grid grid-cols-3 gap-3">
                     {(globalConfig?.categories || CATEGORIES).filter((c: any) => c.isActive !== false).map((cat: any, index: number) => {
-                        const btnStyle = isDayMode 
-                            ? {
-                                animation: `fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) ${index * 35}ms both`,
-                              }
-                            : {
-                                animation: `fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) ${index * 35}ms both`,
-                                backgroundColor: hexToRgba(themeColor, 0.15),
-                                borderColor: hexToRgba(themeColor, 0.2),
-                                boxShadow: `0 0 15px ${hexToRgba(themeColor, 0.08)}`
-                              };
-
                         return (
                             <button
                                 key={cat.id}
                                 onClick={() => { playNeonClick(); navigate(`/${townId}/${cat.slug}`); }}
-                                className={`category-btn aspect-square group backdrop-blur-md transition-all duration-300 ${
-                                    isDayMode ? 'home-btn-3d border' : 'glass-button-3d rounded-[1.25rem]'
-                                }`}
-                                style={btnStyle}
+                                className="neu-btn-3d aspect-square p-2 flex flex-col items-center justify-center gap-1.5 transition-all group"
+                                style={{
+                                    animation: `fadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) ${index * 30}ms both`
+                                }}
                             >
-                                <div className="mb-1 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500 ease-out" style={{ color: isDayMode ? '#47def6' : themeColor }}>
+                                <div className="text-[#2c2440] group-hover:text-[#ff6b6b] transform group-hover:scale-110 transition-transform duration-300">
                                     {cat.iconKey ? resolveIcon(cat.iconKey) : cat.icon}
                                 </div>
-                                <span className={`text-[8px] text-center font-[1000] uppercase leading-[1.1] tracking-[0.01em] px-0.5 group-hover:text-amber-950 transition-colors ${
-                                    isDayMode ? 'text-[#000000]' : 'text-white/90'
-                                }`}>
+                                <span className="text-[8px] text-center font-extrabold uppercase leading-tight tracking-wide text-[#2c2440] group-hover:text-[#ff6b6b] transition-colors">
                                     {t(cat.name)}
                                 </span>
                             </button>
@@ -621,75 +442,47 @@ const Home: React.FC<HomeProps> = ({ globalConfig }) => {
                 </div>
             </div>
 
-            <div className="mt-8 mb-4 px-10 flex flex-col gap-3.5 justify-center items-center w-full max-w-[310px] mx-auto fade-up-item relative z-10" style={{ animationDelay: '700ms' }}>
+            {/* Botones Neumórficos de Suscribir Comercio y Compartir App */}
+            <div className="mt-6 mb-4 px-4 flex flex-col gap-3 justify-center items-center w-full max-w-[365px] mx-auto fade-up-item relative z-10">
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/subscripcion`); }}
-                    className={`relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 border ${
-                        isDayMode ? 'home-btn-3d text-black' : 'btn-3d-esmerilado'
-                    }`}
-                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    className="neu-btn-3d w-full py-3.5 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2.5"
                 >
-                    <Store size={16} style={{ color: isDayMode ? '#47def6' : '#0891b2' }} strokeWidth={3} />
+                    <Store size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
                     <span>{t('Suscribir Comercio')}</span>
                 </button>
 
                 <button
                     onClick={handleShare}
-                    className={`relative w-full py-3.5 rounded-2xl text-[9.5px] font-[1100] uppercase tracking-[0.25em] flex items-center justify-center gap-3 border ${
-                        isDayMode ? 'home-btn-3d text-black' : 'btn-3d-esmerilado'
-                    }`}
-                    style={isDayMode ? { borderBottomWidth: '4px', borderBottomColor: '#cda488' } : {}}
+                    className="neu-btn-3d w-full py-3.5 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2.5"
                 >
-                    <Share2 size={15} style={{ color: isDayMode ? '#47def6' : '#0891b2' }} strokeWidth={3} />
+                    <Share2 size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
                     <span>Compartir App</span>
                 </button>
             </div>
 
-            <footer className="w-full max-w-md mx-auto px-5 z-10 pt-4 pb-4 mt-auto relative">
-                {isDayMode ? (
-                    <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
-                        <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
-                            © 2026 · ShopDigital
+            {/* Pie de Página Neumórfico Crema HD */}
+            <footer className="w-full max-w-[365px] mx-auto px-4 z-10 pt-2 pb-2 mt-auto relative">
+                <div className="neu-footer flex items-center justify-between w-full">
+                    <p className="text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#2c2440] select-none">
+                        © 2026 · ShopDigital
+                    </p>
+                    <div className="flex items-center gap-3">
+                        <p 
+                            onClick={handleWalyClick}
+                            className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#2c2440] hover:text-[#ff6b6b] select-none cursor-pointer active:scale-95 transition-all" 
+                        >
+                            {isInPatagonia ? 'Patagonia' : townName}
                         </p>
-                        <div className="flex items-center gap-2.5">
-                            <p 
-                                onClick={handleWalyClick}
-                                className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] select-none cursor-pointer active:scale-95 transition-transform" 
-                            >
-                                {isInPatagonia ? 'Patagonia' : townName}
-                            </p>
-                            <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
-                            <button 
-                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                                className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
-                            >
-                                Términos
-                            </button>
-                        </div>
+                        <span className="text-[#b4a594]/50 text-[7px] select-none">|</span>
+                        <button 
+                            onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                            className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] active:opacity-75 transition-all select-none"
+                        >
+                            Términos
+                        </button>
                     </div>
-                ) : (
-                    <div className="w-full flex flex-col items-center gap-2 pt-4 pb-4 border-t border-white/10">
-                        <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
-                            © 2026 · ShopDigital
-                        </p>
-                        <div className="flex items-center gap-4 mt-1">
-                            <p 
-                                onClick={handleWalyClick}
-                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none cursor-pointer active:scale-95 transition-transform" 
-                                style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}
-                            >
-                                {isInPatagonia ? 'Patagonia' : townName}
-                            </p>
-                            <span className="text-white/20 text-[8px]">|</span>
-                            <button 
-                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
-                            >
-                                Términos y Condiciones
-                            </button>
-                        </div>
-                    </div>
-                )}
+                </div>
             </footer>
         </div>
     );
