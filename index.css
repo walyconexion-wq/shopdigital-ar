@@ -382,6 +382,15 @@
     0 0 14px rgba(255, 107, 107, 0.45) !important;
   color: #2c2440;
   font-weight: 800;
+/* Pie de página Neumórfico Crema HD */
+.neu-footer {
+  background: #f0ece6;
+  border-radius: 50px;
+  box-shadow: 
+    8px 8px 20px rgba(180, 165, 148, 0.45), 
+    -8px -8px 20px rgba(255, 255, 255, 0.85);
+  padding: 12px 22px;
+  color: #2c2440;
 }
 
 

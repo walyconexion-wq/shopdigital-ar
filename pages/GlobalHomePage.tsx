@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle, Plane } from 'lucide-react';
+import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle, Plane, FileCheck, FileText } from 'lucide-react';
 import { suscribirseARegiones } from '../firebase';
 import { Region, Shop } from '../types';
 import { playNeonClick } from '../utils/audio';
@@ -313,28 +313,29 @@ const GlobalHomePage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* ── Pie de Página con Estilo Esmerilado Claymórfico de la Maqueta ── */}
-                    <footer className="w-full z-10 pt-2 pb-2 mb-2">
-                        <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
+                    {/* ── Pie de Página Neumórfico Crema HD (Maqueta) ── */}
+                    <footer className="w-full z-10 mt-auto pt-2 pb-1 mb-1">
+                        <div className="neu-footer flex items-center justify-between w-full">
                             <p
                                 onClick={handleCopyrightClick}
-                                className="text-[8px] font-black uppercase tracking-[0.25em] text-[#000000] cursor-pointer select-none active:opacity-100 transition-opacity"
+                                className="text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#2c2440] cursor-pointer select-none active:opacity-100 transition-opacity"
                             >
                                 © 2026 · SHOPDIGITAL
                             </p>
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-3">
                                 <button
                                     onClick={() => { playNeonClick(); navigate('/terminos'); }}
-                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
+                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                 >
-                                    Términos
+                                    <FileText size={11} className="opacity-70" />
+                                    TÉRMINOS
                                 </button>
-                                <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
                                 <button
                                     onClick={() => { playNeonClick(); navigate('/terminos'); }}
-                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
+                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                 >
-                                    Condiciones
+                                    <FileCheck size={11} className="opacity-70" />
+                                    CONDICIONES
                                 </button>
                             </div>
                         </div>
