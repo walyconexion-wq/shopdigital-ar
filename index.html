@@ -42,7 +42,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #000000;
+      background: linear-gradient(155deg, #9b7fc7 0%, #7B5EA7 45%, #5a3d8a 100%);
       color: #0A224E;
       margin: 0;
       padding: 0;
@@ -859,6 +859,23 @@
 </head>
 
 <body>
+
+  <!-- ░░░ FONDO CIBER-DIGITAL: CAPA DE CIRCUITOS ANIMADOS ░░░ -->
+  <div id="sd-bg-layer" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+    <canvas id="sd-circuit-canvas" style="width:100%;height:100%;"></canvas>
+    <!-- Partículas de luz flotantes -->
+    <div class="sd-particle" style="--sdx:12%;--sdy:18%;--sdd:3.2s;--sds:0.7"></div>
+    <div class="sd-particle" style="--sdx:82%;--sdy:14%;--sdd:2.1s;--sds:0.5"></div>
+    <div class="sd-particle" style="--sdx:7%;--sdy:55%;--sdd:4.0s;--sds:0.9"></div>
+    <div class="sd-particle" style="--sdx:91%;--sdy:48%;--sdd:2.8s;--sds:0.6"></div>
+    <div class="sd-particle" style="--sdx:25%;--sdy:80%;--sdd:3.5s;--sds:0.8"></div>
+    <div class="sd-particle" style="--sdx:70%;--sdy:78%;--sdd:1.9s;--sds:0.7"></div>
+    <div class="sd-particle" style="--sdx:45%;--sdy:10%;--sdd:3.1s;--sds:0.4"></div>
+    <div class="sd-particle" style="--sdx:60%;--sdy:90%;--sdd:2.6s;--sds:0.6"></div>
+    <div class="sd-particle" style="--sdx:15%;--sdy:35%;--sdd:4.2s;--sds:0.5"></div>
+    <div class="sd-particle" style="--sdx:88%;--sdy:65%;--sdd:2.3s;--sds:0.8"></div>
+  </div>
+
   <div id="root"></div>
   <!-- Inyección dinámica de título zonal para tab del browser y OG dinámico -->
   <script>
@@ -876,6 +893,8 @@
     })();
   </script>
   <script type="module" src="/index.tsx"></script>
+  <!-- Fondo ciber-digital: circuitos animados. Carga después del DOM, no afecta la app -->
+  <script src="/sd-circuit-bg.js" defer></script>
 </body>
 
 </html>
