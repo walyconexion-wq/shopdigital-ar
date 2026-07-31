@@ -299,15 +299,15 @@ const GlobalHomePage: React.FC = () => {
                     </div>
 
                     {/* ── Avatar Central con Movimiento 3D y Sombra ── */}
-                    <div className="flex-1 flex flex-col items-center justify-end relative z-0 select-none pointer-events-none overflow-hidden mt-1 pb-1">
-                        <div className="ari-3d-avatar-container flex flex-col items-center justify-end h-[95%] max-h-[340px]">
+                    <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-2">
+                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[250px] sm:max-h-[280px]">
                             <img
                                 src="/ari-pointing.png"
                                 alt="ARI Asistente"
-                                className="h-full w-auto object-contain object-bottom filter drop-shadow-[0_12px_24px_rgba(40,10,80,0.4)]"
+                                className="max-h-[240px] sm:max-h-[270px] w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.35)]"
                                 loading="eager"
                             />
-                            <div className="ari-3d-shadow -mt-3" />
+                            <div className="ari-3d-shadow mt-1" />
                         </div>
                     </div>
 
