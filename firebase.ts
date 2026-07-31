@@ -1141,6 +1141,7 @@ export interface Broadcast {
     mediaUrl: string;
     mediaType: 'image' | 'video';
     title: string;
+    description?: string;
     targetCategories: string[];  // ['all'] o ['pizzerias','heladerias']
     active: boolean;
     priority: number;

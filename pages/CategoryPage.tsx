@@ -166,7 +166,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ allShops, globalConfig }) =
     }
 
     return (
-    return (
         <div className="flex flex-col pt-6 pb-10 animate-in slide-in-from-bottom-6 duration-700 relative overflow-hidden min-h-screen bg-transparent text-[#2c2440]">
             {/* Fondo Ciber-Digital de Circuitos Animados */}
             <CyberCircuitBackground />
