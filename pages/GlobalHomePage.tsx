@@ -7,6 +7,7 @@ import { playNeonClick } from '../utils/audio';
 import ArgentinaMap from '../components/ArgentinaMap';
 import Logo from '../components/Logo';
 import { AriMerchantAssistant } from '../components/AriMerchantAssistant';
+import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
 
 const STATIC_REGIONS: Region[] = [
     { 
@@ -213,6 +214,9 @@ const GlobalHomePage: React.FC = () => {
         <div 
             className={`w-full font-sans relative select-none ${isDayMode ? 'bg-transparent text-[#2d1e15]' : 'bg-transparent text-white selection:bg-cyan-500/30 overflow-hidden h-screen'}`}
         >
+            {/* Fondo Ciber-Digital de Circuitos Animados */}
+            <CyberCircuitBackground />
+            
             {isDayMode ? (
                 <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 justify-between relative">
 
