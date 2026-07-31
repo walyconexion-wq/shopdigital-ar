@@ -211,7 +211,7 @@ const GlobalHomePage: React.FC = () => {
 
     return (
         <div 
-            className={`w-full font-sans relative select-none ${isDayMode ? 'bg-[#cda488]' : 'bg-black text-white selection:bg-cyan-500/30 overflow-hidden h-screen'}`}
+            className={`w-full font-sans relative select-none ${isDayMode ? 'bg-transparent text-[#2d1e15]' : 'bg-transparent text-white selection:bg-cyan-500/30 overflow-hidden h-screen'}`}
         >
             {isDayMode ? (
                 <div className="w-full max-w-md mx-auto min-h-full flex flex-col p-5 pb-6 justify-between relative">
