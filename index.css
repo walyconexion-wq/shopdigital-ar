@@ -281,8 +281,45 @@
 }
 
 /* Reducir animaciones si el usuario lo prefiere */
+/* 📱 ANIMACIÓN Y EFECTO 3D PARA AVATAR ARI */
+.ari-3d-avatar-container {
+  animation: ari3DFloat 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes ari3DFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.2deg) scale(1.015);
+  }
+}
+
+.ari-3d-shadow {
+  width: 140px;
+  height: 18px;
+  background: radial-gradient(ellipse at center, rgba(30, 10, 65, 0.45) 0%, rgba(30, 10, 65, 0) 75%);
+  border-radius: 50%;
+  animation: ari3DShadowPulse 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ari3DShadowPulse {
+  0%, 100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleX(0.78) scaleY(0.7);
+    opacity: 0.22;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sd-particle {
+  .ari-3d-avatar-container,
+  .ari-3d-shadow {
     animation: none;
   }
 }
+
