@@ -603,7 +603,7 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
     };
 
     return (
-        <div className={inline ? 'w-full' : 'fixed bottom-16 right-5 z-[1000]'}>
+        <div className={inline ? 'w-full' : 'fixed bottom-20 right-5 z-[1000]'}>
             {/* ═══ MODO INLINE: Panel siempre abierto, empotrado en la página ═══ */}
             {inline && (
                 <div
@@ -837,7 +837,7 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
              !(window.location.pathname.split('/').filter(Boolean).length === 3 && 
                !window.location.pathname.includes('/mi-catalogo') &&
                !window.location.pathname.includes('/red-comercial')) && (
-                <div className="fixed bottom-16 left-5 z-[1000]">
+                <div className="fixed bottom-20 left-5 z-[1000]">
                     <a
                         href="https://wa.me/5491140607059?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20ShopDigital%20%F0%9F%9B%92"
                         target="_blank"

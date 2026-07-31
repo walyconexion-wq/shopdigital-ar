@@ -309,7 +309,7 @@ const GlobalHomePage: React.FC = () => {
                     </div>
 
                     {/* ── Pie de Página con Estilo Esmerilado Claymórfico de la Maqueta ── */}
-                    <footer className="w-full z-10 pt-2 pb-1">
+                    <footer className="w-full z-10 pt-2 pb-2 mb-2">
                         <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
                             <p
                                 onClick={handleCopyrightClick}
