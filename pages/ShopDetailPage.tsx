@@ -410,11 +410,13 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 <meta name="twitter:image" content={selectedShop.bannerImage || selectedShop.image} />
             </Helmet>
 
-            <div className="relative w-full h-[360px] bg-black overflow-hidden shadow-md">
+            {/* ---------- PORTADA PRINCIPAL / HERO BANNER ---------- */}
+            <div className="relative w-full h-[350px] bg-zinc-900 overflow-hidden shadow-2xl rounded-b-[2.5rem] border-b border-[#b4a594]/30">
                 {/* Botón Volver Neumórfico 3D */}
                 <button
                     onClick={() => { playNeonClick(); navigate(`${basePath}/${categorySlug}`); }}
-                    className="neu-btn-3d absolute top-6 left-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
+                    className="neu-btn-3d absolute top-5 left-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl transition-transform active:scale-90"
+                    title="Volver"
                 >
                     <ArrowLeft size={18} className="text-[#ff6b6b]" strokeWidth={2.5} />
                 </button>
@@ -428,11 +430,13 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         localStorage.setItem('global_home_theme_mode', nextTheme);
                         window.dispatchEvent(new Event('theme-changed'));
                     }}
-                    className="neu-btn-3d absolute top-6 right-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
+                    className="neu-btn-3d absolute top-5 right-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl transition-transform active:scale-90"
+                    title="Cambiar Modo"
                 >
                     {isDayMode ? <Moon size={17} className="text-[#2c2440]" /> : <Sun size={17} className="text-[#ff6b6b]" />}
                 </button>
 
+                {/* Imágenes de Fondo de Portada */}
                 {gallery.map((img, idx) => (
                     <img
                         key={idx}
@@ -444,35 +448,35 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                     />
                 ))}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/50"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/50" />
 
-                {/* Placa Neumórfica de Nombre y Zona */}
+                {/* Placa Neumórfica de Nombre y Ubicación */}
                 <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[90%] max-w-[345px] flex flex-col items-center">
-                    <div className="neu-plate w-full py-4 px-6 text-center border border-white/60">
-                        <h1 className="text-[22px] font-[900] uppercase tracking-wider text-[#2c2440] leading-none mb-1">
+                    <div className="neu-plate w-full py-4 px-6 text-center border border-white/70 shadow-2xl backdrop-blur-md">
+                        <h1 className="text-[20px] sm:text-[22px] font-[1000] uppercase tracking-wider text-[#2c2440] leading-tight mb-1 drop-shadow-sm">
                             {String(selectedShop.name || '').replace(/\s*\(.*\)\s*/, '').split('-')[0].trim()}
                         </h1>
                         <div className="flex items-center justify-center gap-1.5 mt-2">
-                            <MapPin size={12} className="text-[#ff6b6b]" strokeWidth={2.5} />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#4a3d6a]">
+                            <MapPin size={13} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <span className="text-[9.5px] font-black uppercase tracking-[0.2em] text-[#4a3d6a]">
                                 {selectedShop.zone || 'Tu zona'}
                             </span>
                         </div>
                     </div>
                 </div>
 
-                {/* Contador Visitas Neumórfico */}
-                <div className="neu-inset-title absolute bottom-4 left-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
-                    <Eye size={12} className="text-[#4a3d6a]" />
-                    <span>{selectedShop.visits || 0} visitas</span>
-                </div>
+                {/* Badges Inferiores de Visitas y Suscriptores (Simétricos y Neumórficos) */}
+                <div className="absolute bottom-5 left-0 right-0 z-40 px-5 flex items-center justify-between pointer-events-none">
+                    <div className="neu-inset-title flex items-center gap-1.5 px-3 py-1.5 text-[8.5px] font-black text-[#2c2440] uppercase tracking-widest backdrop-blur-sm bg-[#faf7f2]/80">
+                        <Eye size={12} className="text-[#4a3d6a]" />
+                        <span>{selectedShop.visits || 0} visitas</span>
+                    </div>
 
-                {/* Contador Suscriptores Neumórfico */}
-                <div className="neu-inset-title absolute bottom-4 right-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
-                    <Users size={12} className="text-[#ff6b6b]" />
-                    <span>{selectedShop.subscribers || 0} suscriptores</span>
+                    <div className="neu-inset-title flex items-center gap-1.5 px-3 py-1.5 text-[8.5px] font-black text-[#2c2440] uppercase tracking-widest backdrop-blur-sm bg-[#faf7f2]/80">
+                        <Users size={12} className="text-[#ff6b6b]" />
+                        <span>{selectedShop.subscribers || 0} suscriptores</span>
+                    </div>
                 </div>
-
             </div>
 
             <div className="relative z-10 flex flex-col items-center">
@@ -498,7 +502,6 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 onMouseLeave={() => isTouchingRef.current = false}
                             >
                                 {selectedShop.offers.map((offer, idx) => {
-                                    // Badges Dinámicos sugeridos por Gemy
                                     const badgeType = idx % 3;
                                     const badgeProps = badgeType === 0 
                                         ? { text: '🔥 HOT', bg: 'bg-orange-500/90', shadow: 'shadow-[0_0_10px_rgba(249,115,22,0.8)]' }
@@ -543,28 +546,18 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
 
-                {/* ---------- INTEGRACIÓN PEDIDOSYA ---------- */}
+                {/* ---------- INTEGRACIÓN PEDIDOSYA NEUMÓRFICA ---------- */}
                 {selectedShop.pedidoYaUrl && (
-                    <div className="w-full px-5 mb-14">
+                    <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
                         <button
                             onClick={() => {
                                 playNeonClick();
                                 window.open(selectedShop.pedidoYaUrl, '_blank', 'noopener,noreferrer');
                             }}
-                            className={`w-full py-4 rounded-[2rem] flex items-center justify-center gap-3 group relative overflow-hidden transition-all ${
-                                isDayMode 
-                                    ? 'glass-button-3d w-full shadow-lg border' 
-                                    : 'bg-[#EA044E]/10 border border-[#EA044E]/50 shadow-[0_0_20px_rgba(234,4,78,0.2)] hover:bg-[#EA044E]/20 active:scale-95'
-                            }`}
-                            style={isDayMode ? { 
-                                background: 'rgba(255, 255, 255, 0.65)', 
-                                border: '1px solid rgba(255, 255, 255, 0.85)',
-                                color: '#00C2FF'
-                            } : {}}
+                            className="neu-btn-3d w-full py-4 flex items-center justify-center gap-3 transition-transform active:scale-95"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#EA044E]/0 via-white/10 to-[#EA044E]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                            <ShoppingBag size={18} strokeWidth={2.5} className="text-[#EA044E] group-hover:scale-110 transition-transform" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#EA044E] drop-shadow-md">Pedir por PedidoYa</span>
+                            <ShoppingBag size={18} strokeWidth={2.5} className="text-[#EA044E]" />
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#EA044E]">Pedir por PedidoYa</span>
                         </button>
                     </div>
                 )}
