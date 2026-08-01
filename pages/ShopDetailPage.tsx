@@ -817,205 +817,110 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
 
-                {/* ---------- 🎈 ZONA KIDS ---------- */}
-                <div className="w-full px-4 mb-14">
-                    <div className={`w-full rounded-[2.5rem] pt-6 pb-5 px-3 flex flex-col relative overflow-hidden ${
-                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
-                    }`}>
-                        {/* Globos decorativos flotantes */}
-                        <div className="absolute -top-4 -left-2 w-10 h-12 rounded-full bg-red-400/30 blur-sm animate-bounce" style={{ animationDuration: '3s', animationDelay: '0s' }} />
-                        <div className="absolute -top-2 right-8 w-8 h-10 rounded-full bg-yellow-400/30 blur-sm animate-bounce" style={{ animationDuration: '4s', animationDelay: '1s' }} />
-                        <div className="absolute top-6 -right-1 w-9 h-11 rounded-full bg-green-400/25 blur-sm animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }} />
-                        <div className="absolute top-20 left-4 w-7 h-9 rounded-full bg-purple-400/20 blur-sm animate-bounce" style={{ animationDuration: '4.5s', animationDelay: '2s' }} />
-                        <div className="absolute bottom-12 right-4 w-8 h-10 rounded-full bg-pink-400/25 blur-sm animate-bounce" style={{ animationDuration: '3.2s', animationDelay: '1.5s' }} />
-                        <div className="absolute bottom-4 left-10 w-6 h-8 rounded-full bg-cyan-400/20 blur-sm animate-bounce" style={{ animationDuration: '5s', animationDelay: '0.8s' }} />
-
-                        {/* Título */}
-                        <div className="flex items-center justify-center gap-2.5 mb-5 relative z-10">
+                {/* ---------- 🎈 ZONA KIDS NEUMÓRFICA ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-5 flex flex-col overflow-hidden">
+                        {/* Título colorido */}
+                        <div className="flex items-center justify-center gap-2.5 mb-3">
                             <span className="text-[22px]">🎈</span>
-                            <h3 className={`font-[1000] text-[13px] uppercase tracking-[0.3em] ${
-                                isDayMode ? 'glass-text-main' : ''
-                            }`} style={isDayMode ? {} : { 
-                                background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #FF6BCB)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                filter: 'drop-shadow(0 0 8px rgba(255,107,107,0.4))'
-                            }}>Zona Kids</h3>
+                            <h3 className="font-[1000] text-[13px] uppercase tracking-[0.3em] text-[#2c2440]">Zona Kids</h3>
                             <span className="text-[22px]">🎈</span>
                         </div>
-
-                        {/* Subtítulo */}
-                        <p className={`text-center text-[10px] font-bold mb-5 relative z-10 ${
-                            isDayMode ? 'text-slate-500' : 'text-white/50'
-                        }`}>
+                        <p className="text-center text-[9.5px] font-bold mb-5 text-[#4a3d6a]/70">
                             🎉 ¡Diversión asegurada mientras la familia disfruta! 🎉
                         </p>
 
-                        {/* Grid de actividades */}
-                        <div className="grid grid-cols-2 gap-3 relative z-10">
-                            {/* Card 1: Juegos */}
+                        {/* Grid de actividades neumórficas */}
+                        <div className="grid grid-cols-2 gap-3">
                             <button
                                 onClick={() => { playNeonClick(); alert('🎮 ¡Próximamente! Estamos preparando juegos increíbles.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #FF6B6B22, #FF6B6B08)',
-                                    borderColor: 'rgba(255,107,107,0.3)',
-                                    boxShadow: '0 4px 20px rgba(255,107,107,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-red-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-red-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <Gamepad2 size={24} className="text-red-400 drop-shadow-[0_0_6px_rgba(255,107,107,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,107,107,0.15)', boxShadow: 'inset 2px 2px 5px rgba(255,107,107,0.1)' }}>
+                                    <Gamepad2 size={24} className="text-red-400" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-red-500' : 'text-red-400'
-                                }`}>Juegos</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>Mini-juegos divertidos para toda la familia</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-red-500">Juegos</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">Mini-juegos divertidos para toda la familia</span>
                             </button>
 
-                            {/* Card 2: Adivinanzas */}
                             <button
                                 onClick={() => { playNeonClick(); alert('🧩 ¡Próximamente! Adivinanzas geniales en camino.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #FFD93D22, #FFD93D08)',
-                                    borderColor: 'rgba(255,217,61,0.3)',
-                                    boxShadow: '0 4px 20px rgba(255,217,61,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-yellow-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <HelpCircle size={24} className="text-yellow-400 drop-shadow-[0_0_6px_rgba(255,217,61,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,217,61,0.15)', boxShadow: 'inset 2px 2px 5px rgba(255,217,61,0.1)' }}>
+                                    <HelpCircle size={24} className="text-yellow-500" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-yellow-600' : 'text-yellow-400'
-                                }`}>Adivinanzas</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>Desafíos para pensar y divertirse</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-yellow-600">Adivinanzas</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">Desafíos para pensar y divertirse</span>
                             </button>
 
-                            {/* Card 3: Videos */}
                             <button
                                 onClick={() => { playNeonClick(); alert('🎬 ¡Próximamente! Videos divertidos y educativos.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #6BCB7722, #6BCB7708)',
-                                    borderColor: 'rgba(107,203,119,0.3)',
-                                    boxShadow: '0 4px 20px rgba(107,203,119,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-green-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <Play size={24} className="text-green-400 drop-shadow-[0_0_6px_rgba(107,203,119,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(107,203,119,0.15)', boxShadow: 'inset 2px 2px 5px rgba(107,203,119,0.1)' }}>
+                                    <Play size={24} className="text-green-500" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-green-600' : 'text-green-400'
-                                }`}>Videos</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>Contenido divertido y seguro para ver</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-green-600">Videos</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">Contenido divertido y seguro para ver</span>
                             </button>
 
-                            {/* Card 4: Colorear */}
                             <button
                                 onClick={() => { playNeonClick(); alert('🎨 ¡Próximamente! Dibujos para colorear y crear.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #4D96FF22, #4D96FF08)',
-                                    borderColor: 'rgba(77,150,255,0.3)',
-                                    boxShadow: '0 4px 20px rgba(77,150,255,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-blue-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <Palette size={24} className="text-blue-400 drop-shadow-[0_0_6px_rgba(77,150,255,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(77,150,255,0.15)', boxShadow: 'inset 2px 2px 5px rgba(77,150,255,0.1)' }}>
+                                    <Palette size={24} className="text-blue-500" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-blue-600' : 'text-blue-400'
-                                }`}>Colorear</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>Dibujá y pintá con tu imaginación</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-blue-600">Colorear</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">Dibujá y pintá con tu imaginación</span>
                             </button>
 
-                            {/* Card 5: Cartas / Memoria */}
                             <button
                                 onClick={() => { playNeonClick(); alert('🃏 ¡Próximamente! Juego de memoria y cartas.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #FF6BCB22, #FF6BCB08)',
-                                    borderColor: 'rgba(255,107,203,0.3)',
-                                    boxShadow: '0 4px 20px rgba(255,107,203,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-pink-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-pink-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <Puzzle size={24} className="text-pink-400 drop-shadow-[0_0_6px_rgba(255,107,203,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,107,203,0.15)', boxShadow: 'inset 2px 2px 5px rgba(255,107,203,0.1)' }}>
+                                    <Puzzle size={24} className="text-pink-500" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-pink-600' : 'text-pink-400'
-                                }`}>Memoria</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>Encontrá los pares y ganá puntos</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-pink-600">Memoria</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">Encontrá los pares y ganá puntos</span>
                             </button>
 
-                            {/* Card 6: Sorpresas / Más */}
                             <button
                                 onClick={() => { playNeonClick(); alert('✨ ¡Más sorpresas en camino! Seguí explorando.'); }}
-                                className="rounded-[1.5rem] p-4 flex flex-col items-center gap-2.5 border transition-all active:scale-95 hover:scale-[1.02] relative overflow-hidden group"
-                                style={{
-                                    background: 'linear-gradient(135deg, #A855F722, #A855F708)',
-                                    borderColor: 'rgba(168,85,247,0.3)',
-                                    boxShadow: '0 4px 20px rgba(168,85,247,0.1)'
-                                }}
+                                className="neu-btn-3d p-4 flex flex-col items-center gap-2.5 rounded-[1.5rem]"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-2xl bg-purple-400/20 flex items-center justify-center shadow-md relative z-10">
-                                    <Sparkles size={24} className="text-purple-400 drop-shadow-[0_0_6px_rgba(168,85,247,0.6)]" />
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(168,85,247,0.15)', boxShadow: 'inset 2px 2px 5px rgba(168,85,247,0.1)' }}>
+                                    <Sparkles size={24} className="text-purple-500" />
                                 </div>
-                                <span className={`text-[10px] font-[900] uppercase tracking-widest relative z-10 ${
-                                    isDayMode ? 'text-purple-600' : 'text-purple-400'
-                                }`}>Sorpresas</span>
-                                <span className={`text-[8px] text-center leading-relaxed relative z-10 ${
-                                    isDayMode ? 'text-slate-400' : 'text-white/40'
-                                }`}>¡Próximamente más diversión!</span>
+                                <span className="text-[10px] font-[900] uppercase tracking-widest text-purple-600">Sorpresas</span>
+                                <span className="text-[7.5px] text-center leading-relaxed text-[#4a3d6a]/60">¡Próximamente más diversión!</span>
                             </button>
                         </div>
 
-                        {/* Nota para padres */}
-                        <div className={`mt-4 rounded-2xl p-3.5 flex items-start gap-3 relative z-10 ${
-                            isDayMode ? 'bg-amber-50/60 border border-amber-200/50' : 'bg-white/5 border border-white/10'
-                        }`}>
-                            <ShieldCheck size={18} className={isDayMode ? 'text-amber-500 flex-shrink-0 mt-0.5' : 'text-yellow-400 flex-shrink-0 mt-0.5'} />
-                            <p className={`text-[8.5px] leading-relaxed ${
-                                isDayMode ? 'text-slate-500' : 'text-white/50'
-                            }`}>
-                                <strong className={isDayMode ? 'text-slate-700' : 'text-white/70'}>Contenido seguro para toda la familia.</strong> Todas las actividades son supervisadas y moderadas por nuestro equipo. Diversión sin preocupaciones. 🎈
+                        {/* Nota para padres neumórfica */}
+                        <div className="neu-inset-title mt-4 p-3.5 flex items-start gap-3">
+                            <ShieldCheck size={18} className="text-[#ff6b6b] flex-shrink-0 mt-0.5" />
+                            <p className="text-[8px] leading-relaxed text-[#4a3d6a]/80">
+                                <strong className="text-[#2c2440]">Contenido seguro para toda la familia.</strong> Todas las actividades son supervisadas y moderadas por nuestro equipo. Diversión sin preocupaciones. 🎈
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {/* ---------- OPINIONES DE CLIENTES (CARRUSEL DINÁMICO) ---------- */}
-                <div className="w-full px-4 mb-14">
-                    <div className={`w-full rounded-[2.5rem] pt-6 pb-5 px-3 flex flex-col relative ${
-                        isDayMode ? 'glass-section-card' : 'bg-white/5 border border-white/10 shadow-lg'
-                    }`}>
+
+                {/* ---------- OPINIONES DE CLIENTES NEUMÓRFICA ---------- */}
+                <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
+                    <div className="neu-plate p-4 flex flex-col">
                         {/* Título */}
                         <div className="flex items-center justify-center gap-2 mb-4">
-                            <MessageSquare size={16} style={isDayMode ? { color: '#00C2FF' } : { color: themeColor }} />
-                            <h3 className={`font-black text-[11px] uppercase tracking-[0.3em] ${isDayMode ? 'glass-text-main' : ''}`} style={isDayMode ? {} : { color: themeColor, filter: `drop-shadow(0 0 8px ${hexToRgba(themeColor,0.6)})` }}>Opiniones de Clientes</h3>
+                            <MessageSquare size={16} className="text-[#ff6b6b]" />
+                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-[#2c2440]">Opiniones de Clientes</h3>
                         </div>
 
                         {/* Carrusel de Reseñas con Fotos */}
-                        <div className={`w-full aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden relative border isolate bg-zinc-900 group ${
-                            isDayMode ? 'border-white/40 shadow-lg' : ''
-                        }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
-                            {/* Foto del cliente como fondo */}
+                        <div className="w-full aspect-[4/5] md:aspect-video rounded-2xl overflow-hidden relative border border-[#b4a594]/30 bg-zinc-900 group shadow-md">
                             <img
                                 key={`review-img-${currentReviewSlide}`}
                                 src={mockReviews[currentReviewSlide]?.imageUrl}
@@ -1023,34 +928,26 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 className="w-full h-full object-cover muro-fade-in"
                                 loading="lazy"
                             />
-
-                            {/* Overlay con datos de la reseña */}
                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent pt-24 pb-8 px-6 z-20 flex flex-col items-start text-left">
-                                {/* Estrellas */}
                                 <div className="flex gap-1 mb-2">
                                     {[...Array(5)].map((_, i) => (
                                         <Star key={i} size={14} className={i < mockReviews[currentReviewSlide]?.rating ? 'text-yellow-400 fill-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.7)]' : 'text-white/20 fill-transparent'} />
                                     ))}
                                 </div>
-                                {/* Nombre */}
                                 <h4 className="text-white font-[1000] text-[15px] uppercase tracking-widest mb-1 drop-shadow-md">
                                     {mockReviews[currentReviewSlide]?.authorName}
                                 </h4>
-                                {/* Texto de la reseña */}
                                 <p className="text-white/85 font-medium text-[12px] leading-relaxed italic line-clamp-3 mb-2 drop-shadow">
                                     "{mockReviews[currentReviewSlide]?.text}"
                                 </p>
-                                {/* Fecha y hora */}
                                 <span className="text-white/50 text-[9px] font-black uppercase tracking-[0.25em]">
                                     📅 {mockReviews[currentReviewSlide]?.date}
                                 </span>
                             </div>
-
-                            {/* Dots de paginación */}
                             {mockReviews.length > 1 && (
                                 <div className="absolute top-4 right-4 flex gap-1.5 pointer-events-none z-20">
                                     {mockReviews.map((_, i) => (
-                                        <div key={i} className={`rounded-full backdrop-blur-md shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-500 ${
+                                        <div key={i} className={`rounded-full backdrop-blur-md transition-all duration-500 ${
                                             i === currentReviewSlide
                                             ? 'w-4 h-1.5 bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.6)]'
                                             : 'w-1.5 h-1.5 bg-white/30'
@@ -1058,15 +955,13 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                     ))}
                                 </div>
                             )}
-
-                            {/* Badge "Verificado" */}
                             <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 bg-green-500/20 border border-green-400/40 rounded-full px-3 py-1.5 backdrop-blur-md shadow-lg">
                                 <ShieldCheck size={12} className="text-green-400" />
                                 <span className="text-[8px] font-black text-green-400 uppercase tracking-widest">Cliente Verificado</span>
                             </div>
                         </div>
 
-                        {/* Botón Dejar tu comentario */}
+                        {/* Botón Dejar comentario Neumórfico */}
                         <button
                             onClick={() => {
                                 playNeonClick();
@@ -1076,91 +971,54 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 }
                                 alert('📸 ¡Gracias por querer compartir tu experiencia! Próximamente podrás subir tu foto y comentario.');
                             }}
-                            className={`w-full mt-4 py-3.5 px-6 rounded-full backdrop-blur-md border text-[10px] font-[1000] uppercase tracking-widest flex items-center justify-center gap-2.5 transition-all active:scale-95 shadow-lg ${
-                                isDayMode
-                                ? 'bg-white/40 border-white/70 text-slate-700 hover:bg-white/60'
-                                : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
-                            }`}
+                            className="neu-btn-3d w-full mt-4 py-3.5 flex items-center justify-center gap-2.5 text-[10px] font-[1000] uppercase tracking-widest text-[#2c2440]"
                         >
-                            <Camera size={16} /> Dejar tu comentario
+                            <Camera size={16} className="text-[#ff6b6b]" /> Dejar tu comentario
                         </button>
 
-                        {/* Aviso de moderación */}
-                        <div className={`mt-3 rounded-2xl p-3.5 flex items-start gap-3 ${
-                            isDayMode ? 'bg-sky-50/60 border border-sky-200/50' : 'bg-white/5 border border-white/10'
-                        }`}>
-                            <ShieldCheck size={18} className={isDayMode ? 'text-sky-500 flex-shrink-0 mt-0.5' : 'text-cyan-400 flex-shrink-0 mt-0.5'} />
-                            <p className={`text-[8.5px] leading-relaxed ${
-                                isDayMode ? 'text-slate-500' : 'text-white/50'
-                            }`}>
-                                <strong className={isDayMode ? 'text-slate-700' : 'text-white/70'}>Moderado por Ari & Eve.</strong> Todas las fotos y comentarios son revisados antes de publicarse. No se permite contenido ofensivo, obsceno o inapropiado. Para comentar debes estar suscripto como cliente.
+                        {/* Aviso de moderación neumórfico */}
+                        <div className="neu-inset-title mt-3 p-3.5 flex items-start gap-3">
+                            <ShieldCheck size={18} className="text-[#ff6b6b] flex-shrink-0 mt-0.5" />
+                            <p className="text-[8px] leading-relaxed text-[#4a3d6a]/80">
+                                <strong className="text-[#2c2440]">Moderado por Ari &amp; Eve.</strong> Todas las fotos y comentarios son revisados antes de publicarse. No se permite contenido ofensivo, obsceno o inapropiado. Para comentar debes estar suscripto como cliente.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {/* Botón Regresar */}
-                <div className="w-full px-5 mb-14 flex justify-center">
-                    <button 
-                        onClick={() => {
-                            playNeonClick();
-                            navigate(`${basePath}/${categorySlug}`);
-                        }} 
-                        className={`w-max py-3 px-8 rounded-full flex items-center gap-2 ${
-                            isDayMode ? 'glass-button-3d' : 'btn-3d-celeste text-white'
-                        }`}
-                        style={isDayMode ? { 
-                            background: 'rgba(255, 255, 255, 0.65)', 
-                            border: '1px solid rgba(255, 255, 255, 0.85)',
-                            color: '#2c3e50'
-                        } : {}}
+
+                {/* Botón Regresar Neumórfico */}
+                <div className="w-full px-4 mb-14 flex justify-center">
+                    <button
+                        onClick={() => { playNeonClick(); navigate(`${basePath}/${categorySlug}`); }}
+                        className="neu-btn-3d py-3 px-10 flex items-center gap-2.5 text-[#2c2440]"
                     >
-                        <ArrowLeft size={14} style={{ color: '#00C2FF', filter: 'drop-shadow(0 0 3px rgba(0, 194, 255, 0.6))' }} strokeWidth={3} />
+                        <ArrowLeft size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
                         <span className="text-[10px] font-[1100] uppercase tracking-widest">Regresar</span>
                     </button>
                 </div>
 
             </div>
 
-            {/* PIE DE PÁGINA (Footer) — Términos y Condiciones */}
-            <footer className="w-full max-w-md mx-auto px-5 z-10 pt-4 pb-4 mt-auto relative">
-                {isDayMode ? (
-                    <div className="bg-[#ffffff]/35 backdrop-blur-md border border-white/35 py-3 px-5 rounded-[1.8rem] flex items-center justify-between w-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_6px_15px_rgba(88,70,50,0.06)]">
-                        <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
-                            © 2026 · ShopDigital
+            {/* PIE DE PÁGINA NEUMÓRFICO */}
+            <footer className="w-full max-w-[365px] mx-auto px-4 z-10 pt-2 pb-4 mt-auto relative">
+                <div className="neu-plate flex items-center justify-between w-full py-3 px-5">
+                    <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#5c4033] select-none">
+                        © 2026 · ShopDigital
+                    </p>
+                    <div className="flex items-center gap-2.5">
+                        <p className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#2c2440] select-none">
+                            {selectedShop?.name?.split('-')[0]?.trim() || 'Catálogo'}
                         </p>
-                        <div className="flex items-center gap-2.5">
-                            <p className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] select-none">
-                                {selectedShop?.name?.split('-')[0]?.trim() || 'Catálogo'}
-                            </p>
-                            <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
-                            <button 
-                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                                className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#0f224e] hover:underline active:opacity-75 transition-opacity select-none"
-                            >
-                                Términos
-                            </button>
-                        </div>
+                        <span className="text-[#5c4033]/40 text-[7px] select-none">|</span>
+                        <button
+                            onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
+                            className="text-[7.5px] font-extrabold uppercase tracking-[0.15em] text-[#ff6b6b] hover:underline active:opacity-75 transition-opacity select-none"
+                        >
+                            Términos
+                        </button>
                     </div>
-                ) : (
-                    <div className="w-full flex flex-col items-center gap-2 pt-4 pb-4 border-t border-white/10">
-                        <p className="text-[9px] font-black text-white uppercase tracking-[0.35em] text-center select-none">
-                            © 2026 · ShopDigital
-                        </p>
-                        <div className="flex items-center gap-4 mt-1">
-                            <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-center select-none" style={{ color: themeColor, textShadow: `0 0 10px ${hexToRgba(themeColor, 0.8)}, 0 0 20px ${hexToRgba(themeColor, 0.4)}` }}>
-                                {selectedShop?.name?.split('-')[0]?.trim() || 'Catálogo'}
-                            </p>
-                            <span className="text-white/20 text-[8px]">|</span>
-                            <button 
-                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                                className="text-[8px] font-bold uppercase tracking-[0.25em] text-center text-white hover:text-cyan-300 transition-colors"
-                            >
-                                Términos y Condiciones
-                            </button>
-                        </div>
-                    </div>
-                )}
+                </div>
             </footer>
 
             {/* Modal de Oferta (Fase 4) */}
