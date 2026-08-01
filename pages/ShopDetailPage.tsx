@@ -182,8 +182,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 url: b.mediaUrl,
                 type: b.mediaType,
                 isBroadcast: true,
-                title: b.title,
-                description: b.description || ''
+                title: b.title
             }));
         // Intercalar: broadcast cada 2 items locales
         const result = [...localItems];
@@ -367,7 +366,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
     return (
         <div className="pb-24 animate-in fade-in duration-700 min-h-screen relative bg-transparent text-[#2c2440]">
-            {/* Fondo Ciber-Digital de Circuitos Animados */}
+            {/* Fondo Ciber-Digital Animado */}
             <CyberCircuitBackground />
 
             {/* OVERLAY ESTACIONAL - particulas flotantes */}
@@ -411,14 +410,10 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 <meta name="twitter:image" content={selectedShop.bannerImage || selectedShop.image} />
             </Helmet>
 
-            {/* Cabecera / Portada con Imagen y Botones Neumórficos */}
             <div className="relative w-full h-[360px] bg-black overflow-hidden shadow-md">
                 {/* Botón Volver Neumórfico 3D */}
                 <button
-                    onClick={() => {
-                        playNeonClick();
-                        navigate(`${basePath}/${categorySlug}`);
-                    }}
+                    onClick={() => { playNeonClick(); navigate(`${basePath}/${categorySlug}`); }}
                     className="neu-btn-3d absolute top-6 left-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
                 >
                     <ArrowLeft size={18} className="text-[#ff6b6b]" strokeWidth={2.5} />
@@ -435,11 +430,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     }}
                     className="neu-btn-3d absolute top-6 right-5 z-[60] w-11 h-11 flex items-center justify-center rounded-2xl"
                 >
-                    {isDayMode ? (
-                        <Moon size={17} className="text-[#2c2440]" />
-                    ) : (
-                        <Sun size={17} className="text-[#ff6b6b]" />
-                    )}
+                    {isDayMode ? <Moon size={17} className="text-[#2c2440]" /> : <Sun size={17} className="text-[#ff6b6b]" />}
                 </button>
 
                 {gallery.map((img, idx) => (
@@ -455,7 +446,7 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 ))}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/50"></div>
 
-                {/* Placa Neumórfica de Nombre y Zona en Portada */}
+                {/* Placa Neumórfica de Nombre y Zona */}
                 <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[90%] max-w-[345px] flex flex-col items-center">
                     <div className="neu-plate w-full py-4 px-6 text-center border border-white/60">
                         <h1 className="text-[22px] font-[900] uppercase tracking-wider text-[#2c2440] leading-none mb-1">
@@ -470,35 +461,35 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
 
-                {/* Contador de Visitas Portada Neumórfico */}
+                {/* Contador Visitas Neumórfico */}
                 <div className="neu-inset-title absolute bottom-4 left-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
                     <Eye size={12} className="text-[#4a3d6a]" />
                     <span>{selectedShop.visits || 0} visitas</span>
                 </div>
 
-                {/* Contador de Suscriptores Portada Neumórfico */}
+                {/* Contador Suscriptores Neumórfico */}
                 <div className="neu-inset-title absolute bottom-4 right-4 z-40 flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-black text-[#2c2440] uppercase">
                     <Users size={12} className="text-[#ff6b6b]" />
                     <span>{selectedShop.subscribers || 0} suscriptores</span>
                 </div>
+
             </div>
 
             <div className="relative z-10 flex flex-col items-center">
 
                 {/* ---------- CATÁLOGO DE OFERTAS NEUMÓRFICO CREMA HD ---------- */}
                 <div ref={catalogRef} className="w-full mb-8 mt-4 px-4 max-w-[365px] mx-auto">
-                    <div className="neu-plate w-full p-4 flex flex-col relative border border-white/60">
+                    <div className="neu-plate w-full p-4 flex flex-col">
                         {/* Título de la Sección */}
-                        <div className="neu-inset-title py-2 px-4 mb-4 flex items-center justify-between">
-                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#2c2440]">
-                                Nuestro Catálogo
-                            </span>
-                            <ShoppingBag size={14} className="text-[#ff6b6b]" />
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                            <ShoppingBag size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <h2 className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-[#2c2440]">Nuestro Catálogo</h2>
                         </div>
 
-                        <div className="w-full relative">
+                        <div className="w-full relative px-2">
+                            <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
                             <div 
-                                className="flex gap-3 pb-3 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
+                                className="flex gap-4 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar relative z-10" 
                                 style={{ contain: 'layout style', willChange: 'scroll-position' }}
                                 ref={offersCarouselRef}
                                 onTouchStart={() => isTouchingRef.current = true}
@@ -507,45 +498,44 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 onMouseLeave={() => isTouchingRef.current = false}
                             >
                                 {selectedShop.offers.map((offer, idx) => {
+                                    // Badges Dinámicos sugeridos por Gemy
+                                    const badgeType = idx % 3;
+                                    const badgeProps = badgeType === 0 
+                                        ? { text: '🔥 HOT', bg: 'bg-orange-500/90', shadow: 'shadow-[0_0_10px_rgba(249,115,22,0.8)]' }
+                                        : badgeType === 1 
+                                        ? { text: '✨ NUEVO', bg: 'bg-green-500/90', shadow: 'shadow-[0_0_10px_rgba(34,197,94,0.8)]' }
+                                        : { text: '⚡ HOY', bg: 'bg-rose-500/90', shadow: 'shadow-[0_0_10px_rgba(244,63,94,0.8)]' };
+
                                     return (
-                                        <div 
-                                            key={`${offer.id}-${idx}`} 
-                                            className="neu-btn-3d flex-shrink-0 w-40 p-3 flex flex-col relative group snap-center cursor-pointer border border-white/70"
-                                            onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}
-                                        >
-                                            <div className="rounded-xl overflow-hidden aspect-square mb-2.5 border border-[#b4a594]/30 shadow-inner relative">
+                                        <div key={`${offer.id}-${idx}`} className="flex-shrink-0 w-40 p-3 flex flex-col relative group snap-center cursor-pointer neu-btn-3d" onClick={() => { playNeonClick(); setSelectedOfferForModal(offer); logEvento('view_offer', selectedShop.id, { producto: offer.name }); }}>
+                                            <div className="rounded-xl overflow-hidden aspect-square mb-3 border border-[#b4a594]/30 shadow-md relative">
                                                 <ProgressiveShopImage
                                                     src={offer.image}
                                                     alt={offer.name}
-                                                    className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none object-cover"
+                                                    className="w-full h-full group-hover:scale-110 transition-transform duration-700 pointer-events-none"
                                                     priority={idx < 6}
-                                                    skeletonColor="rgba(0,0,0,0.05)"
+                                                    skeletonColor="rgba(196,163,133,0.15)"
                                                 />
-                                                <div className="absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-0.5 rounded-full uppercase bg-[#ff6b6b] shadow-md border border-white/40 pointer-events-none z-10">
-                                                    🔥 HOT
+                                                <div className={`absolute top-2 right-2 text-white text-[7.5px] font-black px-2 py-1 rounded-full uppercase backdrop-blur-md ${badgeProps.bg} ${badgeProps.shadow} border border-white/20 pointer-events-none z-10`}>
+                                                    {badgeProps.text}
                                                 </div>
                                             </div>
-                                            <div className="px-0.5 text-center pointer-events-none">
-                                                <p className="text-[10px] font-black uppercase tracking-tight mb-2 line-clamp-1 text-[#2c2440]">
-                                                    {offer.name}
-                                                </p>
-                                                <div className="neu-inset-title py-1 px-2.5 text-center">
+                                            <div className="px-1 pb-1 text-center pointer-events-none">
+                                                <p className="text-[10px] font-black uppercase tracking-tight mb-2.5 line-clamp-1 text-[#2c2440]">{offer.name}</p>
+                                                <div className="neu-inset-title py-1.5 px-3">
                                                     <span className="text-[12px] font-black text-[#ff6b6b]">$ {offer.price.toLocaleString('es-AR')}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     );
-                                })}
+                                })}  
                             </div>
                         </div>
 
-                        {/* Botón de Abrir Catálogo Completo Neumórfico 3D */}
+                        {/* Botón Abrir Catálogo Neumórfico */}
                         <button
-                            onClick={() => {
-                                playNeonClick();
-                                navigate(`${basePath}/${categorySlug}/${shopSlug}/menu`);
-                            }}
-                            className="neu-btn-3d w-full py-3.5 mt-3 flex items-center justify-center gap-2.5 font-black uppercase tracking-[0.2em] text-[9.5px]"
+                            onClick={() => { playNeonClick(); navigate(`${basePath}/${categorySlug}/${shopSlug}/menu`); }}
+                            className="neu-btn-3d-active w-full py-3.5 flex items-center justify-center gap-2.5 font-[1100] uppercase tracking-[0.2em] text-[10px] text-[#2c2440] mt-3"
                         >
                             <ShoppingBag size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
                             <span>Abrir Catálogo Completo</span>
@@ -553,62 +543,71 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
 
+                {/* ---------- INTEGRACIÓN PEDIDOSYA ---------- */}
+                {selectedShop.pedidoYaUrl && (
+                    <div className="w-full px-5 mb-14">
+                        <button
+                            onClick={() => {
+                                playNeonClick();
+                                window.open(selectedShop.pedidoYaUrl, '_blank', 'noopener,noreferrer');
+                            }}
+                            className={`w-full py-4 rounded-[2rem] flex items-center justify-center gap-3 group relative overflow-hidden transition-all ${
+                                isDayMode 
+                                    ? 'glass-button-3d w-full shadow-lg border' 
+                                    : 'bg-[#EA044E]/10 border border-[#EA044E]/50 shadow-[0_0_20px_rgba(234,4,78,0.2)] hover:bg-[#EA044E]/20 active:scale-95'
+                            }`}
+                            style={isDayMode ? { 
+                                background: 'rgba(255, 255, 255, 0.65)', 
+                                border: '1px solid rgba(255, 255, 255, 0.85)',
+                                color: '#00C2FF'
+                            } : {}}
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#EA044E]/0 via-white/10 to-[#EA044E]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                            <ShoppingBag size={18} strokeWidth={2.5} className="text-[#EA044E] group-hover:scale-110 transition-transform" />
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#EA044E] drop-shadow-md">Pedir por PedidoYa</span>
+                        </button>
+                    </div>
+                )}
+
                 {/* ---------- DASHBOARD DE CONTACTO NEUMÓRFICO ---------- */}
                 <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
-                    <div className="neu-plate p-4 border border-white/60">
-                        <div className="flex items-center gap-2 mb-4">
+                    <div className="neu-plate p-4">
+                        <div className="flex items-center justify-center gap-2 mb-4">
                             <MessageCircle size={14} className="text-[#ff6b6b]" />
-                            <h3 className="font-extrabold text-[9.5px] uppercase tracking-[0.25em] text-[#2c2440]">Canales de Atención</h3>
+                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-[#2c2440]">Canales de Atención</h3>
                         </div>
-                        <div className="grid grid-cols-3 gap-2.5">
-                            <button 
-                                onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} 
-                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
-                            >
-                                <span className="italic text-[18px] font-black text-[#EA044E]">P</span>
-                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">PedidosYa</span>
+                        <div className="grid grid-cols-3 gap-3">
+                            <button onClick={() => handleOpenLink('https://www.pedidosya.com.ar/')} className="neu-btn-3d flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem]">
+                                <span className="italic text-[20px] font-black text-[#EA044E]">P</span>
+                                <span className="text-[7.5px] tracking-[0.15em] font-black uppercase text-[#EA044E]">PedidosYa</span>
                             </button>
-                            <button 
-                                onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} 
-                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
-                            >
-                                <MessageCircle size={18} className="text-[#25D366]" fill="currentColor" strokeWidth={0} />
-                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">WhatsApp</span>
+                            <button onClick={() => selectedShop.phone && handleOpenLink(`https://wa.me/549${String(selectedShop.phone).replace(/\D/g, '')}?text=Hola!%20Vengo%20de%20la%20App%20de%20Waly`)} className="neu-btn-3d flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem]">
+                                <MessageCircle size={20} className="text-[#25D366]" fill="currentColor" strokeWidth={0} />
+                                <span className="text-[7.5px] tracking-[0.15em] font-black uppercase text-[#25D366]">WhatsApp</span>
                             </button>
-                            <button 
-                                onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} 
-                                className="neu-btn-3d py-3 flex flex-col items-center justify-center gap-1"
-                            >
-                                <Handshake size={18} className="text-[#009EE3]" strokeWidth={2.5} />
-                                <span className="text-[7.5px] tracking-wider font-extrabold uppercase text-[#2c2440]">M. Pago</span>
+                            <button onClick={() => handleOpenLink('https://www.mercadopago.com.ar/')} className="neu-btn-3d flex flex-col items-center justify-center gap-2 py-4 rounded-[1.25rem]">
+                                <Handshake size={20} className="text-[#009EE3]" strokeWidth={2.5} />
+                                <span className="text-[7.5px] tracking-[0.15em] font-black uppercase text-[#009EE3]">M. Pago</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* ---------- CREDENCIAL VIP PREMIUM NEUMÓRFICA ---------- */}
+                {/* ---------- CREDENCIAL VIP NEUMÓRFICA CREMA HD ---------- */}
                 <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
-                    <div className="neu-plate p-6 flex flex-col items-center text-center relative border border-white/60">
-                        <div className="w-28 h-36 mb-2 relative z-10 drop-shadow-xl">
-                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)]" />
+                    <div className="neu-plate p-6 flex flex-col items-center text-center">
+                        <div className="w-28 h-40 mb-3 relative drop-shadow-2xl">
+                            <img src="/luz-avatar.png" alt="Avatar VIP" className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]" />
                         </div>
-                        
-                        <h3 className="text-[12px] font-black uppercase tracking-widest mb-1.5 text-[#2c2440]">
-                            Club de Beneficios VIP
-                        </h3>
-                        <p className="text-[10px] mb-4 leading-relaxed px-2 text-[#4a3d6a] font-extrabold">
+                        <h3 className="text-[12px] font-[1000] uppercase tracking-widest mb-2 text-[#2c2440]">Club de Beneficios VIP</h3>
+                        <p className="text-[10.5px] mb-5 leading-relaxed text-[#4a3d6a]/80 font-medium px-2">
                             Suscribite ahora para desbloquear descuentos y promociones exclusivas.
                         </p>
-
                         <button
-                            onClick={() => {
-                                playNeonClick();
-                                logEvento('click_vip_access', selectedShop.id);
-                                navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`);
-                            }}
-                            className="neu-btn-3d w-full py-3.5 flex items-center justify-center gap-2.5 font-black uppercase tracking-[0.2em] text-[9.5px]"
+                            onClick={() => { playNeonClick(); logEvento('click_vip_access', selectedShop.id); navigate(`${basePath}/${categorySlug}/${shopSlug}/cliente-subscripcion`); }}
+                            className="neu-btn-3d-active w-full py-4 flex items-center justify-center gap-3 font-[1100] uppercase tracking-[0.2em] text-[10px] text-[#2c2440]"
                         >
-                            <Star size={15} className="text-[#ff6b6b]" strokeWidth={2.5} />
+                            <Star size={16} className="text-[#ff6b6b]" strokeWidth={2.5} />
                             <span>Obtener Credencial VIP</span>
                         </button>
                     </div>
@@ -616,13 +615,15 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
 
                 {/* ---------- MÓDULO DE UBICACIÓN NEUMÓRFICO ---------- */}
                 <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
-                    <div className="neu-plate p-4 border border-white/60">
-                        <div className="flex items-center gap-2 mb-3.5">
+                    <div className="neu-plate p-4">
+                        <div className="flex items-center justify-center gap-2 mb-4">
                             <MapPin size={14} className="text-[#ff6b6b]" />
-                            <h3 className="font-extrabold text-[9.5px] uppercase tracking-[0.25em] text-[#2c2440]">Dónde Encontrarnos</h3>
+                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-[#2c2440]">Dónde Encontrarnos</h3>
                         </div>
                         
-                        <div ref={mapRef} className="w-full h-44 overflow-hidden bg-[#e6e2dc] relative mb-3 rounded-2xl border border-[#b4a594]/30 shadow-inner">
+                        <div ref={mapRef} className={`w-full h-48 overflow-hidden bg-black relative mb-4 rounded-[1.25rem] border group ${
+                            isDayMode ? 'border-white/40' : 'border-white/10'
+                        }`}>
                             {mapVisible ? (
                                 <iframe
                                     title="Ubicación"
@@ -632,17 +633,18 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                     style={{ border: 0 }}
                                     allowFullScreen={false}
                                     loading="lazy"
-                                    className="rounded-2xl pointer-events-auto transition-all"
+                                    className="rounded-[1.25rem] invert-[95%] hue-rotate-180 contrast-[120%] saturate-[200%] brightness-[85%] opacity-90 pointer-events-auto transition-all group-hover:opacity-100"
                                 />
                             ) : (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-60">
-                                    <MapPin size={26} className="text-[#2c2440]" />
-                                    <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">Cargando mapa...</span>
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-40">
+                                    <MapPin size={28} className="text-white" />
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-white">Cargando mapa...</span>
                                 </div>
                             )}
+                            <div className="absolute inset-0 pointer-events-none rounded-[1.25rem] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]"></div>
                         </div>
 
-                        <p className="text-[8.5px] text-center font-extrabold uppercase tracking-wider mb-4 text-[#2c2440]">
+                        <p className="text-[8px] text-center font-bold uppercase tracking-widest mb-4 text-[#4a3d6a]/70">
                             {selectedShop.address}
                         </p>
 
@@ -652,57 +654,58 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                                 className="neu-btn-3d py-3 flex items-center justify-center gap-2 text-[#2c2440]"
                             >
                                 <Navigation size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
-                                <span className="text-[8.5px] font-black uppercase tracking-wider">Cómo llegar</span>
+                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Cómo llegar</span>
                             </button>
                             <button 
                                 onClick={() => { logEvento('click_location', selectedShop.id, { metodo: 'uber' }); handleOpenLink('https://m.uber.com/ul/'); }} 
                                 className="neu-btn-3d py-3 flex items-center justify-center gap-2 text-[#2c2440]"
                             >
-                                <Car size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
-                                <span className="text-[8.5px] font-black uppercase tracking-wider">Pedir Uber</span>
+                                <Car size={14} className="text-[#4a3d6a]" strokeWidth={2.5} />
+                                <span className="text-[8.5px] font-[1100] uppercase tracking-wider">Pedir Uber</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* ---------- MÓDULO COMUNIDAD NEUMÓRFICO ---------- */}
+                {/* ---------- COMUNIDAD NEUMÓRFICA ---------- */}
                 <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
-                    <div className="neu-plate p-4 flex flex-col gap-3 border border-white/60">
-                        <div className="grid grid-cols-3 gap-2">
-                            <button 
-                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} 
-                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
-                            >
+                    <div className="neu-plate p-4 flex flex-col gap-3">
+                        <div className="flex items-center justify-center gap-2 mb-1">
+                            <Users size={14} className="text-[#ff6b6b]" />
+                            <h3 className="font-black text-[10px] uppercase tracking-[0.3em] text-[#2c2440]">Comunidad</h3>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2.5">
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'facebook' }); selectedShop.facebook && handleOpenLink(selectedShop.facebook); }} className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1">
                                 <Facebook size={16} className="text-[#1877F2]" fill="currentColor" strokeWidth={0} />
-                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">Facebook</span>
+                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#1877F2]">Facebook</span>
                             </button>
-                            <button 
-                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} 
-                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
-                            >
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'instagram' }); selectedShop.instagram && handleOpenLink(selectedShop.instagram); }} className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1">
                                 <Instagram size={16} className="text-[#E4405F]" strokeWidth={2.5} />
-                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">Instagram</span>
+                                <span className="text-[7.5px] font-black uppercase tracking-wider text-[#E4405F]">Instagram</span>
                             </button>
-                            <button 
-                                onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} 
-                                className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1"
-                            >
+                            <button onClick={() => { logEvento('click_social', selectedShop.id, { plataforma: 'tiktok' }); selectedShop.tiktok && handleOpenLink(selectedShop.tiktok); }} className="neu-btn-3d py-2.5 flex flex-col items-center justify-center gap-1">
                                 <Music size={16} className="text-[#2c2440]" strokeWidth={2.5} />
                                 <span className="text-[7.5px] font-black uppercase tracking-wider text-[#2c2440]">TikTok</span>
                             </button>
                         </div>
-
-                        <button 
-                            onClick={handleShare} 
-                            className="neu-btn-3d w-full py-3 flex items-center justify-center gap-2 mt-1 text-[#2c2440]"
-                        >
+                        <button onClick={handleShare} className="neu-btn-3d w-full py-3 flex items-center justify-center gap-2 mt-1 text-[#2c2440]">
                             <Share2 size={14} className="text-[#ff6b6b]" strokeWidth={2.5} />
                             <span className="text-[9px] font-black uppercase tracking-widest">Compartir Catálogo</span>
                         </button>
+                        <div className="w-full flex justify-center">
+                            <button onClick={() => { playNeonClick(); handleLockTap(); }} className={`flex items-center justify-center gap-1.5 py-2 transition-all duration-300 ${
+                                lockClicks >= 4 ? 'text-cyan-600 scale-110' : lockClicks >= 2 ? 'opacity-30' : 'opacity-15'
+                            } text-[#2c2440]`}>
+                                <Lock size={lockClicks >= 4 ? 14 : 10} className="transition-all duration-300" />
+                                <span className={`font-bold uppercase tracking-widest transition-all duration-300 ${lockClicks >= 4 ? 'text-[9px]' : 'text-[7px]'}`}>Gestión</span>
+                            </button>
+                        </div>
                     </div>
-                {/* ---------- 📺 MURO VIVO (FEED DINÁMICO) ---------- */}
+                </div>
+
+                {/* ---------- 📺 MURO VIVO NEUMÓRFICO ---------- */}
                 <div className="w-full px-4 mb-8 max-w-[365px] mx-auto">
-                    <div className="neu-plate p-4 border border-white/60">
+                    <div className="neu-plate p-4">
                         <div className="flex items-center justify-center gap-2 mb-3">
                             <ImageIcon size={16} className="text-[#ff6b6b]" />
                             <h3 className="font-extrabold text-[10px] uppercase tracking-[0.25em] text-[#2c2440]">Muro de Novedades</h3>
@@ -715,7 +718,11 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                             )}
                         </div>
 
-                        <div className="w-full aspect-[4/5] md:aspect-video rounded-2xl overflow-hidden relative border border-[#b4a594]/30 bg-black group">
+                        <div className={`w-full aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden relative border isolate bg-zinc-900 group ${
+                            isDayMode ? 'border-white/40 shadow-lg' : ''
+                        }`} style={isDayMode ? {} : { borderColor: hexToRgba(themeColor, 0.2), boxShadow: `0 0 30px ${hexToRgba(themeColor, 0.1)}` }}>
+                            
+                            {/* Slide Container */}
                             <div className={`w-full h-full relative ${isGlitching ? 'muro-glitch-active muro-scanline' : ''}`}>
                                 {muroItems.length > 0 ? (
                                     <>
@@ -1284,29 +1291,6 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                     </div>
                 </div>
             )}
-                <footer className="w-full max-w-[365px] mx-auto px-4 z-10 pt-2 pb-2 mt-auto relative">
-                    <div className="neu-footer flex items-center justify-between w-full">
-                        <p className="text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#2c2440] select-none">
-                            © 2026 · ShopDigital
-                        </p>
-                        <div className="flex items-center gap-3">
-                            <p 
-                                onClick={handleWalyClick}
-                                className="text-[8px] font-extrabold uppercase tracking-[0.15em] text-[#2c2440] hover:text-[#ff6b6b] select-none cursor-pointer active:scale-95 transition-all" 
-                            >
-                                {selectedShop.name}
-                            </p>
-                            <span className="text-[#b4a594]/50 text-[7px] select-none">|</span>
-                            <button 
-                                onClick={() => { playNeonClick(); navigate(`/${townId}/terminos`); }}
-                                className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] active:opacity-75 transition-all select-none"
-                            >
-                                Términos
-                            </button>
-                        </div>
-                    </div>
-                </footer>
-            </div>
         </div>
     );
 };
