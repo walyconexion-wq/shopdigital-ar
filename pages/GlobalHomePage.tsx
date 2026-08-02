@@ -300,19 +300,19 @@ const GlobalHomePage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* ── Avatar Central Animado 3D (Sin Fondo Negro / Transparente HD) ── */}
+                    {/* ── Avatar Central Animado 3D (100% Transparente Nativo Alfa HD) ── */}
                     <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-2">
-                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[250px] sm:max-h-[280px] overflow-hidden">
+                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[250px] sm:max-h-[280px]">
                             <picture className="flex items-center justify-center">
                                 <source srcSet="/ari-saludando.webp" type="image/webp" />
                                 <img
                                     src="/ari-saludando.gif"
                                     alt="ARI Asistente Animado"
-                                    className="max-h-[240px] sm:max-h-[270px] h-auto w-auto object-contain mix-blend-screen filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.35)]"
+                                    className="max-h-[240px] sm:max-h-[270px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.25)]"
                                     loading="eager"
                                 />
                             </picture>
-                            <div className="ari-3d-shadow mt-1 opacity-50" />
+                            <div className="ari-3d-shadow mt-1 opacity-40" />
                         </div>
                     </div>
 
