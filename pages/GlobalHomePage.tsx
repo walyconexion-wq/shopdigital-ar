@@ -301,12 +301,12 @@ const GlobalHomePage: React.FC = () => {
                     </div>
 
                     {/* ── Avatar Central Animado 3D (100% Transparente Nativo Chroma Key HD) ── */}
-                    <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-2">
-                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[250px] sm:max-h-[280px]">
+                    <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-1">
+                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[340px] sm:max-h-[390px]">
                             <img
                                 src="/ari-saludando.gif"
                                 alt="ARI Asistente Animado"
-                                className="max-h-[240px] sm:max-h-[270px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.25)]"
+                                className="max-h-[330px] sm:max-h-[380px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.25)]"
                                 loading="eager"
                             />
                             <div className="ari-3d-shadow mt-1 opacity-40" />
@@ -314,15 +314,15 @@ const GlobalHomePage: React.FC = () => {
                     </div>
 
                     {/* ── Pie de Página Neumórfico Crema HD (Maqueta) ── */}
-                    <footer className="w-full z-10 mt-auto pt-2 pb-1 mb-1">
-                        <div className="neu-footer flex items-center justify-between w-full">
+                    <footer className="w-full z-10 mt-auto pt-1 pb-1 mb-0 pr-16 sm:pr-0">
+                        <div className="neu-footer flex items-center justify-between w-full py-2.5 px-4 sm:py-3 sm:px-6">
                             <p
                                 onClick={handleCopyrightClick}
                                 className="text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#2c2440] cursor-pointer select-none active:opacity-100 transition-opacity"
                             >
                                 © 2026 · SHOPDIGITAL
                             </p>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2.5 sm:gap-3">
                                 <button
                                     onClick={() => { playNeonClick(); navigate('/terminos'); }}
                                     className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"

@@ -603,7 +603,7 @@ MÉTRICAS FINANCIERAS DE TESORERÍA (en vivo):
     };
 
     return (
-        <div className={inline ? 'w-full' : 'fixed bottom-20 right-5 z-[1000]'}>
+        <div className={inline ? 'w-full' : 'fixed bottom-2 right-2.5 sm:bottom-6 sm:right-6 z-[1000]'}>
             {/* ═══ MODO INLINE: Panel siempre abierto, empotrado en la página ═══ */}
             {inline && (
                 <div
