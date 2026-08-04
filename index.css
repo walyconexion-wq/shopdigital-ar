@@ -283,7 +283,7 @@
 /* Reducir animaciones si el usuario lo prefiere */
 /* 📱 ANIMACIÓN Y EFECTO 3D PARA AVATAR ARI */
 .ari-3d-avatar-container {
-  animation: ari3DFloat 4.2s ease-in-out infinite;
+  animation: none;
   will-change: transform;
 }
 

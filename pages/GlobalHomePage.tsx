@@ -301,12 +301,12 @@ const GlobalHomePage: React.FC = () => {
                     </div>
 
                     {/* ── Avatar Central Animado 3D (100% Transparente Nativo Chroma Key HD) ── */}
-                    <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-1">
-                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[340px] sm:max-h-[390px]">
+                    <div className="flex-1 flex flex-col items-center justify-center relative z-0 select-none pointer-events-none my-auto py-0">
+                        <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[290px] sm:max-h-[330px]">
                             <img
                                 src="/ari-saludando.gif"
                                 alt="ARI Asistente Animado"
-                                className="max-h-[330px] sm:max-h-[380px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.25)]"
+                                className="max-h-[280px] sm:max-h-[320px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.25)]"
                                 loading="eager"
                             />
                             <div className="ari-3d-shadow mt-1 opacity-40" />
