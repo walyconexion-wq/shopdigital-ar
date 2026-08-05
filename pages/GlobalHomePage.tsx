@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle, Plane, FileCheck, FileText } from 'lucide-react';
+import { Mountain, MapPin, Search, ChevronRight, Globe, Zap, Building2, Palmtree, Palette, X, Sun, Moon, RefreshCw, AlertCircle, Plane, FileCheck, FileText, ScrollText } from 'lucide-react';
 import { suscribirseARegiones } from '../firebase';
 import { Region, Shop } from '../types';
 import { playNeonClick } from '../utils/audio';
@@ -81,6 +81,7 @@ const GlobalHomePage: React.FC = () => {
     });
     const [clickCount, setClickCount] = useState(0);
     const [showEditor, setShowEditor] = useState(false);
+    const [showTermsModal, setShowTermsModal] = useState(false);
 
     // --- ESTADO DE MAQUETA DE DÍA ---
     const [activeRegion, setActiveRegion] = useState<'buenos-aires' | 'cordoba' | 'patagonia'>('buenos-aires');
@@ -161,8 +162,8 @@ const GlobalHomePage: React.FC = () => {
         playNeonClick();
         setClickCount(prev => {
             const next = prev + 1;
-            if (next >= 5) {
-                setShowEditor(true);
+            if (next >= 6) {
+                navigate('/esteban-echeverria/tablero-maestro');
                 return 0;
             }
             return next;
@@ -324,14 +325,14 @@ const GlobalHomePage: React.FC = () => {
                             </p>
                             <div className="flex items-center gap-2.5 sm:gap-3">
                                 <button
-                                    onClick={() => { playNeonClick(); navigate('/terminos'); }}
+                                    onClick={() => { playNeonClick(); setShowTermsModal(true); }}
                                     className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                 >
                                     <FileText size={11} className="opacity-70" />
                                     TÉRMINOS
                                 </button>
                                 <button
-                                    onClick={() => { playNeonClick(); navigate('/terminos'); }}
+                                    onClick={() => { playNeonClick(); setShowTermsModal(true); }}
                                     className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                 >
                                     <FileCheck size={11} className="opacity-70" />
@@ -693,6 +694,23 @@ const GlobalHomePage: React.FC = () => {
                             >
                                 © 2026 · ShopDigital
                             </p>
+                            <div className="flex items-center justify-center gap-4 mt-2.5 mb-1.5">
+                                <button
+                                    onClick={() => { playNeonClick(); setShowTermsModal(true); }}
+                                    className="text-[8px] font-extrabold uppercase tracking-[0.14em] text-cyan-400/70 hover:text-cyan-300 flex items-center gap-1 active:opacity-75 transition-all select-none"
+                                >
+                                    <FileText size={11} className="opacity-70" />
+                                    TÉRMINOS
+                                </button>
+                                <span className="text-white/20 text-[9px]">•</span>
+                                <button
+                                    onClick={() => { playNeonClick(); setShowTermsModal(true); }}
+                                    className="text-[8px] font-extrabold uppercase tracking-[0.14em] text-cyan-400/70 hover:text-cyan-300 flex items-center gap-1 active:opacity-75 transition-all select-none"
+                                >
+                                    <FileCheck size={11} className="opacity-70" />
+                                    CONDICIONES
+                                </button>
+                            </div>
                             <p
                                 className="text-[7px] uppercase tracking-[0.3em] mt-1"
                                 style={{ color: 'rgba(0,251,255,0.4)', textShadow: '0 0 10px rgba(0,251,255,0.4)' }}
@@ -788,6 +806,115 @@ const GlobalHomePage: React.FC = () => {
                         >
                             Entendido
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {/* 📄 MODAL DESPLEGABLE DE TÉRMINOS Y CONDICIONES */}
+            {showTermsModal && (
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
+                    <div className={`w-full max-w-lg max-h-[85vh] flex flex-col rounded-[2.5rem] border shadow-2xl relative animate-in zoom-in-95 duration-200 overflow-hidden ${
+                        isDayMode ? 'bg-[#f0ece6] border-[#e0d6c8] text-[#2c2440]' : 'bg-[#0f172a] border-white/10 text-white'
+                    }`}>
+                        {/* Header del Modal */}
+                        <div className={`p-5 sm:p-6 border-b flex items-center justify-between sticky top-0 z-10 backdrop-blur-xl ${
+                            isDayMode ? 'bg-[#f0ece6]/95 border-[#b4a594]/30' : 'bg-[#0f172a]/95 border-white/10'
+                        }`}>
+                            <div className="flex items-center gap-3">
+                                <div className={`p-2.5 rounded-2xl ${isDayMode ? 'bg-[#2c2440]/10 text-[#2c2440]' : 'bg-cyan-500/20 text-cyan-400'}`}>
+                                    <ScrollText size={20} />
+                                </div>
+                                <div className="text-left">
+                                    <h2 className="text-sm font-[1000] uppercase tracking-wider leading-none">
+                                        Términos y Condiciones
+                                    </h2>
+                                    <p className={`text-[8.5px] font-bold uppercase tracking-widest mt-1 ${isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400/80'}`}>
+                                        ShopDigital VIP S.A. · Documento Legal
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => { playNeonClick(); setShowTermsModal(false); }}
+                                className={`p-2 rounded-full transition-all active:scale-95 ${
+                                    isDayMode ? 'bg-black/5 hover:bg-black/10 text-[#2c2440]' : 'bg-white/10 hover:bg-white/20 text-white'
+                                }`}
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+
+                        {/* Cuerpo Escroleable de Términos */}
+                        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-left">
+                            <div className={`p-3.5 rounded-2xl border text-center ${
+                                isDayMode ? 'bg-amber-500/10 border-amber-500/30 text-[#5c4033]' : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                            }`}>
+                                <p className="text-[9px] font-extrabold uppercase tracking-widest leading-relaxed">
+                                    Este documento establece los términos y condiciones vinculantes para el uso de la Red Nacional ShopDigital.
+                                </p>
+                            </div>
+
+                            {[
+                                {
+                                    title: "1. Aceptación de los Términos",
+                                    content: "Al acceder y utilizar la plataforma ShopDigital (en adelante, la 'Plataforma'), usted acepta estar sujeto a estos Términos y Condiciones, así como a todas las leyes y regulaciones aplicables en la República Argentina."
+                                },
+                                {
+                                    title: "2. Descripción del Servicio",
+                                    content: "ShopDigital es una red digital hiperlocal que conecta comercios locales con usuarios finales, facilitando catálogo de ofertas, fidelización B2C/B2B y gestión multizona."
+                                },
+                                {
+                                    title: "3. Cuentas de Usuarios y Comercios",
+                                    content: "Los comerciantes y usuarios son responsables de salvaguardar sus credenciales y de cualquier actividad en su cuenta. ShopDigital se reserva el derecho de denegar acceso o suspender cuentas por mal uso de la red."
+                                },
+                                {
+                                    title: "4. Privacidad y Protección de Datos",
+                                    content: "Los datos personales se procesan estrictamente bajo la Ley 25.326 de Protección de Datos Personales. No compartimos información personal con terceros ajenos a la operación de la red."
+                                },
+                                {
+                                    title: "5. Pagos y Pasarelas Comerciales",
+                                    content: "Las transacciones de suscripción e interacción comercial se realizan mediante pasarelas de pago homologadas (Mercado Pago, Stripe). ShopDigital no almacena números completos de tarjetas bancarias."
+                                },
+                                {
+                                    title: "6. Propiedad Intelectual",
+                                    content: "Todos los logos, diseños neumórficos, marcas y tecnología conversacional Ari están protegidos por las leyes de propiedad intelectual en la República Argentina."
+                                },
+                                {
+                                    title: "7. Exención de Responsabilidad",
+                                    content: "ShopDigital opera como facilitador tecnológico entre comercio y cliente final, manteniendo altos estándares de disponibilidad y seguridad."
+                                },
+                                {
+                                    title: "8. Modificaciones",
+                                    content: "Nos reservamos el derecho de actualizar estos términos periódicamente para acompañar el crecimiento de la red en todo el país."
+                                }
+                            ].map((sec, idx) => (
+                                <div key={idx} className="space-y-1.5">
+                                    <h3 className={`text-[11px] font-black uppercase tracking-wider ${
+                                        isDayMode ? 'text-[#2c2440]' : 'text-cyan-400'
+                                    }`}>
+                                        {sec.title}
+                                    </h3>
+                                    <p className={`text-[10px] leading-relaxed font-medium text-justify ${
+                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
+                                    }`}>
+                                        {sec.content}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Footer del Modal */}
+                        <div className={`p-4 sm:p-5 border-t text-center ${
+                            isDayMode ? 'bg-[#f0ece6] border-[#b4a594]/30' : 'bg-[#0f172a] border-white/10'
+                        }`}>
+                            <button
+                                onClick={() => { playNeonClick(); setShowTermsModal(false); }}
+                                className={`w-full py-3.5 rounded-2xl font-black uppercase tracking-widest text-[9.5px] active:scale-95 transition-all shadow-lg ${
+                                    isDayMode ? 'bg-[#2c2440] text-white hover:bg-[#1a1528]' : 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                                }`}
+                            >
+                                Entendido y Cerrar
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
