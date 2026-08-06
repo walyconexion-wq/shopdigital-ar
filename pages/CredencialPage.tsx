@@ -213,7 +213,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
         return `${dateStr} - ${hourStr}`;
     };
 
-    // Theme Mode Resolver (sincronizado con GlobalHomePage, ClientSubscriptionPage, SubscriptionPage y ClientVipCredentialPage)
+    // Theme Mode Resolver
     const [isDayMode, setIsDayMode] = useState(() => {
         const themeMode = localStorage.getItem('global_home_theme_mode') || 'light';
         return themeMode === 'light' || (themeMode === 'auto' && (() => {
@@ -340,14 +340,13 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
     // Loading State
     if (authLoading) {
         return (
-            <div className={`min-h-screen flex flex-col items-center justify-center p-8 ${isDayMode ? 'bg-[#f0ece6]' : 'bg-[#0f0920]'}`}>
-                <div className="flex flex-col items-center gap-4">
-                    <div className={`w-12 h-12 border-t-2 rounded-full animate-spin ${
-                        isDayMode ? 'border-t-[#ff6b6b] border-[#4a3d6a]/20' : 'border-t-[#00fbff] border-purple-500/20'
-                    }`} />
-                    <span className={`text-[10px] font-extrabold uppercase tracking-widest animate-pulse ${
-                        isDayMode ? 'text-[#4a3d6a]' : 'text-[#00fbff]'
-                    }`}>Autenticando Credencial de Comerciante...</span>
+            <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden bg-transparent">
+                <CyberCircuitBackground />
+                <div className="flex flex-col items-center gap-4 relative z-10 neu-plate p-8">
+                    <div className="w-12 h-12 border-t-2 border-t-[#ff6b6b] border-[#4a3d6a]/20 rounded-full animate-spin" />
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#4a3d6a] animate-pulse">
+                        Autenticando Credencial de Comerciante...
+                    </span>
                 </div>
             </div>
         );
@@ -356,42 +355,30 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
     // Unauthenticated State
     if (!user) {
         return (
-            <div className={`min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden ${
-                isDayMode ? 'bg-[#faf7f2] text-[#2c2440]' : 'bg-[#0f0920] text-white'
-            }`}>
-                {!isDayMode && <CyberCircuitBackground />}
+            <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-transparent text-[#2c2440]">
+                <CyberCircuitBackground />
 
-                <div className={`w-full max-w-sm rounded-[26px] p-8 relative z-10 transition-all ${
-                    isDayMode 
-                        ? 'neu-plate' 
-                        : 'bg-[#181130]/90 border border-purple-500/30 shadow-[0_0_35px_rgba(168,85,247,0.25)] backdrop-blur-xl'
-                }`}>
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto ${
-                        isDayMode ? 'neu-inset-title' : 'bg-[#241747] border border-cyan-500/30'
-                    }`}>
-                        <Lock size={24} className={`animate-pulse ${isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'}`} />
+                <div className="w-full max-w-sm rounded-[26px] p-8 relative z-10 neu-plate">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto neu-inset-title">
+                        <Lock size={24} className="animate-pulse text-[#ff6b6b]" />
                     </div>
-                    <h2 className={`text-xl font-black uppercase tracking-tight text-center mb-1 ${isDayMode ? 'text-[#2c2440]' : 'text-white'}`}>
+                    <h2 className="text-xl font-black uppercase tracking-tight text-center mb-1 text-[#2c2440]">
                         Credencial Protegida
                     </h2>
-                    <p className={`text-[9px] font-bold uppercase tracking-widest text-center mb-8 ${isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400/70'}`}>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-center mb-8 text-[#4a3d6a]">
                         Verificación B2B Comercio ShopDigital
                     </p>
 
                     <button
                         onClick={() => { playNeonClick(); login(); }}
-                        className={`w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-3 cursor-pointer ${
-                            isDayMode ? 'neu-btn-3d-active' : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg border border-cyan-400/40'
-                        }`}
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-3 cursor-pointer neu-btn-3d-active"
                     >
                         <User size={16} /> Iniciar Sesión con Google
                     </button>
                     
                     <button
                         onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                        className={`w-full h-14 text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center cursor-pointer mt-4 ${
-                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-cyan-400/30 text-cyan-300 rounded-xl'
-                        }`}
+                        className="w-full h-14 text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center cursor-pointer mt-4 neu-btn-3d"
                     >
                         Volver al Inicio
                     </button>
@@ -403,45 +390,31 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
     // Unauthorized Access State (Gated)
     if (!isAuthorized) {
         return (
-            <div className={`min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden ${
-                isDayMode ? 'bg-[#faf7f2] text-[#2c2440]' : 'bg-[#0f0920] text-white'
-            }`}>
-                {!isDayMode && <CyberCircuitBackground />}
+            <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-transparent text-[#2c2440]">
+                <CyberCircuitBackground />
 
-                <div className={`w-full max-w-sm rounded-[26px] p-8 relative z-10 transition-all ${
-                    isDayMode 
-                        ? 'neu-plate border-2 border-[#ff6b6b]' 
-                        : 'bg-red-950/30 border border-red-500/40 backdrop-blur-xl shadow-[0_0_40px_rgba(239,68,68,0.2)]'
-                }`}>
+                <div className="w-full max-w-sm rounded-[26px] p-8 relative z-10 neu-plate border-2 border-[#ff6b6b]">
                     <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto bg-red-500/10 border border-red-500/30">
                         <Zap size={24} className="text-[#ff6b6b] animate-bounce" />
                     </div>
                     <h2 className="text-xl font-black text-[#ff6b6b] uppercase tracking-tight text-center mb-2">Acceso Denegado</h2>
-                    <p className={`text-[10px] font-bold uppercase tracking-wider leading-relaxed text-center mb-6 ${
-                        isDayMode ? 'text-[#2c2440]' : 'text-red-300'
-                    }`}>
+                    <p className="text-[10px] font-bold uppercase tracking-wider leading-relaxed text-center mb-6 text-[#2c2440]">
                         El correo <span className="font-mono text-[#ff6b6b] bg-[#faf7f2] px-1.5 py-0.5 rounded border border-[#ff6b6b]/30">{user.email}</span> no cuenta con autorización para administrar la credencial de {selectedShop.name}.
                     </p>
-                    <p className={`text-[8px] uppercase tracking-widest leading-normal mb-8 border-l-2 pl-3 ${
-                        isDayMode ? 'text-[#4a3d6a] border-[#ff6b6b]' : 'text-white/50 border-red-500/40'
-                    }`}>
+                    <p className="text-[8px] uppercase tracking-widest leading-normal mb-8 border-l-2 pl-3 text-[#4a3d6a] border-[#ff6b6b]">
                         Sistema Doberman B2B Security Audit activo.
                     </p>
 
                     <button
                         onClick={() => { playNeonClick(); logoutUser(); }}
-                        className={`w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center cursor-pointer ${
-                            isDayMode ? 'neu-btn-3d-active' : 'bg-red-600 text-white rounded-xl shadow-lg'
-                        }`}
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center cursor-pointer neu-btn-3d-active"
                     >
                         Cerrar Sesión / Cambiar Cuenta
                     </button>
                     
                     <button
                         onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                        className={`w-full h-14 text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center cursor-pointer mt-4 ${
-                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] text-white rounded-xl'
-                        }`}
+                        className="w-full h-14 text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center cursor-pointer mt-4 neu-btn-3d"
                     >
                         Volver
                     </button>
@@ -453,41 +426,25 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
     const formattedTown = townId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
     return (
-        <div className={`min-h-screen flex flex-col items-center px-4 py-6 relative overflow-hidden transition-colors duration-500 ${
-            isDayMode ? 'bg-[#faf7f2] text-[#2c2440]' : 'bg-[#0f0920] text-white'
-        }`}>
-            {/* Cyber Circuit Background for Dark Mode */}
-            {!isDayMode && <CyberCircuitBackground />}
+        <div className="min-h-screen w-full flex flex-col items-center px-4 py-6 relative overflow-y-auto selection:bg-cyan-500/30 bg-transparent text-[#2c2440]">
+            {/* Fondo Ciber-Digital de Circuitos Animados (Igual a la Home de la aplicación) */}
+            <CyberCircuitBackground />
 
-            {/* Ambient Ambient Glow in Day Mode */}
-            {isDayMode && (
-                <div className="fixed inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-[#ff6b6b]/5 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-[#00fbff]/5 rounded-full blur-[120px]" />
-                </div>
-            )}
-
-            {/* HEADER NEUMÓRFICO */}
+            {/* HEADER NEUMÓRFICO CREMA HD */}
             <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3">
                 <button 
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className={`w-11 h-11 flex items-center justify-center cursor-pointer transition-all ${
-                        isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-cyan-400/30 text-cyan-300 rounded-xl shadow-lg'
-                    }`}
+                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
                     aria-label="Regresar"
                 >
-                    <ArrowLeft size={18} className={isDayMode ? 'text-[#2c2440]' : 'text-[#00fbff]'} strokeWidth={3} />
+                    <ArrowLeft size={18} className="text-[#2c2440]" strokeWidth={3} />
                 </button>
 
-                <div className={`flex-1 text-center px-4 py-2 ${isDayMode ? 'neu-inset-title' : 'bg-[#150d2a]/90 border border-purple-500/30 rounded-full'}`}>
-                    <h1 className={`text-base font-black tracking-tight uppercase leading-tight ${
-                        isDayMode 
-                            ? 'text-[#2c2440]' 
-                            : 'text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-300 to-purple-400'
-                    }`}>
+                <div className="flex-1 text-center px-4 py-2 neu-inset-title">
+                    <h1 className="text-base font-black tracking-tight uppercase leading-tight text-[#2c2440]">
                         Credencial Comerciante
                     </h1>
-                    <p className={`text-[8px] font-extrabold uppercase tracking-widest ${isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400/80'}`}>
+                    <p className="text-[8px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
                         {formattedTown}
                     </p>
                 </div>
@@ -496,11 +453,9 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     <button
                         onClick={toggleTheme}
                         aria-label="Alternar modo de color"
-                        className={`w-11 h-11 flex items-center justify-center cursor-pointer transition-all ${
-                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-cyan-400/30 text-cyan-300 rounded-xl shadow-lg'
-                        }`}
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
                     >
-                        {isDayMode ? <Moon size={16} className="text-[#2c2440]" /> : <Sun size={16} className="text-[#00fbff]" />}
+                        {isDayMode ? <Moon size={16} className="text-[#2c2440]" /> : <Sun size={16} className="text-[#ff6b6b]" />}
                     </button>
                     <button 
                         onClick={() => {
@@ -513,62 +468,50 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                  });
                             }
                         }}
-                        className={`w-11 h-11 flex items-center justify-center cursor-pointer transition-all ${
-                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-cyan-400/30 text-cyan-300 rounded-xl shadow-lg'
-                        }`}
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
                         aria-label="Compartir"
                     >
-                        <Share2 size={16} className={isDayMode ? 'text-[#2c2440]' : 'text-[#00fbff]'} />
+                        <Share2 size={16} className="text-[#2c2440]" />
                     </button>
                 </div>
             </div>
 
-            {/* Brand Avatar Section / Ari 3D Floating */}
-            {isDayMode && (
-                <div className="flex flex-col items-center mb-3 mt-1 ari-3d-avatar-container select-none pointer-events-none z-20">
-                    <img 
-                        src="/ari-pointing.png" 
-                        alt="ARI Asistente Credencial Comercio" 
-                        className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(180,165,148,0.4)]" 
-                    />
-                    <div className="ari-3d-shadow mt-1" />
-                </div>
-            )}
+            {/* Ari 3D Floating Avatar Section */}
+            <div className="flex flex-col items-center mb-3 mt-1 ari-3d-avatar-container select-none pointer-events-none z-20">
+                <img 
+                    src="/ari-pointing.png" 
+                    alt="ARI Asistente Credencial Comercio" 
+                    className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(180,165,148,0.4)]" 
+                />
+                <div className="ari-3d-shadow mt-1" />
+            </div>
 
             {/* ═══════════ LIVE EVENT TICKER BANNER 🟢🔴 ═══════════ */}
             {activeEvent && (
                 <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-4 duration-500">
                     {activeEvent.status === 'active_live' ? (
-                        <div className={`p-4 flex flex-col items-center justify-center relative overflow-hidden ${
-                            isDayMode 
-                                ? 'neu-plate border-2 border-emerald-500/40' 
-                                : 'bg-emerald-950/30 border border-emerald-400/40 rounded-2xl shadow-[0_0_20px_rgba(16,185,129,0.2)]'
-                        }`}>
-                            <span className={`text-[10px] font-black uppercase tracking-widest text-center mb-1 ${isDayMode ? 'text-emerald-700' : 'text-emerald-400'}`}>
+                        <div className="p-4 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-emerald-500/40">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-emerald-700">
                                 🟢 EVENTO EN VIVO REGIONAL
                             </span>
-                            <h3 className={`text-xs font-black uppercase tracking-wider text-center mb-2 ${isDayMode ? 'text-[#2c2440]' : 'text-white'}`}>
+                            <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                 {activeEvent.name}
                             </h3>
-                            <div className={`px-4 py-1 rounded-full text-center ${isDayMode ? 'neu-inset-title' : 'bg-emerald-500/20 border border-emerald-400/40'}`}>
-                                <span className={`text-[9px] font-black uppercase tracking-widest block ${isDayMode ? 'text-emerald-800' : 'text-emerald-300'}`}>
+                            <div className="px-4 py-1 rounded-full text-center neu-inset-title">
+                                <span className="text-[9px] font-black uppercase tracking-widest block text-emerald-800">
                                     🎫 ACCESO VIP EXCLUSIVO INCLUIDO
                                 </span>
                             </div>
                         </div>
                     ) : (
-                        <div className={`p-4 flex flex-col items-center justify-center relative overflow-hidden ${
-                            isDayMode 
-                                ? 'neu-plate border-2 border-[#ff6b6b]/40' 
-                                : 'bg-red-950/30 border border-red-400/40 rounded-2xl shadow-[0_0_20px_rgba(239,68,68,0.2)]'
-                        }`}>
-                            <span className={`text-[10px] font-black uppercase tracking-widest text-center mb-1 ${isDayMode ? 'text-[#ff6b6b]' : 'text-red-400'}`}>
+                        <div className="p-4 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-[#ff6b6b]/40">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-[#ff6b6b]">
                                 🔴 EVENTO REPROGRAMADO
                             </span>
-                            <h3 className={`text-xs font-black uppercase tracking-wider text-center mb-1 ${isDayMode ? 'text-[#2c2440]' : 'text-white'}`}>
+                            <h3 className="text-xs font-black uppercase tracking-wider text-center mb-1 text-[#2c2440]">
                                 {activeEvent.name}
                             </h3>
-                            <p className={`text-[8px] font-extrabold uppercase tracking-widest text-center ${isDayMode ? 'text-[#4a3d6a]' : 'text-red-300'}`}>
+                            <p className="text-[8px] font-extrabold uppercase tracking-widest text-center text-[#4a3d6a]">
                                 Consultar actualización vía Ari 🤖
                             </p>
                         </div>
@@ -578,28 +521,16 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
             {/* ═══════════ CREDENCIAL COMERCIANTE PRINCIPAL ═══════════ */}
             <div className="w-full max-w-sm relative z-10">
-                <div className={`p-6 flex flex-col items-center relative overflow-hidden transition-all ${
-                    isDayMode 
-                        ? 'neu-plate' 
-                        : 'bg-[#181130]/95 border-2 border-purple-500/30 rounded-[28px] shadow-[0_0_50px_rgba(168,85,247,0.3)] backdrop-blur-2xl'
-                }`}>
+                <div className="p-6 flex flex-col items-center relative overflow-hidden transition-all neu-plate">
                     {/* SELLO DE TIEMPO E INVIOLABILIDAD */}
-                    <div className={`w-full flex flex-col items-center justify-center gap-1 mb-5 py-2.5 px-4 relative overflow-hidden transition-all ${
-                        isDayMode 
-                            ? 'neu-inset-title' 
-                            : 'bg-[#0d071c] border border-cyan-500/40 rounded-2xl shadow-[inset_0_0_12px_rgba(0,251,255,0.15)]'
-                    }`}>
+                    <div className="w-full flex flex-col items-center justify-center gap-1 mb-5 py-2.5 px-4 relative overflow-hidden transition-all neu-inset-title">
                         <div className="flex items-center gap-2 relative z-10">
-                            <Clock size={13} className={`animate-spin ${isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'}`} style={{ animationDuration: '6s' }} />
-                            <span className={`text-xs font-black font-mono tracking-widest tabular-nums ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-[#00fbff]'
-                            }`}>
+                            <Clock size={13} className="animate-spin text-[#ff6b6b]" style={{ animationDuration: '6s' }} />
+                            <span className="text-xs font-black font-mono tracking-widest tabular-nums text-[#2c2440]">
                                 {formatClock(currentTime)}
                             </span>
                         </div>
-                        <span className={`text-[7px] font-black uppercase tracking-widest ${
-                            isDayMode ? 'text-[#ff6b6b]' : 'text-cyan-400'
-                        }`}>
+                        <span className="text-[7px] font-black uppercase tracking-widest text-[#ff6b6b]">
                             SELLO DE VERIFICACIÓN EN TIEMPO REAL
                         </span>
                     </div>
@@ -608,22 +539,16 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     {isAuthorized && (
                         <button 
                             onClick={() => { playNeonClick(); setIsEditing(true); }}
-                            className={`absolute top-4 right-4 w-9 h-9 flex items-center justify-center cursor-pointer z-25 transition-all ${
-                                isDayMode ? 'neu-btn-3d' : 'bg-[#241747] border border-cyan-400/40 text-cyan-300 rounded-xl'
-                            }`}
+                            className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center cursor-pointer z-25 transition-all neu-btn-3d"
                             title="Editar Comercio"
                         >
-                            <Edit2 size={14} className={isDayMode ? 'text-[#2c2440]' : 'text-[#00fbff]'} />
+                            <Edit2 size={14} className="text-[#2c2440]" />
                         </button>
                     )}
 
                     {/* Foto Propietario / Logo Comercio */}
-                    <div className={`relative w-24 h-24 rounded-full p-1 mb-4 flex-shrink-0 group/photo transition-all ${
-                        isDayMode 
-                            ? 'neu-plate' 
-                            : 'bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 p-1 shadow-[0_0_25px_rgba(0,251,255,0.4)]'
-                    }`}>
-                        <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center relative bg-black/40">
+                    <div className="relative w-24 h-24 rounded-full p-1 mb-4 flex-shrink-0 group/photo transition-all neu-plate">
+                        <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center relative bg-black/10">
                             <img 
                                 src={shop?.ownerPhoto || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80"} 
                                 alt={shop?.ownerName} 
@@ -649,75 +574,47 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     </div>
 
                     {/* Nombre del Comercio */}
-                    <h2 className={`text-xl font-black uppercase tracking-tight mb-1 text-center leading-tight ${
-                        isDayMode ? 'text-[#2c2440]' : 'text-white'
-                    }`}>
+                    <h2 className="text-xl font-black uppercase tracking-tight mb-1 text-center leading-tight text-[#2c2440]">
                         {shop?.name || selectedShop.name}
                     </h2>
-                    <p className={`text-[9px] font-extrabold uppercase tracking-widest mb-4 text-center ${
-                        isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400/80'
-                    }`}>
+                    <p className="text-[9px] font-extrabold uppercase tracking-widest mb-4 text-center text-[#4a3d6a]">
                         {shop?.specialty || shop?.category || selectedShop.specialty || selectedShop.category}
                     </p>
 
                     {/* Insignia de Comercio Verificado */}
-                    <div className={`flex items-center gap-2 mb-5 px-5 py-2 cursor-default transition-all ${
-                        isDayMode ? 'neu-btn-3d-active' : 'bg-purple-600/30 border border-purple-400/50 rounded-full text-cyan-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
-                    }`}>
-                        <ShieldCheck className={`w-4 h-4 ${isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'}`} />
-                        <span className={`text-[9px] font-black uppercase tracking-widest ${
-                            isDayMode ? 'text-[#2c2440]' : 'text-cyan-200'
-                        }`}>
+                    <div className="flex items-center gap-2 mb-5 px-5 py-2 cursor-default transition-all neu-btn-3d-active">
+                        <ShieldCheck className="w-4 h-4 text-[#ff6b6b]" />
+                        <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">
                             {isEnterprise ? 'Empresa Industrial Verificada' : 'Comercio Acreditado VIP'}
                         </span>
                     </div>
 
                     {/* Grilla de Datos Neumórfica */}
                     <div className="w-full grid grid-cols-2 gap-3 mb-5">
-                        <div className={`p-3 transition-all ${
-                            isDayMode ? 'neu-inset-title' : 'bg-[#0d071c] border border-purple-500/20 rounded-2xl'
-                        }`}>
-                            <p className={`text-[7px] font-extrabold uppercase tracking-widest mb-1 ${
-                                isDayMode ? 'text-[#4a3d6a]' : 'text-purple-300/70'
-                            }`}>Titular</p>
-                            <p className={`text-[11px] font-black uppercase tracking-tight truncate ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-white'
-                            }`}>
+                        <div className="p-3 transition-all neu-inset-title">
+                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 text-[#4a3d6a]">Titular</p>
+                            <p className="text-[11px] font-black uppercase tracking-tight truncate text-[#2c2440]">
                                 {shop?.ownerName || selectedShop.ownerName || 'Sin Registrar'}
                             </p>
                         </div>
                         
-                        <div className={`p-3 transition-all ${
-                            isDayMode ? 'neu-inset-title' : 'bg-[#0d071c] border border-purple-500/20 rounded-2xl'
-                        }`}>
-                            <p className={`text-[7px] font-extrabold uppercase tracking-widest mb-1 ${
-                                isDayMode ? 'text-[#4a3d6a]' : 'text-purple-300/70'
-                            }`}>{isEnterprise ? 'ID Empresa' : 'ID Comercio'}</p>
-                            <p className={`text-[11px] font-black tracking-tight truncate ${
-                                isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'
-                            }`}>
+                        <div className="p-3 transition-all neu-inset-title">
+                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 text-[#4a3d6a]">{isEnterprise ? 'ID Empresa' : 'ID Comercio'}</p>
+                            <p className="text-[11px] font-black tracking-tight truncate text-[#ff6b6b]">
                                 {shop?.shopNumber || selectedShop.shopNumber || selectedShop.id.slice(0, 8).toUpperCase()}
                             </p>
                         </div>
                         
-                        <div className={`p-3 col-span-2 transition-all ${
-                            isDayMode ? 'neu-inset-title' : 'bg-[#0d071c] border border-purple-500/20 rounded-2xl'
-                        }`}>
-                            <p className={`text-[7px] font-extrabold uppercase tracking-widest mb-1 flex items-center gap-1 ${
-                                isDayMode ? 'text-[#4a3d6a]' : 'text-purple-300/70'
-                            }`}>
-                                <MapPin size={8} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} /> Dirección Física
+                        <div className="p-3 col-span-2 transition-all neu-inset-title">
+                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 flex items-center gap-1 text-[#4a3d6a]">
+                                <MapPin size={8} className="text-[#ff6b6b]" /> Dirección Física
                             </p>
-                            <p className={`text-[10px] font-bold truncate ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-white/80'
-                            }`}>{shop?.address || selectedShop.address}</p>
+                            <p className="text-[10px] font-bold truncate text-[#2c2440]">{shop?.address || selectedShop.address}</p>
                         </div>
                     </div>
 
                     {/* QR Code Container */}
-                    <div className={`w-full p-5 flex flex-col items-center mb-5 relative group/qr overflow-hidden transition-all ${
-                        isDayMode ? 'neu-plate' : 'bg-[#0d071c] border border-cyan-500/30 rounded-2xl shadow-[0_0_20px_rgba(0,251,255,0.15)]'
-                    }`}>
+                    <div className="w-full p-5 flex flex-col items-center mb-5 relative group/qr overflow-hidden transition-all neu-plate">
                         <div className="bg-white p-3.5 rounded-2xl mb-3 shadow-md relative z-10 border border-[#f0ece6]">
                             <QRCodeCanvas
                                 value={validationUrl}
@@ -731,42 +628,28 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 }}
                             />
                         </div>
-                        <p className={`text-[9px] font-black uppercase tracking-widest ${
-                            isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400'
-                        }`}>
+                        <p className="text-[9px] font-black uppercase tracking-widest text-[#4a3d6a]">
                             Código de Validación QR
                         </p>
                     </div>
 
                     {/* 🛰️ SINTONIZADOR DE ACCESO / EVENTOS LIVE */}
-                    <div className={`w-full p-4 space-y-3 relative overflow-hidden mb-5 z-10 transition-all ${
-                        isDayMode 
-                            ? 'neu-inset-title' 
-                            : 'bg-[#0d071c] border border-purple-500/30 rounded-2xl'
-                    }`}>
+                    <div className="w-full p-4 space-y-3 relative overflow-hidden mb-5 z-10 transition-all neu-inset-title">
                         <div className="flex justify-between items-center">
-                            <label className={`text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-cyan-300'
-                            }`}>
-                                <Radio size={12} className={`animate-pulse ${isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'}`} /> Sintonizador B2B
+                            <label className="text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 text-[#2c2440]">
+                                <Radio size={12} className="animate-pulse text-[#ff6b6b]" /> Sintonizador B2B
                             </label>
-                            <span className={`text-[8px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                                isDayMode ? 'neu-btn-3d-active text-[8px] py-0.5' : 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-300'
-                            }`}>
+                            <span className="text-[8px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider neu-btn-3d-active">
                                 LIVE SIGNAL
                             </span>
                         </div>
                         
                         {sintonizadorEventData && (
                             <div className="space-y-2">
-                                <p className={`text-[12px] font-black uppercase tracking-tight leading-snug ${
-                                    isDayMode ? 'text-[#2c2440]' : 'text-white'
-                                }`}>
+                                <p className="text-[12px] font-black uppercase tracking-tight leading-snug text-[#2c2440]">
                                     {sintonizadorEventData.name}
                                 </p>
-                                <p className={`text-[9px] font-bold uppercase tracking-wider ${
-                                    isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-300/80'
-                                }`}>
+                                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4a3d6a]">
                                     {sintonizadorEventData.details}
                                 </p>
                                 <div className="flex items-center gap-2 px-3 py-1 rounded-xl w-fit bg-emerald-500/10 border border-emerald-500/30">
@@ -781,11 +664,9 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
                     {/* Status Membresía */}
                     <div className="w-full flex justify-between items-center text-[9px] font-black uppercase tracking-widest pt-2">
-                        <span className={isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'}>Membresía Comercio</span>
+                        <span className="text-[#4a3d6a]">Membresía Comercio</span>
                         <span className={`font-black ${
-                            selectedShop.isActive 
-                                ? 'text-emerald-600' 
-                                : isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'
+                            selectedShop.isActive ? 'text-emerald-600' : 'text-[#ff6b6b]'
                         }`}>
                             {selectedShop.isActive ? '⚡ HABILITADA VIP' : '⏳ EN REVISIÓN'}
                         </span>
@@ -798,30 +679,20 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 {!posnetOpen ? (
                     <button
                         onClick={() => { playNeonClick(); setPosnetOpen(true); }}
-                        className={`w-full h-15 text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2.5 cursor-pointer ${
-                            isDayMode ? 'neu-btn-3d-active' : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg border border-cyan-400/40'
-                        }`}
+                        className="w-full h-15 text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2.5 cursor-pointer neu-btn-3d-active"
                     >
-                        <CreditCard size={18} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} />
+                        <CreditCard size={18} className="text-[#ff6b6b]" />
                         <span>Abrir POSNET de Créditos</span>
                     </button>
                 ) : (
-                    <div className={`p-6 space-y-4 transition-all ${
-                        isDayMode 
-                            ? 'neu-plate' 
-                            : 'bg-[#181130]/90 border border-purple-500/30 rounded-[28px] backdrop-blur-xl'
-                    }`}>
+                    <div className="p-6 space-y-4 transition-all neu-plate">
                         <div className="flex items-center justify-between">
-                            <h3 className={`text-[11px] font-black uppercase tracking-wider flex items-center gap-2 ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-cyan-300'
-                            }`}>
-                                <CreditCard size={15} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} /> POSNET de Créditos
+                            <h3 className="text-[11px] font-black uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
+                                <CreditCard size={15} className="text-[#ff6b6b]" /> POSNET de Créditos
                             </h3>
                             <button 
                                 onClick={() => { playNeonClick(); setPosnetOpen(false); resetPosnet(); }}
-                                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs cursor-pointer ${
-                                    isDayMode ? 'neu-btn-3d' : 'bg-white/10 text-white/60 hover:text-white'
-                                }`}
+                                className="w-8 h-8 rounded-full flex items-center justify-center text-xs cursor-pointer neu-btn-3d"
                             >
                                 ✕
                             </button>
@@ -833,12 +704,8 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 onClick={() => { playNeonClick(); setPosnetMode('load'); setTxStatus('idle'); }}
                                 className={`py-3 rounded-xl font-black uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
                                     posnetMode === 'load'
-                                        ? isDayMode 
-                                            ? 'neu-btn-3d-active border-emerald-500 text-emerald-700' 
-                                            : 'bg-emerald-600 text-white border border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                                        : isDayMode 
-                                            ? 'neu-btn-3d text-[#4a3d6a]' 
-                                            : 'bg-[#1e153b] text-white/50 border border-cyan-400/20'
+                                        ? 'neu-btn-3d-active border-emerald-500 text-emerald-700'
+                                        : 'neu-btn-3d text-[#4a3d6a]'
                                 }`}
                             >
                                 <ArrowUpRight size={16} />
@@ -849,12 +716,8 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 onClick={() => { playNeonClick(); setPosnetMode('spend'); setTxStatus('idle'); }}
                                 className={`py-3 rounded-xl font-black uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
                                     posnetMode === 'spend'
-                                        ? isDayMode 
-                                            ? 'neu-btn-3d-active border-[#ff6b6b] text-[#ff6b6b]' 
-                                            : 'bg-red-600 text-white border border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)]'
-                                        : isDayMode 
-                                            ? 'neu-btn-3d text-[#4a3d6a]' 
-                                            : 'bg-[#1e153b] text-white/50 border border-cyan-400/20'
+                                        ? 'neu-btn-3d-active border-[#ff6b6b] text-[#ff6b6b]'
+                                        : 'neu-btn-3d text-[#4a3d6a]'
                                 }`}
                             >
                                 <ArrowDownRight size={16} />
@@ -871,38 +734,30 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                         value={searchTerm}
                                         onChange={e => setSearchTerm(e.target.value)}
                                         placeholder="Buscar socio (nombre, DNI, tel)..."
-                                        className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                         autoFocus
                                     />
-                                    <Search size={14} className={`absolute right-3 top-1/2 -translate-y-1/2 opacity-40 ${isDayMode ? 'text-[#2c2440]' : 'text-white'}`} />
+                                    <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 text-[#2c2440]" />
                                 </div>
                                 {filteredClients.map(c => (
                                     <button 
                                         key={c.id}
                                         onClick={() => { playNeonClick(); setSelectedClient(c); setSearchTerm(''); setTxStatus('idle'); }}
-                                        className={`w-full p-2.5 rounded-xl flex items-center gap-2.5 text-left cursor-pointer transition-all ${
-                                            isDayMode 
-                                                ? 'neu-btn-3d hover:border-[#ff6b6b]' 
-                                                : 'bg-[#0d071c] border border-purple-500/20 text-white hover:border-cyan-400/40'
-                                        }`}
+                                        className="w-full p-2.5 rounded-xl flex items-center gap-2.5 text-left cursor-pointer transition-all neu-btn-3d hover:border-[#ff6b6b]"
                                     >
                                         <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
                                             {c.photo ? <img src={c.photo} className="w-full h-full object-cover rounded-full" alt="" /> : <User size={12} className="opacity-40" />}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-[10px] font-black uppercase tracking-wider truncate">{c.name}</p>
-                                            <p className={`text-[8px] ${isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-400/70'}`}>{c.dni || 'Sin DNI'} · 💰 {c.credits || 0} crs</p>
+                                            <p className="text-[10px] font-black uppercase tracking-wider truncate text-[#2c2440]">{c.name}</p>
+                                            <p className="text-[8px] text-[#4a3d6a]">{c.dni || 'Sin DNI'} · 💰 {c.credits || 0} crs</p>
                                         </div>
                                     </button>
                                 ))}
                             </div>
                         ) : (
                             <div className="space-y-3">
-                                <div className={`p-3 rounded-xl flex items-center gap-3 relative ${
-                                    isDayMode ? 'neu-inset-title' : 'bg-[#0d071c] border border-cyan-400/30'
-                                }`}>
+                                <div className="p-3 rounded-xl flex items-center gap-3 relative neu-inset-title">
                                     <button 
                                         onClick={() => { playNeonClick(); resetPosnet(); }}
                                         className="absolute top-2 right-2 text-xs opacity-50 hover:opacity-100 border-none bg-transparent cursor-pointer"
@@ -913,8 +768,8 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                         {selectedClient.photo ? <img src={selectedClient.photo} className="w-full h-full object-cover" alt="" /> : <div className="w-full h-full flex items-center justify-center"><User size={16} className="opacity-30" /></div>}
                                     </div>
                                     <div className="flex-1 min-w-0 text-left">
-                                        <p className="text-[10px] font-black uppercase tracking-wider truncate">{selectedClient.name}</p>
-                                        <p className={`text-[8.5px] ${isDayMode ? 'text-[#4a3d6a]' : 'text-cyan-300'}`}>Saldo actual: <span className="font-black tabular-nums">{selectedClient.credits || 0}</span> créditos</p>
+                                        <p className="text-[10px] font-black uppercase tracking-wider truncate text-[#2c2440]">{selectedClient.name}</p>
+                                        <p className="text-[8.5px] text-[#4a3d6a]">Saldo actual: <span className="font-black tabular-nums text-[#2c2440]">{selectedClient.credits || 0}</span> créditos</p>
                                     </div>
                                 </div>
 
@@ -924,13 +779,9 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                         value={amount}
                                         onChange={e => setAmount(e.target.value)}
                                         placeholder="0"
-                                        className={`w-full p-3 text-2xl font-black tabular-nums text-center focus:outline-none ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-2xl font-black tabular-nums text-center focus:outline-none neu-inset-title text-[#2c2440]"
                                     />
-                                    <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black opacity-50 uppercase tracking-widest ${
-                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white'
-                                    }`}>CRÉDITOS</span>
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black opacity-50 uppercase tracking-widest text-[#4a3d6a]">CRÉDITOS</span>
                                 </div>
 
                                 {txStatus === 'success' && (
@@ -955,9 +806,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 <button
                                     onClick={handleTransaction}
                                     disabled={isProcessing || !amount}
-                                    className={`w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer ${
-                                        isDayMode ? 'neu-btn-3d-active' : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg'
-                                    }`}
+                                    className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer neu-btn-3d-active"
                                 >
                                     {isProcessing ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -972,9 +821,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 {txStatus === 'success' && (
                                     <button 
                                         onClick={() => { playNeonClick(); resetPosnet(); }}
-                                        className={`w-full h-10 text-[8px] font-black uppercase tracking-widest cursor-pointer mt-2 ${
-                                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] text-white rounded-xl'
-                                        }`}
+                                        className="w-full h-10 text-[8px] font-black uppercase tracking-widest cursor-pointer mt-2 neu-btn-3d"
                                     >
                                         Nueva Transacción
                                     </button>
@@ -989,17 +836,13 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
             <div className="w-full max-w-sm mt-5 space-y-3 relative z-10">
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/${categorySlug}/${shopSlug}/panel-autogestion`); }}
-                    className={`w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer ${
-                        isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-cyan-400/30 text-cyan-300 rounded-xl shadow-lg'
-                    }`}
+                    className="w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer neu-btn-3d"
                 >
-                    <Store size={15} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} /> Panel de Autogestión
+                    <Store size={15} className="text-[#ff6b6b]" /> Panel de Autogestión
                 </button>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className={`w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center cursor-pointer ${
-                        isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] border border-purple-500/30 text-white rounded-xl shadow-lg'
-                    }`}
+                    className="w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center cursor-pointer neu-btn-3d"
                 >
                     Volver al Inicio
                 </button>
@@ -1010,22 +853,14 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={() => setIsEditing(false)} />
                     
-                    <div className={`relative w-full max-w-sm p-6 overflow-hidden transition-all ${
-                        isDayMode 
-                            ? 'neu-plate' 
-                            : 'bg-[#181130] border-2 border-cyan-400/40 rounded-[28px] text-white shadow-[0_0_50px_rgba(0,251,255,0.3)]'
-                    }`}>
+                    <div className="relative w-full max-w-sm p-6 overflow-hidden transition-all neu-plate">
                         <div className="flex justify-between items-center mb-5 relative z-10">
-                            <h3 className={`text-xs font-black uppercase tracking-wider flex items-center gap-2 ${
-                                isDayMode ? 'text-[#2c2440]' : 'text-white'
-                            }`}>
-                                <ShieldCheck size={18} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} /> Editar Comercio
+                            <h3 className="text-xs font-black uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
+                                <ShieldCheck size={18} className="text-[#ff6b6b]" /> Editar Comercio
                             </h3>
                             <button 
                                 onClick={() => { playNeonClick(); setIsEditing(false); }} 
-                                className={`w-8 h-8 rounded-xl flex items-center justify-center cursor-pointer transition-all ${
-                                    isDayMode ? 'neu-btn-3d' : 'bg-white/10 text-cyan-300'
-                                }`}
+                                className="w-8 h-8 rounded-xl flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
                                 aria-label="Cerrar"
                             >
                                 <X size={16} />
@@ -1034,96 +869,70 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
                         <form onSubmit={handleSaveShopProfile} className="space-y-4 relative z-10 max-h-[70vh] overflow-y-auto pr-1">
                             <div>
-                                <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                    isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                }`}>Nombre del Local</label>
+                                <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Nombre del Local</label>
                                 <input 
                                     required
                                     value={editForm.name}
                                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                    className={`w-full p-3 text-xs rounded-xl focus:outline-none uppercase font-black ${
-                                        isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                    }`}
+                                    className="w-full p-3 text-xs rounded-xl focus:outline-none uppercase font-black neu-inset-title text-[#2c2440]"
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                    }`}>Titular</label>
+                                    <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Titular</label>
                                     <input 
                                         required
                                         value={editForm.ownerName}
                                         onChange={(e) => setEditForm({ ...editForm, ownerName: e.target.value })}
-                                        className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                     />
                                 </div>
                                 <div>
-                                    <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                    }`}>Nro / DNI / CUIT</label>
+                                    <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Nro / DNI / CUIT</label>
                                     <input 
                                         required
                                         value={editForm.shopNumber}
                                         onChange={(e) => setEditForm({ ...editForm, shopNumber: e.target.value })}
-                                        className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                     />
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                    }`}>WhatsApp</label>
+                                    <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">WhatsApp</label>
                                     <input 
                                         required
                                         value={editForm.phone}
                                         onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                                        className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                     />
                                 </div>
                                 <div>
-                                    <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                        isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                    }`}>Email Autorizado</label>
+                                    <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Email Autorizado</label>
                                     <input 
                                         required
                                         type="email"
                                         value={editForm.gmail}
                                         onChange={(e) => setEditForm({ ...editForm, gmail: e.target.value })}
-                                        className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                            isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                        }`}
+                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                    isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                }`}>Dirección Física</label>
+                                <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Dirección Física</label>
                                 <input 
                                     required
                                     value={editForm.address}
                                     onChange={(e) => setEditForm({ ...editForm, address: e.target.value })}
-                                    className={`w-full p-3 text-xs rounded-xl focus:outline-none font-bold ${
-                                        isDayMode ? 'neu-inset-title text-[#2c2440]' : 'bg-[#0d071c] border border-cyan-400/30 text-white'
-                                    }`}
+                                    className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                 />
                             </div>
 
                             <div>
-                                <label className={`text-[8.5px] font-black uppercase tracking-widest mb-1.5 block ${
-                                    isDayMode ? 'text-[#4a3d6a]' : 'text-white/70'
-                                }`}>Foto del Propietario</label>
+                                <label className="text-[8.5px] font-black uppercase tracking-widest mb-1.5 block text-[#4a3d6a]">Foto del Propietario</label>
                                 <div className="flex gap-2.5 items-center">
                                     <div className="w-11 h-11 rounded-full overflow-hidden bg-black/10 shrink-0">
                                         <img src={shop?.ownerPhoto || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80'} className="w-full h-full object-cover" />
@@ -1131,9 +940,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                     <button
                                         type="button"
                                         onClick={() => { playNeonClick(); fileInputRef.current?.click(); }}
-                                        className={`flex-1 py-2.5 text-[9px] font-black uppercase tracking-widest cursor-pointer ${
-                                            isDayMode ? 'neu-btn-3d' : 'bg-[#1e153b] text-cyan-300 rounded-xl'
-                                        }`}
+                                        className="flex-1 py-2.5 text-[9px] font-black uppercase tracking-widest cursor-pointer neu-btn-3d"
                                     >
                                         Subir Nueva Foto
                                     </button>
@@ -1143,15 +950,13 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                             <button 
                                 type="submit"
                                 disabled={isSaving}
-                                className={`w-full py-4 flex items-center justify-center gap-2 font-black uppercase tracking-wider text-[10px] cursor-pointer ${
-                                    isDayMode ? 'neu-btn-3d-active' : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg'
-                                }`}
+                                className="w-full py-4 flex items-center justify-center gap-2 font-black uppercase tracking-wider text-[10px] cursor-pointer neu-btn-3d-active"
                             >
                                 {isSaving ? (
                                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
-                                        <Check size={16} className={isDayMode ? 'text-[#ff6b6b]' : 'text-[#00fbff]'} strokeWidth={3} />
+                                        <Check size={16} className="text-[#ff6b6b]" strokeWidth={3} />
                                         <span>Guardar Cambios</span>
                                     </>
                                 )}
@@ -1163,17 +968,11 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
             {/* PIE DE PÁGINA NEUMÓRFICO FLOAT */}
             <div className="mt-8 mb-4 relative z-10">
-                <div className={`flex flex-col items-center gap-1.5 text-center transition-all ${
-                    isDayMode ? 'neu-footer' : 'bg-[#150d2a] border border-purple-500/30 rounded-full px-6 py-3 text-white'
-                }`}>
-                    <p className={`text-[8px] font-black uppercase tracking-widest ${
-                        isDayMode ? 'text-[#2c2440]' : 'text-cyan-400'
-                    }`}>
+                <div className="flex flex-col items-center gap-1.5 text-center transition-all neu-footer">
+                    <p className="text-[8px] font-black uppercase tracking-widest text-[#2c2440]">
                         ID SEGURIDAD: SHOP-{selectedShop.id.slice(0, 8).toUpperCase()}
                     </p>
-                    <span className={`text-[7.5px] font-extrabold uppercase tracking-widest ${
-                        isDayMode ? 'text-[#4a3d6a]' : 'text-purple-300/60'
-                    }`}>
+                    <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
                         ShopDigital.tech · Credencial Oficial
                     </span>
                 </div>
