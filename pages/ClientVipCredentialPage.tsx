@@ -402,148 +402,98 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
             <CyberCircuitBackground />
 
             {/* ══════════════════════════════════════════
-                HEADER NEUMÓRFICO CON PODS DE CABECERA
+                CABECERA SUPERIOR EN CONTENEDOR ESMERILADO TECNOLÓGICO
             ══════════════════════════════════════════ */}
-            <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
-                <button 
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                    aria-label="Regresar"
-                >
-                    <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
-                </button>
-
-                <div className="flex-1 text-center px-4 py-2 neu-inset-title">
-                    <h1 className="text-base font-black tracking-tight uppercase leading-tight text-[#2c2440]">
-                        Credencial VIP Cliente
-                    </h1>
-                    <p className="text-[8px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
-                        {formattedTown}
-                    </p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={toggleTheme}
-                        aria-label="Alternar modo de color"
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                    >
-                        {isDayMode 
-                            ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" />
-                            : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
-                        }
-                    </button>
+            <div className="w-full max-w-sm relative z-10 mb-6 p-4 rounded-[2.5rem] bg-white/20 backdrop-blur-xl border border-white/40 shadow-[0_10px_32px_rgba(44,36,64,0.15)] flex flex-col items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
+                {/* HEADER NEUMÓRFICO CON PODS DE CABECERA */}
+                <div className="w-full flex justify-between items-center gap-2">
                     <button 
-                        onClick={() => {
-                            playNeonClick();
-                            if (navigator.share) {
-                                navigator.share({
-                                    title: `Credencial VIP de ${client.name}`,
-                                    text: `Mirá mi Credencial VIP en ShopDigital: ${shop.name}`,
-                                    url: window.location.href,
-                                 });
-                            }
-                        }}
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                        aria-label="Compartir"
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
+                        className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group shrink-0"
+                        aria-label="Regresar"
                     >
-                        <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                        <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
+                    </button>
+
+                    <div className="flex-1 text-center px-3 py-1.5 neu-inset-title">
+                        <h1 className="text-sm font-black tracking-tight uppercase leading-tight text-[#2c2440]">
+                            Credencial VIP Cliente
+                        </h1>
+                        <p className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
+                            {formattedTown}
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                            onClick={toggleTheme}
+                            aria-label="Alternar modo de color"
+                            className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                        >
+                            {isDayMode 
+                                ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" />
+                                : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
+                            }
+                        </button>
+                        <button 
+                            onClick={() => {
+                                playNeonClick();
+                                if (navigator.share) {
+                                    navigator.share({
+                                        title: `Credencial VIP de ${client.name}`,
+                                        text: `Mirá mi Credencial VIP en ShopDigital: ${shop.name}`,
+                                        url: window.location.href,
+                                     });
+                                }
+                            }}
+                            className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                            aria-label="Compartir"
+                        >
+                            <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Avatar ARI Integrado */}
+                {isDayMode && (
+                    <div className="flex flex-col items-center select-none pointer-events-none my-1">
+                        <img 
+                            src="/ari-pointing.png" 
+                            alt="ARI Asistente Credencial" 
+                            className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(44,36,64,0.25)] animate-in fade-in duration-700" 
+                        />
+                        <div className="ari-3d-shadow mt-1" />
+                    </div>
+                )}
+
+                {/* SELLO DE VIDA — TIMESTAMP ANTI-FALSIFICACIÓN INTEGRADO */}
+                <div className="w-full flex items-center justify-between neu-inset-title px-4 py-2">
+                    <div className="flex items-center gap-2">
+                        <Clock size={12} className="text-[#4a3d6a] animate-spin flex-shrink-0" style={{ animationDuration: '8s' }} />
+                        <p className="text-[9.5px] font-black font-mono tracking-widest tabular-nums text-[#2c2440]">
+                            {formatClock(currentTime)}
+                        </p>
+                    </div>
+                    <div className="h-3.5 w-[1px] bg-[#4a3d6a]/20" />
+                    <button 
+                        onClick={handleToggleEventReceiver}
+                        className={`flex items-center gap-1.5 border-none bg-transparent font-black text-[9px] uppercase tracking-widest cursor-pointer transition-colors ${
+                            client.eventPassEnabled !== false ? 'text-emerald-600' : 'text-[#4a3d6a]/40'
+                        }`}
+                    >
+                        {client.eventPassEnabled !== false ? (
+                            <>
+                                <Wifi size={12} className="animate-pulse" />
+                                <span>ON</span>
+                            </>
+                        ) : (
+                            <>
+                                <WifiOff size={12} />
+                                <span>OFF</span>
+                            </>
+                        )}
                     </button>
                 </div>
-            </div>
-
-            {/* Avatar ARI (solo en día) */}
-            {isDayMode && (
-                <div className="flex justify-center mb-4 mt-1 ari-3d-avatar-container select-none pointer-events-none z-20">
-                    <img 
-                        src="/ari-pointing.png" 
-                        alt="ARI Asistente Credencial" 
-                        className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(180,165,148,0.4)] animate-in fade-in duration-700" 
-                    />
-                    <div className="ari-3d-shadow mt-1" />
-                </div>
-            )}
-
-            {/* ═══════════ LIVE EVENT TICKER BANNER 🟢🔴 ═══════════ */}
-            {client.eventPassEnabled !== false && (
-                <>
-                    {client.activeTicket && ticketEvent && (
-                        <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
-                            {ticketEvent.status === 'active_live' ? (
-                                <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-emerald-500/40">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-emerald-700 animate-pulse">
-                                        🟢 EVENTO ACTIVO - ENTRADA EXCLUSIVA
-                                    </span>
-                                    <h3 className="text-sm font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
-                                        {ticketEvent.name}
-                                    </h3>
-                                    <div className="px-3 py-1.5 rounded-full text-center w-full neu-inset-title">
-                                        <span className="text-[10px] font-black uppercase tracking-widest block font-mono text-[#2c2440]">
-                                            SECTOR: {client.activeTicket.seatSector || 'General VIP'} · FILA: {client.activeTicket.fila || '-'} · ASIENTO: {client.activeTicket.asiento || '-'}
-                                        </span>
-                                    </div>
-                                </div>
-                            ) : ticketEvent.status === 'suspended' ? (
-                                <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-red-500/40">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-red-600 animate-bounce">
-                                        🔴 EVENTO SUSPENDIDO / APLAZADO
-                                    </span>
-                                    <h3 className="text-sm font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
-                                        {ticketEvent.name}
-                                    </h3>
-                                    <p className="text-[9px] font-black text-[#4a3d6a] uppercase tracking-widest text-center animate-pulse">
-                                        MÁS INFO VÍA ASISTENTE ARI 🤖
-                                    </p>
-                                </div>
-                            ) : null}
-                        </div>
-                    )}
-
-                    {!client.activeTicket && generalActiveEvent && (
-                        <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
-                            <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-[#4a3d6a]/30 animate-pulse">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-[#4a3d6a]">
-                                    ✨ EVENTO VIP DISPONIBLE EN TU ZONA
-                                </span>
-                                <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
-                                    {generalActiveEvent.name}
-                                </h3>
-                                <p className="text-[8px] font-black text-[#4a3d6a] uppercase tracking-widest text-center">
-                                    Adquirí tus pases con descuento B2C consultando a Ari 🤖
-                                </p>
-                            </div>
-                        </div>
-                    )}
-                </>
-            )}
-
-            {/* ══════════════════════════════════════════
-                SELLO DE VIDA — TIMESTAMP ANTI-FALSIFICACIÓN
-            ══════════════════════════════════════════ */}
-            <div className="relative z-10 mb-6 flex items-center gap-3 neu-inset-title px-5 py-2.5">
-                <Clock size={12} className="text-[#4a3d6a] animate-spin flex-shrink-0" style={{ animationDuration: '8s' }} />
-                <p className="text-[10px] font-black font-mono flex items-center gap-2 tracking-widest tabular-nums text-[#2c2440]">
-                    {formatClock(currentTime)}
-                </p>
-                <div className="h-4 w-[1px] bg-[#4a3d6a]/20" />
-                <button 
-                    onClick={handleToggleEventReceiver}
-                    className={`flex items-center gap-1.5 border-none bg-transparent font-black text-[9px] uppercase tracking-widest cursor-pointer transition-colors ${
-                        client.eventPassEnabled !== false ? 'text-emerald-600' : 'text-[#4a3d6a]/40'
-                    }`}
-                >
-                    {client.eventPassEnabled !== false ? (
-                        <>
-                            <Wifi size={12} className="animate-pulse" />
-                            <span>ON</span>
-                        </>
-                    ) : (
-                        <>
-                            <WifiOff size={12} />
-                            <span>OFF</span>
-                        </>
-                    )}
-                </button>
             </div>
 
             {/* ══════════════════════════════════════════
