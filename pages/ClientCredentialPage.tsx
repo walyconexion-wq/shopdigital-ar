@@ -7,6 +7,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { ShieldCheck, User, Clock, ChevronLeft, Ticket, Wallet, Coins, ArrowRightLeft, ArrowDownRight, ArrowUpRight, Zap } from 'lucide-react';
 import { playNeonClick } from '../utils/audio';
 import LoadingScreen from '../components/LoadingScreen';
+import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
 
 const ClientCredentialPage: React.FC = () => {
     const { clientId } = useParams<{ clientId: string }>();
@@ -59,27 +60,36 @@ const ClientCredentialPage: React.FC = () => {
     // Active event for the client's zone if they don't have a ticket
     const generalActiveEvent = useMemo(() => {
         if (client?.activeTicket) return null;
-        return liveEvents.find(e => 
+        return liveEvents.find(e =>
             (e.status === 'active_live' || e.status === 'suspended') &&
             e.targetRoles.includes('cliente_calle')
         );
     }, [liveEvents, client]);
 
     if (loading) return (
-        <div className="min-h-screen bg-black z-50 fixed inset-0 flex items-center justify-center">
+        <div className="min-h-screen bg-transparent z-50 fixed inset-0 flex items-center justify-center">
+            <CyberCircuitBackground />
             <LoadingScreen ready={false} onDone={() => {}} />
         </div>
     );
 
     if (!client) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
-                <ShieldCheck size={64} className="text-red-500 mb-4 animate-pulse" />
-                <h1 className="text-2xl font-black text-red-500 uppercase tracking-widest text-center">Credencial Inválida</h1>
-                <p className="text-sm text-white/50 text-center mt-2">El pase VIP no existe o fue revocado.</p>
-                <button onClick={() => navigate('/')} className="mt-8 px-6 py-2 bg-white/10 rounded-full text-xs uppercase font-bold tracking-widest">
-                    Volver al Inicio
-                </button>
+            <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-transparent text-[#2c2440]">
+                <CyberCircuitBackground />
+                <div className="relative z-10 w-full max-w-sm p-8 neu-plate flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto neu-inset-title">
+                        <ShieldCheck size={32} className="animate-pulse text-[#ff6b6b]" />
+                    </div>
+                    <h1 className="text-xl font-black text-[#ff6b6b] uppercase tracking-tight mb-2">Credencial Inválida</h1>
+                    <p className="text-[10px] text-[#4a3d6a] uppercase tracking-widest mb-8">El pase VIP no existe o fue revocado.</p>
+                    <button
+                        onClick={() => { playNeonClick(); navigate('/'); }}
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-3 cursor-pointer neu-btn-hero"
+                    >
+                        Volver al Inicio
+                    </button>
+                </div>
             </div>
         );
     }
@@ -88,53 +98,60 @@ const ClientCredentialPage: React.FC = () => {
     const formattedTown = client.locality ? client.locality.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Zona Norte';
 
     return (
-        <div className="min-h-screen bg-black text-white relative flex flex-col items-center pb-24 overflow-hidden selection:bg-cyan-500/30">
-            {/* Background Cyber-Neon */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay" />
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
-            </div>
+        <div className="min-h-screen w-full flex flex-col items-center px-4 py-6 relative overflow-y-auto selection:bg-cyan-500/30 bg-transparent text-[#2c2440]">
+            {/* Fondo Ciber-Digital Púrpura Animado */}
+            <CyberCircuitBackground />
 
-            {/* Header Mini */}
-            <div className="w-full max-w-md px-6 pt-8 pb-4 flex items-center justify-between relative z-10">
-                <button onClick={() => { playNeonClick(); navigate(-1); }}
-                    className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:bg-cyan-500/20 transition-all">
-                    <ChevronLeft size={20} />
+            {/* HEADER NEUMÓRFICO */}
+            <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3">
+                <button
+                    onClick={() => { playNeonClick(); navigate(-1); }}
+                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                    aria-label="Regresar"
+                >
+                    <ChevronLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
                 </button>
-                <div className="flex flex-col items-end">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">ShopDigital</span>
-                    <span className="text-[6px] font-black text-white/50 tracking-[0.3em]">RED COMERCIAL DIGITAL</span>
+
+                <div className="flex-1 text-center px-4 py-2 neu-inset-title">
+                    <h1 className="text-base font-black tracking-tight uppercase leading-tight text-[#2c2440]">
+                        Pase VIP Cliente
+                    </h1>
+                    <p className="text-[8px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
+                        {formattedTown} · ShopDigital
+                    </p>
+                </div>
+
+                <div className="w-11 h-11 flex items-center justify-center neu-btn-pod">
+                    <Ticket size={16} className="text-[#4a3d6a]" />
                 </div>
             </div>
 
             {/* ═══════════ LIVE EVENT TICKER BANNER 🟢🔴 ═══════════ */}
             {client.activeTicket && ticketEvent && (
-                <div className="w-full max-w-sm px-5 mb-4 relative z-10 animate-in slide-in-from-top-6 duration-500">
+                <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
                     {ticketEvent.status === 'active_live' ? (
-                        <div className="bg-gradient-to-r from-emerald-500/15 via-emerald-600/25 to-teal-500/15 border border-emerald-400/50 rounded-3xl p-5 shadow-[0_0_20px_rgba(16,185,129,0.2)] flex flex-col items-center justify-center relative overflow-hidden">
-                            <span className="text-[12px] font-[1000] text-emerald-400 uppercase tracking-[0.2em] text-center mb-1 animate-pulse">
+                        <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-emerald-500/40">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-emerald-700 animate-pulse">
                                 🟢 EVENTO ACTIVO - ENTRADA VÁLIDA
                             </span>
-                            <h3 className="text-sm font-black text-white uppercase tracking-wider text-center mb-2">
+                            <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                 {ticketEvent.name}
                             </h3>
-                            <div className="bg-emerald-500/15 border border-emerald-400/30 px-3 py-1.5 rounded-2xl text-center w-full">
-                                <span className="text-[10px] font-black text-white uppercase tracking-widest block font-mono">
+                            <div className="px-3 py-1.5 rounded-full text-center neu-inset-title">
+                                <span className="text-[9px] font-black uppercase tracking-widest block font-mono text-[#2c2440]">
                                     SECTOR: {client.activeTicket.seatSector || 'General'} · FILA: {client.activeTicket.fila || '-'} · ASIENTO: {client.activeTicket.asiento || '-'}
                                 </span>
                             </div>
                         </div>
                     ) : ticketEvent.status === 'suspended' ? (
-                        <div className="bg-gradient-to-r from-red-500/15 via-red-600/25 to-rose-500/15 border border-red-400/40 rounded-3xl p-5 shadow-[0_0_20px_rgba(239,68,68,0.2)] flex flex-col items-center justify-center relative overflow-hidden">
-                            <span className="text-[12px] font-[1000] text-red-400 uppercase tracking-[0.2em] text-center mb-1 animate-bounce">
+                        <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-red-500/40">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-red-600 animate-bounce">
                                 🔴 EVENTO SUSPENDIDO / APLAZADO
                             </span>
-                            <h3 className="text-sm font-black text-white uppercase tracking-wider text-center mb-2">
+                            <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                 {ticketEvent.name}
                             </h3>
-                            <p className="text-[9px] font-black text-red-300 uppercase tracking-widest text-center animate-pulse">
+                            <p className="text-[9px] font-black text-[#4a3d6a] uppercase tracking-widest text-center animate-pulse">
                                 MÁS INFO VÍA ASISTENTE ARI 🤖
                             </p>
                         </div>
@@ -142,144 +159,146 @@ const ClientCredentialPage: React.FC = () => {
                 </div>
             )}
 
-            {/* General Promo banner if no ticket bought */}
+            {/* Promo banner si no tiene ticket */}
             {!client.activeTicket && generalActiveEvent && (
-                <div className="w-full max-w-sm px-5 mb-4 relative z-10 animate-in slide-in-from-top-6 duration-500">
-                    <div className="bg-gradient-to-r from-cyan-500/15 via-indigo-600/20 to-cyan-500/15 border border-cyan-400/40 rounded-3xl p-5 shadow-[0_0_20px_rgba(34,211,238,0.15)] flex flex-col items-center justify-center relative overflow-hidden animate-pulse">
-                        <span className="text-[10px] font-[1000] text-cyan-400 uppercase tracking-[0.2em] text-center mb-1">
-                            ✨ EVENTO DISPONIBLE EN TU ZONA
+                <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
+                    <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-[#4a3d6a]/30 animate-pulse">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-[#4a3d6a]">
+                            ✨ EVENTO VIP DISPONIBLE EN TU ZONA
                         </span>
-                        <h3 className="text-xs font-black text-white uppercase tracking-wider text-center mb-2">
+                        <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                             {generalActiveEvent.name}
                         </h3>
-                        <p className="text-[8px] font-black text-cyan-300 uppercase tracking-widest text-center">
+                        <p className="text-[8px] font-black text-[#4a3d6a] uppercase tracking-widest text-center">
                             Adquirí tus entradas con descuento B2B consultando a Ari 🤖
                         </p>
                     </div>
                 </div>
             )}
 
-            {/* Credential Main Card */}
-            <div className="w-full max-w-sm px-5 relative z-10 mt-2 perspective-[1000px]">
-                <div className="glass-card-3d bg-zinc-900/60 backdrop-blur-xl border border-cyan-500/30 rounded-[2rem] p-8 flex flex-col items-center relative overflow-hidden shadow-[0_0_50px_rgba(34,211,238,0.15)] transform transition-transform duration-500 hover:rotate-y-2 hover:rotate-x-2">
-                    
-                    {/* Holographic corner accents */}
-                    <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-cyan-400/50 rounded-tl-[2rem]" />
-                    <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-cyan-400/50 rounded-br-[2rem]" />
-                    <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" />
+            {/* ══════════ TARJETA CREDENTIAL PRINCIPAL ══════════ */}
+            <div className="w-full max-w-sm relative z-10 mt-2">
+                <div className="neu-plate p-8 flex flex-col items-center relative overflow-hidden">
 
-                    {/* TOP: Title & Clock */}
-                    <div className="flex flex-col items-center w-full mb-8">
-                        <div className="flex items-center gap-2 mb-3 bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-400/30">
-                            <Ticket size={16} className="text-cyan-400" />
-                            <h2 className="text-[12px] font-[1000] text-cyan-300 uppercase tracking-[0.25em]">PASE VIP</h2>
-                        </div>
-                        
-                        {/* Real Time Clock - SEGUNDERO INVIOLABLE ⏱️ */}
-                        <div className="flex items-center gap-1.5 text-white/80 py-1.5 px-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20 shadow-[inset_0_0_10px_rgba(6,182,212,0.1)]">
-                            <Clock size={11} className="text-cyan-400 animate-spin" style={{ animationDuration: '8s' }} />
-                            <span className="text-[10px] font-mono tracking-widest font-bold text-cyan-400 drop-shadow-[0_0_5px_rgba(6,182,212,0.3)] tabular-nums">
-                                {currentTime.toLocaleDateString('es-AR')} {currentTime.toLocaleTimeString('es-AR', { hour12: false })}
-                            </span>
-                        </div>
+                    {/* Sello Temporal Anti-Falsificación */}
+                    <div className="w-full mb-6 flex items-center justify-center gap-3 neu-inset-title py-2 px-4">
+                        <Clock size={11} className="text-[#4a3d6a] animate-spin flex-shrink-0" style={{ animationDuration: '8s' }} />
+                        <span className="text-[9px] font-mono font-black tracking-widest tabular-nums text-[#2c2440]">
+                            {currentTime.toLocaleDateString('es-AR')} {currentTime.toLocaleTimeString('es-AR', { hour12: false })}
+                        </span>
                     </div>
 
-                    {/* CENTER: Identity */}
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 p-1 mt-2 mb-6 shadow-[0_0_30px_rgba(34,211,238,0.4)] relative">
-                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black">
-                            <User size={40} className="text-cyan-400/50" />
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent h-[200%] -top-[100%] animate-[scan_3s_ease-in-out_infinite]" />
+                    {/* TOP: Badge PASE VIP */}
+                    <div className="flex items-center gap-2 mb-6 px-4 py-2 neu-btn-pod">
+                        <Ticket size={16} className="text-[#ff6b6b]" />
+                        <span className="text-[11px] font-black text-[#2c2440] uppercase tracking-[0.25em]">PASE VIP</span>
+                    </div>
+
+                    {/* CENTER: Avatar de Identidad */}
+                    <div className="w-24 h-24 rounded-full p-1 mb-6 relative neu-btn-pod">
+                        <div className="w-full h-full rounded-full neu-inset-title flex items-center justify-center overflow-hidden">
+                            {client.photo ? (
+                                <img src={client.photo} alt={client.name} className="w-full h-full object-cover rounded-full" />
+                            ) : (
+                                <User size={38} className="text-[#4a3d6a]" />
+                            )}
                         </div>
-                        <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-2 border-black flex items-center justify-center shadow-[0_0_10px_rgba(34,197,94,0.6)]">
+                        <div className="absolute -bottom-2 -right-2 bg-emerald-500 w-6 h-6 rounded-full border-2 border-[#f0ece6] flex items-center justify-center shadow-md">
                             <ShieldCheck size={12} className="text-white" />
                         </div>
                     </div>
 
                     {!showWallet ? (
                         <>
-                            <div className="text-center mb-6 relative w-full">
-                                <h3 className="text-2xl font-[1000] uppercase tracking-tighter text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] mb-1 break-words leading-none">
+                            {/* Identidad */}
+                            <div className="text-center mb-6 w-full">
+                                <h3 className="text-2xl font-[1000] uppercase tracking-tighter text-[#2c2440] mb-1 break-words leading-none">
                                     {client.name}
                                 </h3>
-                                <p className="text-[10px] text-cyan-400 uppercase tracking-[0.2em] font-bold">
+                                <p className="text-[9px] text-[#4a3d6a] uppercase tracking-[0.2em] font-bold">
                                     Miembro Verificado · {formattedTown}
                                 </p>
                             </div>
 
+                            {/* Botón Billetera VIP — Héroe */}
                             <button
                                 onClick={() => { playNeonClick(); setShowWallet(true); }}
-                                className="w-full mb-8 glass-action-btn btn-cyan-neon py-4 rounded-xl font-black uppercase tracking-[0.2em] active:scale-95 transition-all flex items-center justify-center gap-3 relative overflow-hidden"
+                                className="w-full mb-6 h-14 text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 cursor-pointer neu-btn-hero"
                             >
-                                <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-400/20 rounded-full blur-[20px] pointer-events-none" />
-                                <Wallet size={18} className="text-white relative z-10" />
-                                <span className="text-[11px] text-white relative z-10">Mi Billetera VIP</span>
-                                <div className="bg-cyan-900/50 border border-cyan-400/30 px-2 py-0.5 rounded-md flex items-center gap-1 relative z-10">
-                                    <Coins size={12} className="text-yellow-400" />
-                                    <span className="text-[10px] text-yellow-400 font-black">{client.points || 0}</span>
+                                <Wallet size={18} className="text-[#ff6b6b]" />
+                                <span className="text-[#2c2440]">Mi Billetera VIP</span>
+                                <div className="flex items-center gap-1 neu-inset-title py-1 px-2 rounded-xl">
+                                    <Coins size={12} className="text-amber-600" />
+                                    <span className="text-[10px] text-amber-700 font-black">{client.points || 0}</span>
                                 </div>
                             </button>
 
                             {/* BOTTOM: QR Code */}
-                            <div className="bg-white p-3 rounded-2xl relative group">
-                                <div className="absolute inset-0 bg-cyan-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                            <div className="neu-inset-title p-4 relative group">
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity rounded-[50px]" />
                                 <QRCodeSVG
                                     value={validationUrl}
                                     size={160}
-                                    bgColor="#ffffff"
-                                    fgColor="#000000"
+                                    bgColor="#f0ece6"
+                                    fgColor="#2c2440"
                                     level="H"
                                     className="relative z-10"
                                 />
                             </div>
-                            <p className="text-[7px] text-white/40 uppercase tracking-widest mt-4 text-center">
+                            <p className="text-[7px] text-[#4a3d6a]/60 uppercase tracking-widest mt-3 text-center">
                                 Escaneá para validar en puerta
                             </p>
                         </>
                     ) : (
                         <div className="w-full flex flex-col items-center animate-in slide-in-from-right-8 duration-300">
-                            <div className="w-full flex justify-between items-center mb-6">
-                                <button onClick={() => { playNeonClick(); setShowWallet(false); }} className="text-cyan-400 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider hover:text-cyan-300 transition-colors">
+                            {/* Header Billetera */}
+                            <div className="w-full flex justify-between items-center mb-5">
+                                <button
+                                    onClick={() => { playNeonClick(); setShowWallet(false); }}
+                                    className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider cursor-pointer neu-btn-pod px-3 py-2 text-[#2c2440]"
+                                >
                                     <ChevronLeft size={14} /> Volver
                                 </button>
-                                <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.2em] flex items-center gap-1">
+                                <span className="text-[10px] font-black text-[#4a3d6a] uppercase tracking-[0.2em] flex items-center gap-1">
                                     <Wallet size={14} /> Billetera
                                 </span>
                             </div>
 
-                            <div className="glass-card-3d bg-cyan-950/30 border border-cyan-400/40 w-full rounded-2xl p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_0_30px_rgba(34,211,238,0.2)]">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-[30px] pointer-events-none" />
-                                <p className="text-[9px] uppercase tracking-[0.3em] text-cyan-400/80 font-bold mb-2">Saldo Actual</p>
+                            {/* Saldo */}
+                            <div className="w-full rounded-[20px] p-6 mb-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate">
+                                <p className="text-[9px] uppercase tracking-[0.3em] text-[#4a3d6a] font-bold mb-2">Saldo Actual</p>
                                 <div className="flex items-center gap-3">
-                                    <Coins size={36} className="text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
-                                    <span className="text-5xl font-[1000] tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                                    <Coins size={36} className="text-amber-600 drop-shadow-sm" />
+                                    <span className="text-5xl font-[1000] tracking-tighter text-[#2c2440]">
                                         {client.points || 0}
                                     </span>
                                 </div>
-                                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-3">
+                                <p className="text-[8px] uppercase tracking-widest text-[#4a3d6a]/60 mt-3">
                                     Un punto = Un beneficio
                                 </p>
                             </div>
 
+                            {/* Historial de movimientos */}
                             <div className="w-full">
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 border-b border-white/10 pb-2 mb-4 flex items-center gap-2">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#4a3d6a] border-b-2 border-[#4a3d6a]/10 pb-2 mb-4 flex items-center gap-2">
                                     <ArrowRightLeft size={12} /> Movimientos Recientes
                                 </h4>
-                                <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1 custom-scrollbar">
+                                <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
                                     {!client.pointsHistory || client.pointsHistory.length === 0 ? (
-                                        <p className="text-center text-[10px] text-white/40 italic py-4">Aún no hay movimientos registrados.</p>
+                                        <p className="text-center text-[10px] text-[#4a3d6a]/50 italic py-4">Aún no hay movimientos registrados.</p>
                                     ) : (
                                         client.pointsHistory.map((trx) => (
-                                            <div key={trx.id} className="bg-black/40 border border-white/5 rounded-xl p-3 flex items-center justify-between">
+                                            <div key={trx.id} className="neu-plate p-3 flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
-                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border ${trx.type === 'earned' ? 'bg-green-500/10 border-green-500/30 text-green-400' : 'bg-red-500/10 border-red-500/30 text-red-400'}`}>
+                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center neu-btn-pod ${trx.type === 'earned' ? 'text-emerald-600' : 'text-red-500'}`}>
                                                         {trx.type === 'earned' ? <ArrowDownRight size={14} /> : <ArrowUpRight size={14} />}
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="text-[11px] font-black text-white uppercase tracking-wider">{trx.shopName}</span>
-                                                        <span className="text-[8px] text-white/40">{new Date(trx.date).toLocaleDateString('es-AR')} - {new Date(trx.date).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</span>
+                                                        <span className="text-[11px] font-black text-[#2c2440] uppercase tracking-wider">{trx.shopName}</span>
+                                                        <span className="text-[8px] text-[#4a3d6a]/60">{new Date(trx.date).toLocaleDateString('es-AR')} - {new Date(trx.date).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</span>
                                                     </div>
                                                 </div>
-                                                <div className={`text-[14px] font-[1000] ${trx.type === 'earned' ? 'text-green-400' : 'text-red-400'}`}>
+                                                <div className={`text-[14px] font-[1000] ${trx.type === 'earned' ? 'text-emerald-600' : 'text-red-500'}`}>
                                                     {trx.type === 'earned' ? '+' : '-'}{trx.points}
                                                 </div>
                                             </div>
@@ -292,13 +311,11 @@ const ClientCredentialPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Global Styles for Animations */}
-            <style dangerouslySetInnerHTML={{__html: `
-                @keyframes scan {
-                    0% { transform: translateY(0); }
-                    100% { transform: translateY(100%); }
-                }
-            `}} />
+            {/* Pie Neumórfico */}
+            <div className="relative z-10 mt-6 mb-4 neu-footer flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-[#4a3d6a]">
+                <ShieldCheck size={11} className="text-[#ff6b6b]" />
+                ShopDigital · Red Comercial Digital
+            </div>
         </div>
     );
 };

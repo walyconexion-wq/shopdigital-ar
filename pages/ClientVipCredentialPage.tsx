@@ -32,6 +32,7 @@ import {
     Sun
 } from 'lucide-react';
 import { playNeonClick, playSuccessSound } from '../utils/audio';
+import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
 
 interface ClientVipCredentialPageProps {
     allShops: Shop[];
@@ -71,7 +72,7 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
 
     // Theme Mode Resolver (sincronizado con GlobalHomePage, ClientSubscriptionPage y SubscriptionPage)
     const [isDayMode, setIsDayMode] = useState(() => {
-        const themeMode = localStorage.getItem('global_home_theme_mode') || 'dark';
+        const themeMode = localStorage.getItem('global_home_theme_mode') || 'light';
         return themeMode === 'light' || (themeMode === 'auto' && (() => {
             const hour = new Date().getHours();
             return hour >= 8 && hour < 20;
@@ -89,7 +90,7 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
     // Listen for changes from other pages
     useEffect(() => {
         const handleThemeChange = () => {
-            const themeMode = localStorage.getItem('global_home_theme_mode') || 'dark';
+            const themeMode = localStorage.getItem('global_home_theme_mode') || 'light';
             setIsDayMode(themeMode === 'light' || (themeMode === 'auto' && (() => {
                 const hour = new Date().getHours();
                 return hour >= 8 && hour < 20;
@@ -336,13 +337,14 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
 
     if (isLoadingClient) {
         return (
-            <div className={`min-h-screen flex flex-col items-center justify-center p-8 text-center ${isDayMode ? 'bg-[#cda488]' : 'bg-black'}`}>
-                <div className={`w-12 h-12 border-4 rounded-full animate-spin mb-4 ${
-                    isDayMode ? 'border-[#855b3c]/20 border-t-[#855b3c]' : 'border-cyan-500/20 border-t-cyan-500'
-                }`} />
-                <p className={`text-[10px] uppercase tracking-widest font-black animate-pulse ${
-                    isDayMode ? 'text-[#855b3c]' : 'text-cyan-400'
-                }`}>Sincronizando Identidad...</p>
+            <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-transparent">
+                <CyberCircuitBackground />
+                <div className="relative z-10 neu-plate p-8 flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 rounded-full animate-spin border-[#4a3d6a]/20 border-t-[#ff6b6b]" />
+                    <p className="text-[10px] uppercase tracking-widest font-black animate-pulse text-[#4a3d6a]">
+                        Sincronizando Identidad...
+                    </p>
+                </div>
             </div>
         );
     }
@@ -350,128 +352,86 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
     if (!shop || !client) {
         const targetHome = townId ? `/${townId}/home` : '/esteban-echeverria/home';
         return (
-            <div className={`min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden ${
-                isDayMode ? 'bg-[#cda488] text-[#2d1e15]' : 'bg-black text-white'
-            }`}>
-                {/* HUD Background Layers */}
-                <div className="fixed inset-0 pointer-events-none z-0">
-                    {isDayMode ? (
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(140,90,50,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(140,90,50,0.03)_1px,transparent_1px)] bg-[size:30px_30px]" />
-                    ) : (
-                        <>
-                            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,245,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,255,0.12)_1px,transparent_1px)] bg-[size:30px_30px]" />
-                            <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,245,255,0.18)_1px,transparent_1.5px)] bg-[size:15px_15px]" />
-                        </>
-                    )}
+            <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-transparent">
+                <CyberCircuitBackground />
+                <div className="relative z-10 w-full max-w-sm p-8 neu-plate flex flex-col items-center">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto border-2 border-[#ff6b6b]/30 bg-red-500/10">
+                        <ShieldCheck size={40} className="text-[#ff6b6b] animate-pulse" />
+                    </div>
+                    <h2 className="text-xl font-black uppercase tracking-tighter mb-2 text-[#2c2440]">Socio No Encontrado</h2>
+                    <p className="text-[10px] uppercase mb-8 leading-relaxed text-[#4a3d6a]">
+                        La credencial no pertenece a este radar o ha sido revocada.
+                    </p>
+                    <button 
+                        onClick={() => { playNeonClick(); navigate(targetHome); }} 
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-[0.25em] neu-btn-hero flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        Volver al Inicio
+                    </button>
                 </div>
-
-                <div className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center mb-6 animate-pulse border-2 ${
-                    isDayMode ? 'bg-white/95 border-red-200 text-[#ef4444] shadow-md' : 'bg-red-500/10 border-red-500/30 text-red-500 shadow-[0_0_15px_rgba(239,68,68,0.1)]'
-                }`}>
-                    <ShieldCheck size={40} />
-                </div>
-                <h2 className="relative z-10 text-xl font-black uppercase tracking-tighter mb-2">Socio No Encontrado</h2>
-                <p className={`relative z-10 text-[10px] uppercase mb-8 leading-relaxed ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/40'}`}>
-                    La credencial no pertenece a este radar o ha sido revocada.
-                </p>
-                <button 
-                    onClick={() => { playNeonClick(); navigate(targetHome); }} 
-                    className="relative z-10 py-4 px-8 text-[10px] font-[1100] uppercase tracking-[0.25em] btn-3d-celeste flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                >
-                    Volver al Inicio
-                </button>
             </div>
         );
     }
 
     const isSuspended = client.status === 'suspended';
-    const cardColor = '#00f5ff';
     const formattedTown = townId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
     return (
-        <div className={`min-h-screen p-6 relative overflow-hidden flex flex-col items-center pt-16 pb-24 selection:bg-cyan-500/30 transition-colors duration-500 ${
-            isDayMode ? 'bg-[#cda488] text-[#2d1e15]' : 'bg-black text-white'
-        }`}>
-            {/* Ambient styles to override Day-Mode */}
+        <div className="min-h-screen w-full flex flex-col items-center px-4 py-6 relative overflow-y-auto selection:bg-cyan-500/30 bg-transparent text-[#2c2440]">
+            {/* Estilos premium para inputs del modal */}
             <style>{`
-                .neon-credential-card .text-white, .day-mode .neon-credential-card .text-white { color: #ffffff !important; }
-                .neon-credential-card .text-cyan-400, .day-mode .neon-credential-card .text-cyan-400 { color: #00f5ff !important; }
-                .neon-credential-card .text-cyan-300, .day-mode .neon-credential-card .text-cyan-300 { color: #67e8f9 !important; }
-                .neon-credential-card .text-white\/80, .day-mode .neon-credential-card .text-white\/80 { color: rgba(255, 255, 255, 0.8) !important; }
-                .neon-credential-card .text-white\/60, .day-mode .neon-credential-card .text-white\/60 { color: rgba(255, 255, 255, 0.6) !important; }
-                .neon-credential-card .text-white\/40, .day-mode .neon-credential-card .text-white\/40 { color: rgba(255, 255, 255, 0.4) !important; }
-                .neon-credential-card .text-white\/30, .day-mode .neon-credential-card .text-white\/30 { color: rgba(255, 255, 255, 0.3) !important; }
-                .neon-credential-card .text-white\/20, .day-mode .neon-credential-card .text-white\/20 { color: rgba(255, 255, 255, 0.2) !important; }
-                
-                /* High contrast input styling */
                 .premium-input {
-                    color: ${isDayMode ? '#083344' : '#ffffff'} !important;
-                    background-color: ${isDayMode ? '#ffffff' : '#050505'} !important;
-                    border: 2.5px solid ${isDayMode ? '#0891b2' : 'rgba(0, 245, 255, 0.2)'} !important;
-                    box-shadow: ${isDayMode ? '0 2px 5px rgba(8, 145, 178, 0.08), inset 0 2px 4px rgba(0,0,0,0.03)' : 'inset 0 2px 4px rgba(0,0,0,0.8)'} !important;
+                    color: #083344 !important;
+                    background-color: #ffffff !important;
+                    border: 2.5px solid #0891b2 !important;
+                    box-shadow: 0 2px 5px rgba(8, 145, 178, 0.08), inset 0 2px 4px rgba(0,0,0,0.03) !important;
                     transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
                 }
                 .premium-input:focus {
-                    border-color: ${isDayMode ? '#083344' : '#00f5ff'} !important;
-                    box-shadow: ${isDayMode ? '0 0 0 3.5px rgba(8, 51, 68, 0.15), inset 0 2px 4px rgba(0,0,0,0.03)' : '0 0 10px rgba(0, 245, 255, 0.25), inset 0 2px 4px rgba(0,0,0,0.8)'} !important;
+                    border-color: #083344 !important;
+                    box-shadow: 0 0 0 3.5px rgba(8, 51, 68, 0.15), inset 0 2px 4px rgba(0,0,0,0.03) !important;
+                    outline: none !important;
                 }
-
                 input, option, select {
-                    color: ${isDayMode ? '#083344' : '#ffffff'} !important;
-                    background-color: ${isDayMode ? '#ffffff' : '#050505'} !important;
-                }
-                
-                @keyframes scanner-line {
-                    0% { transform: translateY(-50%); }
-                    100% { transform: translateY(50%); }
+                    color: #083344 !important;
+                    background-color: #ffffff !important;
                 }
             `}</style>
 
-            {/* HUD Background Layers */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className={`absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] opacity-35 ${
-                    isDayMode ? 'bg-amber-500/10' : 'bg-cyan-500/15'
-                }`} />
-                {!isDayMode ? (
-                    <>
-                        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-blue-500/10 rounded-full blur-[150px] opacity-25 animate-pulse" style={{ animationDuration: '10s' }} />
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,245,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,255,0.12)_1px,transparent_1px)] bg-[size:30px_30px]" />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,245,255,0.18)_1px,transparent_1.5px)] bg-[size:15px_15px]" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.04] to-transparent h-[200%] w-full -translate-y-1/2 animate-[scanner-line_8s_linear_infinite]" />
-                    </>
-                ) : (
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(140,90,50,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(140,90,50,0.03)_1px,transparent_1px)] bg-[size:30px_30px]" />
-                )}
-            </div>
+            {/* Fondo Ciber-Digital Púrpura Animado */}
+            <CyberCircuitBackground />
 
-            {/* HEADER */}
-            <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-6 gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
+            {/* ══════════════════════════════════════════
+                HEADER NEUMÓRFICO CON PODS DE CABECERA
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
                 <button 
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-10 h-10 rounded-xl flex items-center justify-center btn-3d-celeste shadow-lg transition-all cursor-pointer"
+                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                     aria-label="Regresar"
                 >
-                    <ArrowLeft size={18} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee' }} strokeWidth={3} />
+                    <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
                 </button>
-                <div className="text-center flex-1">
-                    <h1 className={`text-[19px] font-[1000] tracking-tighter uppercase leading-tight ${
-                        isDayMode 
-                            ? 'text-[#2d1e15] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]' 
-                            : 'text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-400 to-blue-500 drop-shadow-[0_0_20px_rgba(0,245,255,0.4)]'
-                    }`}>
+
+                <div className="flex-1 text-center px-4 py-2 neu-inset-title">
+                    <h1 className="text-base font-black tracking-tight uppercase leading-tight text-[#2c2440]">
                         Credencial VIP Cliente
                     </h1>
-                    <p className={`text-[7px] font-[900] uppercase tracking-[0.3em] ${isDayMode ? 'text-[#855b3c]/70' : 'text-cyan-400/60'}`}>
-                        Sede: {formattedTown}
+                    <p className="text-[8px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
+                        {formattedTown}
                     </p>
                 </div>
+
                 <div className="flex items-center gap-2">
                     <button
                         onClick={toggleTheme}
                         aria-label="Alternar modo de color"
-                        className="w-10 h-10 rounded-xl flex items-center justify-center btn-3d-celeste shadow-lg transition-all cursor-pointer"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                     >
-                        {isDayMode ? <Moon size={16} style={{ color: '#083344' }} /> : <Sun size={16} style={{ color: '#22d3ee' }} />}
+                        {isDayMode 
+                            ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" />
+                            : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
+                        }
                     </button>
                     <button 
                         onClick={() => {
@@ -484,22 +444,23 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                                  });
                             }
                         }}
-                        className="w-10 h-10 rounded-xl flex items-center justify-center btn-3d-celeste shadow-lg transition-all cursor-pointer"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                         aria-label="Compartir"
                     >
-                        <Share2 size={16} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee' }} />
+                        <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
             </div>
 
-            {/* Brand Avatar Section */}
+            {/* Avatar ARI (solo en día) */}
             {isDayMode && (
-                <div className="flex justify-center mb-4 mt-1 model-floating select-none pointer-events-none z-20">
+                <div className="flex justify-center mb-4 mt-1 ari-3d-avatar-container select-none pointer-events-none z-20">
                     <img 
                         src="/ari-pointing.png" 
                         alt="ARI Asistente Credencial" 
-                        className="h-32 w-auto object-contain drop-shadow-[0_10px_15px_rgba(88,70,50,0.15)] animate-in fade-in duration-700" 
+                        className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(180,165,148,0.4)] animate-in fade-in duration-700" 
                     />
+                    <div className="ari-3d-shadow mt-1" />
                 </div>
             )}
 
@@ -507,38 +468,30 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
             {client.eventPassEnabled !== false && (
                 <>
                     {client.activeTicket && ticketEvent && (
-                        <div className="w-full max-w-sm mb-6 relative z-10 animate-in slide-in-from-top-6 duration-500">
+                        <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
                             {ticketEvent.status === 'active_live' ? (
-                                <div className={`border rounded-3xl p-5 flex flex-col items-center justify-center relative overflow-hidden ${
-                                    isDayMode 
-                                        ? 'bg-emerald-500/10 border-emerald-500/30 shadow-[0_8px_20px_rgba(16,185,129,0.15)]' 
-                                        : 'bg-gradient-to-r from-emerald-500/15 via-emerald-600/25 to-teal-500/15 border border-emerald-400/50 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
-                                }`}>
-                                    <span className={`text-[12px] font-[1000] uppercase tracking-[0.2em] text-center mb-1 animate-pulse ${isDayMode ? 'text-emerald-700' : 'text-emerald-400'}`}>
+                                <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-emerald-500/40">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-emerald-700 animate-pulse">
                                         🟢 EVENTO ACTIVO - ENTRADA EXCLUSIVA
                                     </span>
-                                    <h3 className={`text-sm font-black uppercase tracking-wider text-center mb-2 ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
+                                    <h3 className="text-sm font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                         {ticketEvent.name}
                                     </h3>
-                                    <div className={`border px-3 py-1.5 rounded-2xl text-center w-full ${isDayMode ? 'bg-[#faf8f5] border-[#cbd5e1]' : 'bg-emerald-500/15 border-emerald-400/30'}`}>
-                                        <span className={`text-[10px] font-black uppercase tracking-widest block font-mono ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
+                                    <div className="px-3 py-1.5 rounded-full text-center w-full neu-inset-title">
+                                        <span className="text-[10px] font-black uppercase tracking-widest block font-mono text-[#2c2440]">
                                             SECTOR: {client.activeTicket.seatSector || 'General VIP'} · FILA: {client.activeTicket.fila || '-'} · ASIENTO: {client.activeTicket.asiento || '-'}
                                         </span>
                                     </div>
                                 </div>
                             ) : ticketEvent.status === 'suspended' ? (
-                                <div className={`border rounded-3xl p-5 flex flex-col items-center justify-center relative overflow-hidden ${
-                                    isDayMode 
-                                        ? 'bg-red-500/10 border-red-500/30 shadow-lg' 
-                                        : 'bg-gradient-to-r from-red-500/15 via-red-600/25 to-rose-500/15 border border-red-400/40 shadow-[0_0_20px_rgba(239,68,68,0.2)]'
-                                }`}>
-                                    <span className={`text-[12px] font-[1000] uppercase tracking-[0.2em] text-center mb-1 animate-bounce ${isDayMode ? 'text-red-700' : 'text-red-400'}`}>
+                                <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-red-500/40">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-red-600 animate-bounce">
                                         🔴 EVENTO SUSPENDIDO / APLAZADO
                                     </span>
-                                    <h3 className={`text-sm font-black uppercase tracking-wider text-center mb-2 ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
+                                    <h3 className="text-sm font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                         {ticketEvent.name}
                                     </h3>
-                                    <p className={`text-[9px] font-black uppercase tracking-widest text-center animate-pulse ${isDayMode ? 'text-red-600' : 'text-red-300'}`}>
+                                    <p className="text-[9px] font-black text-[#4a3d6a] uppercase tracking-widest text-center animate-pulse">
                                         MÁS INFO VÍA ASISTENTE ARI 🤖
                                     </p>
                                 </div>
@@ -547,19 +500,15 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                     )}
 
                     {!client.activeTicket && generalActiveEvent && (
-                        <div className="w-full max-w-sm mb-6 relative z-10 animate-in slide-in-from-top-6 duration-500">
-                            <div className={`border rounded-3xl p-5 flex flex-col items-center justify-center relative overflow-hidden animate-pulse ${
-                                isDayMode 
-                                    ? 'bg-white border-[#cbd5e1] border-b-[4px] border-b-[#cbd5e1] shadow-lg' 
-                                    : 'bg-gradient-to-r from-cyan-500/15 via-indigo-600/20 to-cyan-500/15 border border-cyan-400/40 shadow-[0_0_20px_rgba(0,245,255,0.15)]'
-                            }`}>
-                                <span className={`text-[10px] font-[1000] uppercase tracking-[0.2em] text-center mb-1 ${isDayMode ? 'text-[#855b3c]' : 'text-cyan-400'}`}>
+                        <div className="w-full max-w-sm mb-5 relative z-10 animate-in slide-in-from-top-6 duration-500">
+                            <div className="p-5 flex flex-col items-center justify-center relative overflow-hidden neu-plate border-2 border-[#4a3d6a]/30 animate-pulse">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-center mb-1 text-[#4a3d6a]">
                                     ✨ EVENTO VIP DISPONIBLE EN TU ZONA
                                 </span>
-                                <h3 className={`text-xs font-black uppercase tracking-wider text-center mb-2 ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
+                                <h3 className="text-xs font-black uppercase tracking-wider text-center mb-2 text-[#2c2440]">
                                     {generalActiveEvent.name}
                                 </h3>
-                                <p className={`text-[8px] font-black uppercase tracking-widest text-center ${isDayMode ? 'text-[#855b3c]/85' : 'text-cyan-300'}`}>
+                                <p className="text-[8px] font-black text-[#4a3d6a] uppercase tracking-widest text-center">
                                     Adquirí tus pases con descuento B2C consultando a Ari 🤖
                                 </p>
                             </div>
@@ -568,22 +517,19 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                 </>
             )}
 
-            {/* SELLO DE VIDA */}
-            <div className={`relative z-10 mb-8 border px-4 py-2 rounded-2xl backdrop-blur-md flex items-center gap-4 transition-all ${
-                isDayMode 
-                    ? 'bg-white/80 border-[#cbd5e1] border-b-[4px] border-b-[#cbd5e1] shadow-sm text-[#2d1e15]' 
-                    : 'bg-cyan-500/5 border-cyan-500/20 text-cyan-400'
-            }`}>
-                <p className={`text-[10px] font-black font-mono flex items-center gap-2 tracking-widest tabular-nums ${
-                    isDayMode ? 'text-[#2d1e15]' : 'text-cyan-400 drop-shadow-[0_0_5px_rgba(0,245,255,0.3)]'
-                }`}>
-                    <Clock size={12} className={`animate-spin ${isDayMode ? 'text-[#855b3c]' : 'text-cyan-400'}`} style={{ animationDuration: '8s' }} /> {formatClock(currentTime)}
+            {/* ══════════════════════════════════════════
+                SELLO DE VIDA — TIMESTAMP ANTI-FALSIFICACIÓN
+            ══════════════════════════════════════════ */}
+            <div className="relative z-10 mb-6 flex items-center gap-3 neu-inset-title px-5 py-2.5">
+                <Clock size={12} className="text-[#4a3d6a] animate-spin flex-shrink-0" style={{ animationDuration: '8s' }} />
+                <p className="text-[10px] font-black font-mono flex items-center gap-2 tracking-widest tabular-nums text-[#2c2440]">
+                    {formatClock(currentTime)}
                 </p>
-                <div className={`h-4 w-[1px] ${isDayMode ? 'bg-[#cbd5e1]' : 'bg-cyan-500/20'}`} />
+                <div className="h-4 w-[1px] bg-[#4a3d6a]/20" />
                 <button 
                     onClick={handleToggleEventReceiver}
                     className={`flex items-center gap-1.5 border-none bg-transparent font-black text-[9px] uppercase tracking-widest cursor-pointer transition-colors ${
-                        client.eventPassEnabled !== false ? 'text-green-600' : 'text-white/30'
+                        client.eventPassEnabled !== false ? 'text-emerald-600' : 'text-[#4a3d6a]/40'
                     }`}
                 >
                     {client.eventPassEnabled !== false ? (
@@ -600,284 +546,228 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                 </button>
             </div>
 
-            {/* VIP CARD */}
-            <div className="w-full max-w-sm relative z-10 group animate-in zoom-in duration-700 delay-100">
-                <div className={`absolute -inset-1 rounded-[2.5rem] blur opacity-25 ${isDayMode ? 'bg-[#855b3c]/20' : ''}`} style={isDayMode ? {} : { backgroundColor: isSuspended ? '#ef4444' : cardColor }}></div>
-                
-                <div className={`relative border-2 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all ${
-                    isDayMode 
-                        ? 'bg-white/85 border-[#855b3c] border-b-[8px] border-b-[#855b3c]' 
-                        : 'bg-zinc-900 border-cyan-500/30 border-b-[8px] border-b-cyan-500/50'
-                }`}>
-                    {/* Background structures */}
-                    {!isDayMode ? (
-                        <>
-                            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,245,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none z-0" />
-                            <div className="absolute top-0 left-0 w-full h-44 opacity-20" style={{ background: `linear-gradient(135deg, ${cardColor}, transparent)` }} />
-                        </>
-                    ) : (
-                        <div className="absolute top-0 left-0 w-full h-44 opacity-10 bg-gradient-to-br from-[#cda488] to-transparent pointer-events-none" />
-                    )}
-                    
+            {/* ══════════════════════════════════════════
+                TARJETA VIP PRINCIPAL — NEUMÓRFICA
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm relative z-10 animate-in zoom-in duration-700 delay-100">
+                <div className="neu-plate p-8 pb-10 relative overflow-hidden">
+
+                    {/* Overlay suspensión */}
                     {isSuspended && (
                         <div className="absolute inset-0 z-50 bg-red-600/10 backdrop-blur-[2px] flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-500">
                             <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_20px,rgba(239,68,68,0.05)_20px,rgba(239,68,68,0.05)_40px)]" />
-                            <div className="bg-red-600 px-6 py-2 rounded-xl shadow-[0_0_30px_rgba(239,68,68,0.6)] rotate-[-5deg] mb-4">
+                            <div className="bg-red-600 px-6 py-2 rounded-xl shadow-lg rotate-[-5deg] mb-4">
                                 <h4 className="text-xl font-[1000] text-white uppercase tracking-widest">CUENTA SUSPENDIDA</h4>
                             </div>
-                            <p className="text-[10px] font-black text-red-500/90 uppercase tracking-widest max-w-[200px] leading-relaxed">
+                            <p className="text-[10px] font-black text-red-600 uppercase tracking-widest max-w-[200px] leading-relaxed">
                                 Contacte con {shop.name} para regularizar su situación de membresía.
                             </p>
                         </div>
                     )}
 
-                    <div className="p-8 pb-10 neon-credential-card">
-                        <div className="flex justify-between items-start mb-8">
-                            <div className={`px-3 py-1.5 rounded-full flex items-center gap-2 border ${
-                                isDayMode 
-                                    ? 'bg-[#cda488]/15 border-[#a88d75]/30 text-[#855b3c]' 
-                                    : 'bg-white/5 border-white/10'
-                            }`} style={isDayMode ? {} : { borderColor: `${cardColor}4D` }}>
-                                <Activity size={10} className="animate-pulse" style={isDayMode ? { color: '#855b3c' } : { color: cardColor }} />
-                                <span className="text-[9px] font-black uppercase tracking-widest" style={isDayMode ? { color: '#855b3c' } : { color: cardColor }}>SOCIO VIP ACTIVO</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                {isAuthorized && (
-                                    <button 
-                                        onClick={() => { playNeonClick(); setIsEditing(true); }}
-                                        className="w-8 h-8 rounded-xl flex items-center justify-center btn-3d-celeste shadow-md transition-all cursor-pointer"
-                                        title="Editar Perfil"
-                                    >
-                                        <Edit2 size={14} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee' }} />
-                                    </button>
-                                )}
-                                <Star size={24} className={isDayMode ? 'text-[#855b3c]' : 'text-cyan-400'} style={isDayMode ? { fill: '#855b3c', color: '#855b3c' } : { color: cardColor, fill: cardColor }} />
-                            </div>
+                    {/* Top Row: Badge + Edit + Star */}
+                    <div className="flex justify-between items-start mb-8">
+                        <div className="px-3 py-1.5 rounded-full flex items-center gap-2 neu-btn-pod">
+                            <Activity size={10} className="animate-pulse text-[#ff6b6b]" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">SOCIO VIP ACTIVO</span>
                         </div>
-
-                        <div className="mb-10 relative">
-                            <p className={`text-[10px] font-black uppercase tracking-[0.3em] mb-1 ${isDayMode ? 'text-[#5c4033]/60' : 'text-white/60'}`}>Titular VIP</p>
-                            <h3 className={`text-3xl font-[1000] uppercase tracking-tighter leading-none mb-2 ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
-                                {client.name}
-                            </h3>
-                            <div className={`flex items-center gap-2 ${isDayMode ? 'text-[#5c4033]/85' : 'text-white/70'}`}>
-                                <MapPin size={12} style={isDayMode ? { color: '#855b3c' } : { color: cardColor }} />
-                                <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5">{shop.zone || formattedTown}</span>
-                            </div>
+                        <div className="flex items-center gap-2">
+                            {isAuthorized && (
+                                <button 
+                                    onClick={() => { playNeonClick(); setIsEditing(true); }}
+                                    className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                                    title="Editar Perfil"
+                                >
+                                    <Edit2 size={14} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                                </button>
+                            )}
+                            <Star size={24} className="text-[#ff6b6b]" style={{ fill: '#ff6b6b', color: '#ff6b6b' }} />
                         </div>
+                    </div>
 
-                        <div className={`w-full aspect-square border-2 rounded-[2rem] flex flex-col items-center justify-center p-8 mb-8 relative overflow-hidden group/photo transition-colors duration-500 ${
-                            isDayMode ? 'bg-[#ebd9c5] border-[#855b3c]/30' : 'bg-white/[0.03] border-white/10'
-                        }`}>
-                            <div className="absolute inset-0" style={{ background: isDayMode ? '' : `radial-gradient(circle at center, ${cardColor}1A, transparent 70%)` }} />
+                    {/* Titular VIP */}
+                    <div className="mb-8 relative">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-1 text-[#4a3d6a]">Titular VIP</p>
+                        <h3 className="text-3xl font-[1000] uppercase tracking-tighter leading-none mb-2 text-[#2c2440]">
+                            {client.name}
+                        </h3>
+                        <div className="flex items-center gap-2 text-[#4a3d6a]">
+                            <MapPin size={12} className="text-[#ff6b6b]" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5">{shop.zone || formattedTown}</span>
+                        </div>
+                    </div>
+
+                    {/* Foto / Avatar VIP */}
+                    <div className="w-full aspect-square neu-inset-title flex flex-col items-center justify-center p-8 mb-8 relative overflow-hidden group/photo transition-all duration-500">
+                        <div className="relative w-40 h-40 rounded-full border-2 border-[#4a3d6a]/20 p-1 shadow-lg overflow-hidden group-hover/photo:scale-105 transition-transform duration-500 neu-btn-pod">
+                            <img 
+                                src={client.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'} 
+                                className="w-full h-full object-cover rounded-full" 
+                                alt={client.name} 
+                            />
                             
-                            <div className="relative w-40 h-40 rounded-full border-2 p-1 shadow-2xl overflow-hidden group-hover/photo:scale-105 transition-transform duration-500" 
-                                 style={isDayMode ? { borderColor: '#855b3c/30', backgroundColor: '#ebd9c5' } : { borderColor: `${cardColor}4D`, backgroundColor: `${cardColor}0D` }}>
-                                <img 
-                                    src={client.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'} 
-                                    className="w-full h-full object-cover rounded-full" 
-                                    alt={client.name} 
-                                />
-                                
-                                {isAuthorized && (
-                                    <button 
-                                        onClick={() => fileInputRef.current?.click()}
-                                        className="absolute inset-0 bg-black/60 opacity-0 group-hover/photo:opacity-100 flex flex-col items-center justify-center transition-opacity border-none cursor-pointer"
-                                    >
-                                        <Camera size={32} className="text-white mb-2" />
-                                        <span className="text-[8px] font-black uppercase tracking-widest text-white">{client.photo ? 'Editar Foto' : 'Subir Foto'}</span>
-                                    </button>
-                                )}
-                                
-                                <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
-                                
-                                {isUploading && (
-                                    <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-                                        <div className="w-8 h-8 border-3 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
-                                    </div>
-                                )}
-                            </div>
+                            {isAuthorized && (
+                                <button 
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="absolute inset-0 bg-black/60 opacity-0 group-hover/photo:opacity-100 flex flex-col items-center justify-center transition-opacity border-none cursor-pointer rounded-full"
+                                >
+                                    <Camera size={32} className="text-white mb-2" />
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-white">{client.photo ? 'Editar Foto' : 'Subir Foto'}</span>
+                                </button>
+                            )}
+                            
+                            <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
+                            
+                            {isUploading && (
+                                <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-full">
+                                    <div className="w-8 h-8 border-3 border-[#4a3d6a]/20 border-t-[#ff6b6b] rounded-full animate-spin" />
+                                </div>
+                            )}
+                        </div>
 
-                            <div className={`mt-8 border-2 px-5 py-2 rounded-2xl transition-colors duration-500 ${isDayMode ? 'bg-black border-[#855b3c]/40 text-white' : 'bg-zinc-950/80 border-white/10'}`}>
-                                <p className={`text-[10px] font-black tracking-[0.3em] flex items-center gap-2 ${isDayMode ? 'text-emerald-400' : 'text-white'}`}>
-                                    <CheckCircle2 size={12} className="text-emerald-400" /> IDENTIDAD VERIFICADA
+                        <div className="mt-6 px-5 py-2 neu-btn-pod">
+                            <p className="text-[10px] font-black tracking-[0.3em] flex items-center gap-2 text-[#2c2440]">
+                                <CheckCircle2 size={12} className="text-emerald-600" /> IDENTIDAD VERIFICADA
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Info Membresía */}
+                    <div className="space-y-5 border-t-2 border-[#4a3d6a]/10 pt-8">
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <p className="text-[8px] font-black uppercase tracking-widest mb-1 text-[#4a3d6a]">Local de Suscripción</p>
+                                <p className="text-[15px] font-[1000] tracking-tighter uppercase leading-tight text-[#2c2440]">
+                                    {shop.name}
+                                </p>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-[8px] font-black uppercase tracking-widest mb-1 text-[#4a3d6a]">Nro. de Membresía (DNI)</p>
+                                <p className={`text-[15px] font-black tracking-tighter uppercase leading-tight flex items-center justify-end gap-1 ${client.dni ? 'text-[#2c2440]' : 'text-[#ff6b6b] animate-pulse'}`}>
+                                    <IdCard size={14} className="opacity-40" /> {client.dni || "COMPLETAR DNI"}
                                 </p>
                             </div>
                         </div>
 
-                        <div className="space-y-6 border-t border-white/5 pt-8">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <p className={`text-[8px] font-black uppercase tracking-widest mb-1 ${isDayMode ? 'text-[#5c4033]/60' : 'text-white/60'}`}>Local de Suscripción</p>
-                                    <p className={`text-[15px] font-[1000] tracking-tighter uppercase leading-tight ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
-                                        {shop.name}
-                                    </p>
-                                </div>
-                                <div className="text-right">
-                                    <p className={`text-[8px] font-black uppercase tracking-widest mb-1 ${isDayMode ? 'text-[#5c4033]/60' : 'text-white/60'}`}>Nro. de Membresía (DNI)</p>
-                                    <p className={`text-[15px] font-black tracking-tighter uppercase leading-tight flex items-center justify-end gap-1 ${
-                                        isDayMode ? 'text-[#2d1e15]' : client.dni ? 'text-white/80' : 'text-cyan-400 animate-pulse'
-                                    }`}>
-                                        <IdCard size={14} className="opacity-40" /> {client.dni || "COMPLETAR DNI"}
-                                    </p>
+                        {/* Wallet de Créditos */}
+                        <div className="p-5 neu-plate flex justify-between items-center group/wallet">
+                            <div>
+                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-1 flex items-center gap-1.5 text-[#4a3d6a]">
+                                    <Wallet size={10} className="text-[#ff6b6b]" /> Créditos ShopDigital
+                                </label>
+                                <p className="text-2xl font-[1000] font-inter tabular-nums text-[#2c2440]">
+                                    {client.credits || 0}
+                                </p>
+                            </div>
+                            <div className="text-right">
+                                <div className="inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest neu-inset-title text-[#4a3d6a]">
+                                    DISPONIBLES
                                 </div>
                             </div>
+                        </div>
 
-                            <div className={`border-2 p-5 rounded-3xl flex justify-between items-center shadow-inner group/wallet transition-colors duration-500 ${
-                                isDayMode ? 'bg-[#ebd9c5] border-[#855b3c]/30 text-[#2d1e15]' : 'bg-gradient-to-br from-white/[0.05] to-transparent border-white/10 text-white'
-                            }`}>
-                                <div>
-                                    <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-1 flex items-center gap-1.5 ${isDayMode ? 'text-[#2d1e15]/75' : 'text-white/60'}`}>
-                                        <Wallet size={10} style={isDayMode ? { color: '#855b3c' } : { color: cardColor }} /> Créditos ShopDigital
-                                    </label>
-                                    <p className={`text-2xl font-[1000] font-inter tabular-nums ${isDayMode ? 'text-[#2d1e15]' : 'text-white'}`}>
-                                        {client.credits || 0}
+                        {/* 🛰️ SINTONIZADOR DE ACCESO / EVENTOS LIVE */}
+                        <div className="rounded-[2rem] p-6 space-y-4 relative overflow-hidden bg-[#2c2440] border-2 border-[#4a3d6a] shadow-lg">
+                            <div className="flex justify-between items-center relative z-10">
+                                <label className="text-[9px] font-black uppercase tracking-[0.25em] flex items-center gap-2 text-amber-400">
+                                    <Radio size={12} className="animate-pulse text-amber-400" /> Sintonizador de Acceso
+                                </label>
+                                <span className="text-[8px] font-[900] border px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse bg-amber-500/20 border-amber-400/40 text-amber-300">
+                                    LIVE SINFONÍA
+                                </span>
+                            </div>
+                            
+                            {client.eventPassEnabled !== false && sintonizadorEventData ? (
+                                <div className="space-y-3.5 relative z-10">
+                                    <p className="text-[13px] font-[1000] uppercase tracking-tight leading-snug text-white">
+                                        {sintonizadorEventData.name}
+                                    </p>
+                                    <p className="text-[9px] font-black uppercase tracking-widest leading-relaxed text-amber-300/90">
+                                        {sintonizadorEventData.details}
+                                    </p>
+                                    <div className="flex items-center gap-2 border px-3 py-1.5 rounded-xl w-fit bg-emerald-500/20 border-emerald-500/40">
+                                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                                        <span className="text-[9px] font-[1000] text-emerald-400 uppercase tracking-widest">
+                                            {sintonizadorEventData.access}
+                                        </span>
+                                    </div>
+                                    <p className="text-[7.5px] font-bold uppercase tracking-widest leading-relaxed text-white/50">
+                                        Control de Puerta: Permitir acceso y verificar DNI/Membresía.
                                     </p>
                                 </div>
-                                <div className="text-right">
-                                    <div className={`inline-block px-3 py-1 rounded-full border text-[9px] font-black uppercase tracking-widest transition-colors ${
-                                        isDayMode 
-                                            ? 'bg-black border-[#855b3c]/50 text-white' 
-                                            : 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
-                                    }`}>
-                                        DISPONIBLES
-                                    </div>
+                            ) : (
+                                <div className="space-y-2 relative z-10">
+                                    <p className="text-[10px] font-black uppercase tracking-widest italic text-white/50">
+                                        {client.eventPassEnabled === false ? 'Sintonizador inactivo (OFF)' : 'Buscando transmisiones...'}
+                                    </p>
+                                    <p className="text-[8px] font-bold uppercase tracking-wider leading-relaxed text-white/40">
+                                        {client.eventPassEnabled === false 
+                                            ? 'Active el sintonizador arriba para recibir pases de eventos live.' 
+                                            : 'Sin eventos live activos en este radar. Acceso comercial estándar.'}
+                                    </p>
                                 </div>
-                            </div>
-
-                            {/* 🛰️ SINTONIZADOR DE ACCESO / EVENTOS LIVE */}
-                            <div className={`rounded-[2.5rem] p-6 border-2 space-y-4 relative overflow-hidden transition-colors duration-500 ${
-                                isDayMode 
-                                    ? 'bg-black border-[#855b3c] text-white shadow-lg' 
-                                    : 'bg-black/80 border-white/15 shadow-[inset_0_0_20px_rgba(0,245,255,0.15)] text-white'
-                            }`}>
-                                <div className="flex justify-between items-center relative z-10">
-                                    <label className={`text-[9px] font-black uppercase tracking-[0.25em] flex items-center gap-2 ${isDayMode ? 'text-amber-400' : 'text-cyan-300'}`}>
-                                        <Radio size={12} className={`animate-pulse ${isDayMode ? 'text-amber-400' : 'text-cyan-400'}`} /> Sintonizador de Acceso
-                                    </label>
-                                    <span className={`text-[8px] font-[900] border px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse ${
-                                        isDayMode 
-                                            ? 'bg-amber-500/20 border-amber-400/40 text-amber-300' 
-                                            : 'bg-cyan-500/20 border-cyan-400/40 text-cyan-400'
-                                    }`}>
-                                        LIVE SINFONÍA
-                                    </span>
-                                </div>
-                                
-                                {client.eventPassEnabled !== false && sintonizadorEventData ? (
-                                    <div className="space-y-3.5 relative z-10">
-                                        <p className={`text-[13px] font-[1000] uppercase tracking-tight leading-snug ${isDayMode ? 'text-white drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]' : 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.25)]'}`}>
-                                            {sintonizadorEventData.name}
-                                        </p>
-                                        <p className={`text-[9px] font-black uppercase tracking-widest leading-relaxed ${isDayMode ? 'text-amber-300/90' : 'text-cyan-300'}`}>
-                                            {sintonizadorEventData.details}
-                                        </p>
-                                        <div className={`flex items-center gap-2 border px-3 py-1.5 rounded-xl w-fit ${
-                                            isDayMode ? 'bg-emerald-500/20 border-emerald-500/40' : 'bg-emerald-500/20 border-emerald-500/40'
-                                        }`}>
-                                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                                            <span className="text-[9px] font-[1000] text-emerald-400 uppercase tracking-widest">
-                                                {sintonizadorEventData.access}
-                                            </span>
-                                        </div>
-                                        <p className="text-[7.5px] font-bold uppercase tracking-widest leading-relaxed text-white/50">
-                                            Control de Puerta: Permitir acceso y verificar DNI/Membresía.
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div className="space-y-2 relative z-10">
-                                        <p className={`text-[10px] font-black uppercase tracking-widest italic ${isDayMode ? 'text-white/50' : 'text-white/50'}`}>
-                                            {client.eventPassEnabled === false ? 'Sintonizador inactivo (OFF)' : 'Buscando transmisiones...'}
-                                        </p>
-                                        <p className="text-[8px] font-bold uppercase tracking-wider leading-relaxed text-white/40">
-                                            {client.eventPassEnabled === false 
-                                                ? 'Active el sintonizador arriba para recibir pases de eventos live.' 
-                                                : 'Sin eventos live activos en este radar. Acceso comercial estándar.'}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* QR DE VALIDACIÓN TRASACCIONAL */}
-            <div className={`w-full max-w-sm mt-8 p-6 border-2 rounded-[2rem] flex flex-col items-center shadow-2xl ${
-                isDayMode 
-                    ? 'bg-white/85 border-slate-200 border-b-[8px] border-b-[#855b3c]' 
-                    : 'bg-zinc-900 border-cyan-500/30 border-b-[8px] border-b-cyan-500/50'
-            }`}>
-                <p className={`text-[10px] font-black uppercase tracking-[0.4em] mb-6 ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>Validación de Descuentos</p>
-                <div className="bg-white p-4 rounded-2xl shadow-2xl relative group/qr">
-                    <QrCode size={160} className="text-black transition-transform group-hover/qr:scale-105 duration-500" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/qr:opacity-100 transition-opacity pointer-events-none">
-                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-zinc-100">
-                             <Star size={24} style={isDayMode ? { color: '#855b3c', fill: '#855b3c' } : { color: cardColor, fill: cardColor }} />
-                        </div>
+            {/* ══════════════════════════════════════════
+                QR DE VALIDACIÓN
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm mt-6 relative z-10">
+                <div className="neu-plate p-8 flex flex-col items-center">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-5 text-[#4a3d6a]">Validación de Descuentos</p>
+                    <div className="neu-inset-title p-4 relative group/qr">
+                        <QrCode size={160} className="text-[#2c2440] transition-transform group-hover/qr:scale-105 duration-500" />
                     </div>
+                    <p className="text-[8px] text-[#4a3d6a]/60 uppercase tracking-widest mt-4 text-center">
+                        Escaneá en el punto de acceso para validar
+                    </p>
                 </div>
-                
-                <button 
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/validar/${client.id}`); }}
-                    className="mt-8 w-full h-16 text-[11px] font-[1100] uppercase tracking-[0.2em] btn-3d-celeste flex items-center justify-center gap-3 shadow-lg cursor-pointer"
-                >
-                    <Activity size={18} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee' }} strokeWidth={3} /> COMPLETAR DATOS
-                </button>
             </div>
 
-            {/* ACTION BUTTONS */}
-            <div className="w-full max-w-sm mt-8 space-y-4 relative z-10 animate-in slide-in-from-bottom-4 duration-700 delay-300">
+            {/* ══════════════════════════════════════════
+                BOTONES DE ACCIÓN — JERARQUÍA 3D
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm mt-6 space-y-3 relative z-10 animate-in slide-in-from-bottom-4 duration-700 delay-300">
                 <button 
                     onClick={() => { playNeonClick(); navigate(`/${townId}/red-comercial/ofertas`); }}
-                    className="w-full h-14 text-[10px] font-[1100] uppercase tracking-[0.2em] btn-3d-celeste flex items-center justify-center shadow-md cursor-pointer"
+                    className="w-full h-14 text-[10px] font-black uppercase tracking-[0.2em] neu-btn-hero flex items-center justify-center gap-3 cursor-pointer"
                 >
-                    Explorar Beneficios
+                    <Star size={16} className="text-[#ff6b6b]" />
+                    <span className="text-[#2c2440]">Explorar Beneficios VIP</span>
                 </button>
                 <button 
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-full h-14 text-[10px] font-[1100] uppercase tracking-[0.2em] btn-3d-celeste flex items-center justify-center shadow-md cursor-pointer"
+                    className="w-full h-14 text-[10px] font-extrabold uppercase tracking-[0.2em] neu-btn-3d flex items-center justify-center gap-2 cursor-pointer"
                 >
-                    Volver al Inicio
+                    <ArrowLeft size={16} className="text-[#4a3d6a]" /> Volver al Inicio
                 </button>
             </div>
 
             {/* MODAL DE EDICIÓN DEL CLIENTE VIP */}
             {isEditing && isAuthorized && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-in fade-in duration-300">
-                    <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setIsEditing(false)} />
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsEditing(false)} />
                     
-                    <div className={`relative w-full max-w-sm rounded-[2.5rem] p-8 overflow-hidden border-2 shadow-2xl transition-all ${
-                        isDayMode 
-                            ? 'bg-white border-slate-200 border-b-[8px] border-b-[#855b3c] text-[#2d1e15]' 
-                            : 'bg-zinc-950 border-cyan-500/30 border-b-[8px] border-b-cyan-500/50 text-white'
-                    }`}>
-                        {!isDayMode && (
-                            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,245,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none z-0" />
-                        )}
-                        
-                        <div className="flex justify-between items-center mb-6 relative z-10">
-                            <h3 className={`text-xs font-black uppercase tracking-widest flex items-center gap-2 ${
-                                isDayMode ? 'text-[#855b3c]' : 'text-white'
-                            }`}>
-                                <ShieldCheck size={18} className={isDayMode ? 'text-[#855b3c]' : 'text-cyan-400'} /> Editar Perfil VIP
+                    <div className="relative w-full max-w-sm neu-plate p-8 overflow-hidden">
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-xs font-black uppercase tracking-widest flex items-center gap-2 text-[#2c2440]">
+                                <ShieldCheck size={18} className="text-[#ff6b6b]" /> Editar Perfil VIP
                             </h3>
                             <button 
                                 onClick={() => { playNeonClick(); setIsEditing(false); }} 
-                                className={`w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer transition-all border ${
-                                    isDayMode 
-                                        ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-500 hover:text-slate-800' 
-                                        : 'bg-white/5 hover:bg-white/10 border-white/10 text-cyan-400 hover:text-white'
-                                }`}
+                                className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                                 aria-label="Cerrar"
                             >
-                                <X size={16} />
+                                <X size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
                             </button>
                         </div>
 
-                        <form onSubmit={handleSaveProfile} className="space-y-5 relative z-10">
+                        <form onSubmit={handleSaveProfile} className="space-y-5">
                             <div>
-                                <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-2 block ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>Nombre del Titular</label>
+                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Nombre del Titular</label>
                                 <input 
                                     required
                                     value={editForm.name}
@@ -888,7 +778,7 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-2 block ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>DNI / Membresía</label>
+                                    <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">DNI / Membresía</label>
                                     <input 
                                         required
                                         placeholder="Ej: 41234567"
@@ -898,7 +788,7 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                                     />
                                 </div>
                                 <div>
-                                    <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-2 block ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>WhatsApp</label>
+                                    <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">WhatsApp</label>
                                     <input 
                                         required
                                         value={editForm.phone}
@@ -909,7 +799,7 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                             </div>
 
                             <div>
-                                <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-2 block ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>Correo Electrónico</label>
+                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Correo Electrónico</label>
                                 <input 
                                     required
                                     type="email"
@@ -920,34 +810,33 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                             </div>
 
                             <div>
-                                <label className={`text-[8px] font-black uppercase tracking-[0.2em] mb-2 block ${isDayMode ? 'text-[#2d1e15]/60' : 'text-white/60'}`}>Foto de Perfil</label>
+                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Foto de Perfil</label>
                                 <div className="flex gap-2 items-center">
-                                    <div className={`w-12 h-12 rounded-xl border overflow-hidden flex items-center justify-center shrink-0 ${
-                                        isDayMode ? 'bg-[#faf8f5] border-[#0891b2]/45' : 'bg-white/5 border-white/10'
-                                    }`}>
-                                        <img src={editForm.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'} className="w-full h-full object-cover" />
+                                    <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shrink-0 neu-btn-pod">
+                                        <img src={editForm.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'} className="w-full h-full object-cover" alt="" />
                                     </div>
                                     <button
                                         type="button"
                                         onClick={() => { playNeonClick(); fileInputRef.current?.click(); }}
-                                        className="flex-1 py-2.5 text-[9px] font-black uppercase tracking-widest btn-3d-celeste flex items-center justify-center shadow-md cursor-pointer"
+                                        className="flex-1 py-3 text-[9px] font-black uppercase tracking-widest neu-btn-3d flex items-center justify-center gap-2 cursor-pointer"
                                     >
-                                        Subir Foto
+                                        <Camera size={14} className="text-[#4a3d6a]" /> Subir Foto
                                     </button>
                                 </div>
                             </div>
 
+                            {/* Botón Guardar — Hero */}
                             <button 
                                 type="submit"
                                 disabled={isSaving}
-                                className="w-full py-4 rounded-2xl flex items-center justify-center gap-2 font-[1000] uppercase tracking-[0.2em] text-[10px] btn-3d-celeste shadow-lg disabled:opacity-50 cursor-pointer"
+                                className="w-full h-14 neu-btn-hero flex items-center justify-center gap-2 font-[1000] uppercase tracking-[0.2em] text-[10px] cursor-pointer disabled:opacity-50"
                             >
                                 {isSaving ? (
-                                    <div className="w-4 h-4 border-2 border-white/25 border-t-white rounded-full animate-spin" />
+                                    <div className="w-4 h-4 border-2 border-[#4a3d6a]/25 border-t-[#ff6b6b] rounded-full animate-spin" />
                                 ) : (
                                     <>
-                                        <Check size={16} style={isDayMode ? { color: '#083344' } : { color: '#22d3ee' }} strokeWidth={3} />
-                                        <span>Guardar Cambios</span>
+                                        <Check size={16} className="text-[#ff6b6b]" strokeWidth={3} />
+                                        <span className="text-[#2c2440]">Guardar Cambios</span>
                                     </>
                                 )}
                             </button>
@@ -957,12 +846,16 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
             )}
 
             {/* FOOTER INFO */}
-            <p className={`text-[8.5px] uppercase tracking-[0.4em] font-black text-center leading-[1.8] mt-12 px-8 ${
-                isDayMode ? 'text-[#2d1e15]/40' : 'text-white/50'
-            }`}>
+            <p className="text-[8px] uppercase tracking-[0.4em] font-black text-center leading-[1.8] mt-10 mb-4 px-8 text-[#4a3d6a]/50 relative z-10">
                 Secured VIP Network · {formatClock(client.updatedAt ? new Date(client.updatedAt) : currentTime)} <br/>
                 ID: {client.id}
             </p>
+
+            {/* Pie Neumórfico */}
+            <div className="relative z-10 mb-6 neu-footer flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-[#4a3d6a]">
+                <ShieldCheck size={11} className="text-[#ff6b6b]" />
+                ShopDigital · Red Comercial Digital
+            </div>
         </div>
     );
 };
