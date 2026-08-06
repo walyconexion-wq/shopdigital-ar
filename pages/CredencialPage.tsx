@@ -371,7 +371,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
                     <button
                         onClick={() => { playNeonClick(); login(); }}
-                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-3 cursor-pointer neu-btn-3d-active"
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-3 cursor-pointer neu-btn-hero"
                     >
                         <User size={16} /> Iniciar Sesión con Google
                     </button>
@@ -407,7 +407,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
                     <button
                         onClick={() => { playNeonClick(); logoutUser(); }}
-                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center cursor-pointer neu-btn-3d-active"
+                        className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center cursor-pointer neu-btn-hero"
                     >
                         Cerrar Sesión / Cambiar Cuenta
                     </button>
@@ -430,14 +430,14 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
             {/* Fondo Ciber-Digital de Circuitos Animados (Igual a la Home de la aplicación) */}
             <CyberCircuitBackground />
 
-            {/* HEADER NEUMÓRFICO CREMA HD */}
+            {/* HEADER NEUMÓRFICO CON PODS DE CABECERA ELEVADOS */}
             <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3">
                 <button 
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
+                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                     aria-label="Regresar"
                 >
-                    <ArrowLeft size={18} className="text-[#2c2440]" strokeWidth={3} />
+                    <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
                 </button>
 
                 <div className="flex-1 text-center px-4 py-2 neu-inset-title">
@@ -453,9 +453,9 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     <button
                         onClick={toggleTheme}
                         aria-label="Alternar modo de color"
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                     >
-                        {isDayMode ? <Moon size={16} className="text-[#2c2440]" /> : <Sun size={16} className="text-[#ff6b6b]" />}
+                        {isDayMode ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" /> : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />}
                     </button>
                     <button 
                         onClick={() => {
@@ -468,10 +468,10 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                  });
                             }
                         }}
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                         aria-label="Compartir"
                     >
-                        <Share2 size={16} className="text-[#2c2440]" />
+                        <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
             </div>
@@ -535,14 +535,14 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                         </span>
                     </div>
 
-                    {/* Botón de Edición del Comercio */}
+                    {/* Botón Flotante de Edición del Comercio */}
                     {isAuthorized && (
                         <button 
                             onClick={() => { playNeonClick(); setIsEditing(true); }}
-                            className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center cursor-pointer z-25 transition-all neu-btn-3d"
+                            className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center cursor-pointer z-25 transition-all neu-btn-pod group"
                             title="Editar Comercio"
                         >
-                            <Edit2 size={14} className="text-[#2c2440]" />
+                            <Edit2 size={14} className="text-[#ff6b6b] group-hover:rotate-12 transition-transform" />
                         </button>
                     )}
 
@@ -581,7 +581,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                         {shop?.specialty || shop?.category || selectedShop.specialty || selectedShop.category}
                     </p>
 
-                    {/* Insignia de Comercio Verificado */}
+                    {/* Insignia de Comercio Verificado (Chip Neumórfico Activo) */}
                     <div className="flex items-center gap-2 mb-5 px-5 py-2 cursor-default transition-all neu-btn-3d-active">
                         <ShieldCheck className="w-4 h-4 text-[#ff6b6b]" />
                         <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">
@@ -674,53 +674,54 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 </div>
             </div>
 
-            {/* ═══════════ POSNET DE CRÉDITOS INTEGRADO ═══════════ */}
+            {/* ═══════════ POSNET DE CRÉDITOS INTEGRADO (HERO CTA PROTAGONISTA) ═══════════ */}
             <div className="w-full max-w-sm mt-6 relative z-10 space-y-4">
                 {!posnetOpen ? (
                     <button
                         onClick={() => { playNeonClick(); setPosnetOpen(true); }}
-                        className="w-full h-15 text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2.5 cursor-pointer neu-btn-3d-active"
+                        className="w-full h-16 text-[11px] font-[1000] uppercase tracking-[0.2em] neu-btn-hero flex items-center justify-center gap-3 shadow-xl cursor-pointer group"
                     >
-                        <CreditCard size={18} className="text-[#ff6b6b]" />
+                        <CreditCard size={20} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
                         <span>Abrir POSNET de Créditos</span>
+                        <Sparkles size={14} className="text-[#ff6b6b] opacity-80 animate-pulse" />
                     </button>
                 ) : (
-                    <div className="p-6 space-y-4 transition-all neu-plate">
+                    <div className="p-6 space-y-4 transition-all neu-plate border-2 border-[#ff6b6b]/40">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-[11px] font-black uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
-                                <CreditCard size={15} className="text-[#ff6b6b]" /> POSNET de Créditos
+                            <h3 className="text-[11px] font-[1000] uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
+                                <CreditCard size={16} className="text-[#ff6b6b]" /> POSNET de Créditos
                             </h3>
                             <button 
                                 onClick={() => { playNeonClick(); setPosnetOpen(false); resetPosnet(); }}
-                                className="w-8 h-8 rounded-full flex items-center justify-center text-xs cursor-pointer neu-btn-3d"
+                                className="w-8 h-8 rounded-full flex items-center justify-center text-xs cursor-pointer neu-btn-pod"
                             >
                                 ✕
                             </button>
                         </div>
 
-                        {/* Selección Cargar / Descontar */}
+                        {/* Selección Cargar / Descontar — Doble Conmutador con Jerarquía Neumórfica */}
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 onClick={() => { playNeonClick(); setPosnetMode('load'); setTxStatus('idle'); }}
-                                className={`py-3 rounded-xl font-black uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
+                                className={`py-3.5 rounded-xl font-[1000] uppercase tracking-wider text-[9.5px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
                                     posnetMode === 'load'
-                                        ? 'neu-btn-3d-active border-emerald-500 text-emerald-700'
-                                        : 'neu-btn-3d text-[#4a3d6a]'
+                                        ? 'neu-btn-emerald-active'
+                                        : 'neu-btn-3d opacity-75 hover:opacity-100'
                                 }`}
                             >
-                                <ArrowUpRight size={16} />
+                                <ArrowUpRight size={17} className={posnetMode === 'load' ? 'text-emerald-600' : 'text-[#4a3d6a]'} />
                                 Cargar Créditos
                             </button>
 
                             <button
                                 onClick={() => { playNeonClick(); setPosnetMode('spend'); setTxStatus('idle'); }}
-                                className={`py-3 rounded-xl font-black uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
+                                className={`py-3.5 rounded-xl font-[1000] uppercase tracking-wider text-[9.5px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
                                     posnetMode === 'spend'
-                                        ? 'neu-btn-3d-active border-[#ff6b6b] text-[#ff6b6b]'
-                                        : 'neu-btn-3d text-[#4a3d6a]'
+                                        ? 'neu-btn-3d-active'
+                                        : 'neu-btn-3d opacity-75 hover:opacity-100'
                                 }`}
                             >
-                                <ArrowDownRight size={16} />
+                                <ArrowDownRight size={17} className={posnetMode === 'spend' ? 'text-[#ff6b6b]' : 'text-[#4a3d6a]'} />
                                 Descontar Créditos
                             </button>
                         </div>
@@ -734,16 +735,16 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                         value={searchTerm}
                                         onChange={e => setSearchTerm(e.target.value)}
                                         placeholder="Buscar socio (nombre, DNI, tel)..."
-                                        className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
+                                        className="w-full p-3.5 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
                                         autoFocus
                                     />
-                                    <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 text-[#2c2440]" />
+                                    <Search size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 opacity-40 text-[#2c2440]" />
                                 </div>
                                 {filteredClients.map(c => (
                                     <button 
                                         key={c.id}
                                         onClick={() => { playNeonClick(); setSelectedClient(c); setSearchTerm(''); setTxStatus('idle'); }}
-                                        className="w-full p-2.5 rounded-xl flex items-center gap-2.5 text-left cursor-pointer transition-all neu-btn-3d hover:border-[#ff6b6b]"
+                                        className="w-full p-3 rounded-xl flex items-center gap-3 text-left cursor-pointer transition-all neu-btn-3d hover:border-[#ff6b6b]"
                                     >
                                         <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
                                             {c.photo ? <img src={c.photo} className="w-full h-full object-cover rounded-full" alt="" /> : <User size={12} className="opacity-40" />}
@@ -757,10 +758,10 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                             </div>
                         ) : (
                             <div className="space-y-3">
-                                <div className="p-3 rounded-xl flex items-center gap-3 relative neu-inset-title">
+                                <div className="p-3.5 rounded-xl flex items-center gap-3 relative neu-inset-title">
                                     <button 
                                         onClick={() => { playNeonClick(); resetPosnet(); }}
-                                        className="absolute top-2 right-2 text-xs opacity-50 hover:opacity-100 border-none bg-transparent cursor-pointer"
+                                        className="absolute top-2.5 right-2.5 text-xs opacity-50 hover:opacity-100 border-none bg-transparent cursor-pointer"
                                     >
                                         ✕
                                     </button>
@@ -779,13 +780,13 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                         value={amount}
                                         onChange={e => setAmount(e.target.value)}
                                         placeholder="0"
-                                        className="w-full p-3 text-2xl font-black tabular-nums text-center focus:outline-none neu-inset-title text-[#2c2440]"
+                                        className="w-full p-3.5 text-2xl font-black tabular-nums text-center focus:outline-none neu-inset-title text-[#2c2440]"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black opacity-50 uppercase tracking-widest text-[#4a3d6a]">CRÉDITOS</span>
                                 </div>
 
                                 {txStatus === 'success' && (
-                                    <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-3">
+                                    <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-3">
                                         <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
                                         <div className="text-left">
                                             <p className="text-[10px] font-black text-emerald-700 uppercase tracking-wider">
@@ -797,7 +798,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 )}
 
                                 {txStatus === 'error' && (
-                                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/40 flex items-center gap-3">
+                                    <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/40 flex items-center gap-3">
                                         <XCircle size={18} className="text-red-500 flex-shrink-0" />
                                         <p className="text-[9px] font-black text-red-600 text-left">{errorMsg}</p>
                                     </div>
@@ -806,13 +807,15 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 <button
                                     onClick={handleTransaction}
                                     disabled={isProcessing || !amount}
-                                    className="w-full h-14 text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer neu-btn-3d-active"
+                                    className={`w-full h-15 text-[10.5px] font-[1000] uppercase tracking-[0.18em] flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer ${
+                                        posnetMode === 'load' ? 'neu-btn-emerald-active' : 'neu-btn-hero'
+                                    }`}
                                 >
                                     {isProcessing ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     ) : (
                                         <>
-                                            {posnetMode === 'load' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
+                                            {posnetMode === 'load' ? <ArrowUpRight size={17} /> : <ArrowDownRight size={17} />}
                                             {posnetMode === 'load' ? 'Otorgar Créditos' : 'Confirmar Descuento'}
                                         </>
                                     )}
@@ -821,7 +824,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 {txStatus === 'success' && (
                                     <button 
                                         onClick={() => { playNeonClick(); resetPosnet(); }}
-                                        className="w-full h-10 text-[8px] font-black uppercase tracking-widest cursor-pointer mt-2 neu-btn-3d"
+                                        className="w-full h-11 text-[8.5px] font-black uppercase tracking-widest cursor-pointer mt-2 neu-btn-3d"
                                     >
                                         Nueva Transacción
                                     </button>
@@ -832,19 +835,21 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 )}
             </div>
 
-            {/* BOTONES DE NAVEGACIÓN */}
-            <div className="w-full max-w-sm mt-5 space-y-3 relative z-10">
+            {/* BOTONES DE NAVEGACIÓN (NIVEL 2 PROTAGONISTAS DE NAVEGACIÓN) */}
+            <div className="w-full max-w-sm mt-5 space-y-3.5 relative z-10">
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/${categorySlug}/${shopSlug}/panel-autogestion`); }}
-                    className="w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer neu-btn-3d"
+                    className="w-full h-14 text-[9.5px] font-[1000] uppercase tracking-[0.2em] flex items-center justify-center gap-2.5 cursor-pointer neu-btn-3d group hover:border-[#ff6b6b]/60"
                 >
-                    <Store size={15} className="text-[#ff6b6b]" /> Panel de Autogestión
+                    <Store size={16} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
+                    <span>Panel de Autogestión</span>
                 </button>
                 <button
                     onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-full h-14 text-[9px] font-black uppercase tracking-widest flex items-center justify-center cursor-pointer neu-btn-3d"
+                    className="w-full h-14 text-[9.5px] font-[1000] uppercase tracking-[0.2em] flex items-center justify-center gap-2 cursor-pointer neu-btn-3d group"
                 >
-                    Volver al Inicio
+                    <ArrowLeft size={15} className="text-[#4a3d6a] group-hover:-translate-x-1 transition-transform" />
+                    <span>Volver al Inicio</span>
                 </button>
             </div>
 
@@ -853,17 +858,17 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={() => setIsEditing(false)} />
                     
-                    <div className="relative w-full max-w-sm p-6 overflow-hidden transition-all neu-plate">
+                    <div className="relative w-full max-w-sm p-6 overflow-hidden transition-all neu-plate border-2 border-[#ff6b6b]/40">
                         <div className="flex justify-between items-center mb-5 relative z-10">
                             <h3 className="text-xs font-black uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
                                 <ShieldCheck size={18} className="text-[#ff6b6b]" /> Editar Comercio
                             </h3>
                             <button 
                                 onClick={() => { playNeonClick(); setIsEditing(false); }} 
-                                className="w-8 h-8 rounded-xl flex items-center justify-center cursor-pointer transition-all neu-btn-3d"
+                                className="w-8 h-8 rounded-xl flex items-center justify-center cursor-pointer transition-all neu-btn-pod"
                                 aria-label="Cerrar"
                             >
-                                <X size={16} />
+                                <X size={16} className="text-[#2c2440]" />
                             </button>
                         </div>
 
@@ -940,7 +945,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                     <button
                                         type="button"
                                         onClick={() => { playNeonClick(); fileInputRef.current?.click(); }}
-                                        className="flex-1 py-2.5 text-[9px] font-black uppercase tracking-widest cursor-pointer neu-btn-3d"
+                                        className="flex-1 py-2.5 text-[9px] font-black uppercase tracking-widest cursor-pointer neu-btn-3d hover:border-[#ff6b6b]/50"
                                     >
                                         Subir Nueva Foto
                                     </button>
@@ -950,7 +955,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                             <button 
                                 type="submit"
                                 disabled={isSaving}
-                                className="w-full py-4 flex items-center justify-center gap-2 font-black uppercase tracking-wider text-[10px] cursor-pointer neu-btn-3d-active"
+                                className="w-full py-4 flex items-center justify-center gap-2 font-[1000] uppercase tracking-[0.2em] text-[10px] cursor-pointer neu-btn-hero"
                             >
                                 {isSaving ? (
                                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
