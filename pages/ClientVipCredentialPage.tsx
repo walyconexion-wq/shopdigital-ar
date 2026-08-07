@@ -402,24 +402,24 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
             <CyberCircuitBackground />
 
             {/* ══════════════════════════════════════════
-                CABECERA SUPERIOR EN CONTENEDOR ESMERILADO TECNOLÓGICO
+                CABECERA SUPERIOR EN CONTENEDOR NEUMÓRFICO UNIFICADO
             ══════════════════════════════════════════ */}
-            <div className="w-full max-w-sm relative z-10 mb-6 p-4 rounded-[2.5rem] bg-white/20 backdrop-blur-xl border border-white/40 shadow-[0_10px_32px_rgba(44,36,64,0.15)] flex flex-col items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
+            <div className="w-full max-w-sm relative z-10 mb-5 p-3.5 neu-plate flex flex-col items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
                 {/* HEADER NEUMÓRFICO CON PODS DE CABECERA */}
                 <div className="w-full flex justify-between items-center gap-2">
                     <button 
                         onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                        className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group shrink-0"
+                        className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group shrink-0"
                         aria-label="Regresar"
                     >
-                        <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
+                        <ArrowLeft size={16} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
                     </button>
 
-                    <div className="flex-1 text-center px-3 py-1.5 neu-inset-title">
-                        <h1 className="text-sm font-black tracking-tight uppercase leading-tight text-[#2c2440]">
+                    <div className="flex-1 text-center px-3 py-1 neu-inset-title">
+                        <h1 className="text-xs font-black tracking-tight uppercase leading-tight text-[#2c2440]">
                             Credencial VIP Cliente
                         </h1>
-                        <p className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
+                        <p className="text-[7px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
                             {formattedTown}
                         </p>
                     </div>
@@ -428,11 +428,11 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                         <button
                             onClick={toggleTheme}
                             aria-label="Alternar modo de color"
-                            className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                            className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                         >
                             {isDayMode 
-                                ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" />
-                                : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
+                                ? <Moon size={15} className="text-[#2c2440] group-hover:rotate-12 transition-transform" />
+                                : <Sun size={15} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
                             }
                         </button>
                         <button 
@@ -446,23 +446,23 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
                                      });
                                 }
                             }}
-                            className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                            className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
                             aria-label="Compartir"
                         >
-                            <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                            <Share2 size={15} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
                         </button>
                     </div>
                 </div>
 
                 {/* Avatar ARI Integrado */}
                 {isDayMode && (
-                    <div className="flex flex-col items-center select-none pointer-events-none my-1">
+                    <div className="flex flex-col items-center select-none pointer-events-none my-0.5">
                         <img 
                             src="/ari-pointing.png" 
                             alt="ARI Asistente Credencial" 
-                            className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(44,36,64,0.25)] animate-in fade-in duration-700" 
+                            className="h-20 w-auto object-contain drop-shadow-[0_4px_10px_rgba(44,36,64,0.18)] animate-in fade-in duration-700" 
                         />
-                        <div className="ari-3d-shadow mt-1" />
+                        <div className="ari-3d-shadow mt-0.5 scale-75" />
                     </div>
                 )}
 
