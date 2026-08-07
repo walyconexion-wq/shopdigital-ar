@@ -663,148 +663,51 @@ const ClientVipCredentialPage: React.FC<ClientVipCredentialPageProps> = ({ allSh
             </div>
 
             {/* ══════════════════════════════════════════
-                QR DE VALIDACIÓN
+                SECCIÓN FINAL — CONTENEDOR NEUMÓRFICO UNIFICADO (QR + BOTONES + FOOTER)
             ══════════════════════════════════════════ */}
-            <div className="w-full max-w-sm mt-6 relative z-10">
-                <div className="neu-plate p-8 flex flex-col items-center">
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-5 text-[#4a3d6a]">Validación de Descuentos</p>
-                    <div className="neu-inset-title p-4 relative group/qr">
-                        <QrCode size={160} className="text-[#2c2440] transition-transform group-hover/qr:scale-105 duration-500" />
+            <div className="w-full max-w-sm mt-5 relative z-10 neu-plate p-5 flex flex-col items-center gap-4 animate-in slide-in-from-bottom-4 duration-700">
+                {/* QR DE VALIDACIÓN */}
+                <div className="w-full flex flex-col items-center">
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-3 text-[#4a3d6a]">Validación de Descuentos</p>
+                    <div className="neu-inset-title p-3.5 relative group/qr">
+                        <QrCode size={135} className="text-[#2c2440] transition-transform group-hover/qr:scale-105 duration-500" />
                     </div>
-                    <p className="text-[8px] text-[#4a3d6a]/60 uppercase tracking-widest mt-4 text-center">
+                    <p className="text-[7.5px] text-[#4a3d6a]/70 uppercase tracking-widest mt-2.5 text-center font-bold">
                         Escaneá en el punto de acceso para validar
                     </p>
                 </div>
-            </div>
 
-            {/* ══════════════════════════════════════════
-                BOTONES DE ACCIÓN — JERARQUÍA 3D
-            ══════════════════════════════════════════ */}
-            <div className="w-full max-w-sm mt-6 space-y-3 relative z-10 animate-in slide-in-from-bottom-4 duration-700 delay-300">
-                <button 
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/red-comercial/ofertas`); }}
-                    className="w-full h-14 text-[10px] font-black uppercase tracking-[0.2em] neu-btn-hero flex items-center justify-center gap-3 cursor-pointer"
-                >
-                    <Star size={16} className="text-[#ff6b6b]" />
-                    <span className="text-[#2c2440]">Explorar Beneficios VIP</span>
-                </button>
-                <button 
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-full h-14 text-[10px] font-extrabold uppercase tracking-[0.2em] neu-btn-3d flex items-center justify-center gap-2 cursor-pointer"
-                >
-                    <ArrowLeft size={16} className="text-[#4a3d6a]" /> Volver al Inicio
-                </button>
-            </div>
+                {/* DIVISOR MÍNIMO */}
+                <div className="w-full h-[1px] bg-[#4a3d6a]/10 my-0.5" />
 
-            {/* MODAL DE EDICIÓN DEL CLIENTE VIP */}
-            {isEditing && isAuthorized && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-in fade-in duration-300">
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsEditing(false)} />
-                    
-                    <div className="relative w-full max-w-sm neu-plate p-8 overflow-hidden">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-xs font-black uppercase tracking-widest flex items-center gap-2 text-[#2c2440]">
-                                <ShieldCheck size={18} className="text-[#ff6b6b]" /> Editar Perfil VIP
-                            </h3>
-                            <button 
-                                onClick={() => { playNeonClick(); setIsEditing(false); }} 
-                                className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                                aria-label="Cerrar"
-                            >
-                                <X size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
-                            </button>
-                        </div>
+                {/* BOTONES DE ACCIÓN (COMPACTOS Y COMPACTADOS DENTRO DEL CONTENEDOR) */}
+                <div className="w-full space-y-2.5">
+                    <button 
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/red-comercial/ofertas`); }}
+                        className="w-full h-11 text-[9.5px] font-black uppercase tracking-[0.18em] neu-btn-hero flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <Star size={14} className="text-[#ff6b6b]" />
+                        <span className="text-[#2c2440]">Explorar Beneficios VIP</span>
+                    </button>
+                    <button 
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
+                        className="w-full h-11 text-[9.5px] font-extrabold uppercase tracking-[0.18em] neu-btn-3d flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <ArrowLeft size={14} className="text-[#4a3d6a]" /> Volver al Inicio
+                    </button>
+                </div>
 
-                        <form onSubmit={handleSaveProfile} className="space-y-5">
-                            <div>
-                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Nombre del Titular</label>
-                                <input 
-                                    required
-                                    value={editForm.name}
-                                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                    className="w-full p-3 text-sm rounded-xl focus:outline-none uppercase font-black premium-input"
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">DNI / Membresía</label>
-                                    <input 
-                                        required
-                                        placeholder="Ej: 41234567"
-                                        value={editForm.dni}
-                                        onChange={(e) => setEditForm({ ...editForm, dni: e.target.value })}
-                                        className="w-full p-3 text-sm rounded-xl focus:outline-none font-bold premium-input"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">WhatsApp</label>
-                                    <input 
-                                        required
-                                        value={editForm.phone}
-                                        onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                                        className="w-full p-3 text-sm rounded-xl focus:outline-none font-bold premium-input"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Correo Electrónico</label>
-                                <input 
-                                    required
-                                    type="email"
-                                    value={editForm.email}
-                                    onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                                    className="w-full p-3 text-xs rounded-xl focus:outline-none premium-input"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="text-[8px] font-black uppercase tracking-[0.2em] mb-2 block text-[#4a3d6a]">Foto de Perfil</label>
-                                <div className="flex gap-2 items-center">
-                                    <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shrink-0 neu-btn-pod">
-                                        <img src={editForm.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'} className="w-full h-full object-cover" alt="" />
-                                    </div>
-                                    <button
-                                        type="button"
-                                        onClick={() => { playNeonClick(); fileInputRef.current?.click(); }}
-                                        className="flex-1 py-3 text-[9px] font-black uppercase tracking-widest neu-btn-3d flex items-center justify-center gap-2 cursor-pointer"
-                                    >
-                                        <Camera size={14} className="text-[#4a3d6a]" /> Subir Foto
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Botón Guardar — Hero */}
-                            <button 
-                                type="submit"
-                                disabled={isSaving}
-                                className="w-full h-14 neu-btn-hero flex items-center justify-center gap-2 font-[1000] uppercase tracking-[0.2em] text-[10px] cursor-pointer disabled:opacity-50"
-                            >
-                                {isSaving ? (
-                                    <div className="w-4 h-4 border-2 border-[#4a3d6a]/25 border-t-[#ff6b6b] rounded-full animate-spin" />
-                                ) : (
-                                    <>
-                                        <Check size={16} className="text-[#ff6b6b]" strokeWidth={3} />
-                                        <span className="text-[#2c2440]">Guardar Cambios</span>
-                                    </>
-                                )}
-                            </button>
-                        </form>
+                {/* FOOTER INFO INTEGRADO */}
+                <div className="w-full pt-1 flex flex-col items-center">
+                    <p className="text-[7.5px] uppercase tracking-[0.3em] font-black text-center text-[#4a3d6a]/60 leading-relaxed mb-2">
+                        Secured VIP Network · {formatClock(client.updatedAt ? new Date(client.updatedAt) : currentTime)} <br/>
+                        ID: {client.id}
+                    </p>
+                    <div className="w-full neu-inset-title py-1.5 px-3 flex items-center justify-center gap-1.5 text-[7.5px] font-black uppercase tracking-widest text-[#4a3d6a]">
+                        <ShieldCheck size={10} className="text-[#ff6b6b]" />
+                        ShopDigital · Red Comercial Digital
                     </div>
                 </div>
-            )}
-
-            {/* FOOTER INFO */}
-            <p className="text-[8px] uppercase tracking-[0.4em] font-black text-center leading-[1.8] mt-10 mb-4 px-8 text-[#4a3d6a]/50 relative z-10">
-                Secured VIP Network · {formatClock(client.updatedAt ? new Date(client.updatedAt) : currentTime)} <br/>
-                ID: {client.id}
-            </p>
-
-            {/* Pie Neumórfico */}
-            <div className="relative z-10 mb-6 neu-footer flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-[#4a3d6a]">
-                <ShieldCheck size={11} className="text-[#ff6b6b]" />
-                ShopDigital · Red Comercial Digital
             </div>
         </div>
     );
