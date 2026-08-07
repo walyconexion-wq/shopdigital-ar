@@ -477,32 +477,38 @@
     0 0 22px rgba(16, 185, 129, 0.6) !important;
 }
 
-/* Pods de Cabecera Neumórficos */
+/* Pods de Cabecera Neumórficos — Acrílico / Vidrio Esmerilado 3D */
 .neu-btn-pod {
-  background: #f0ece6;
-  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
   border-radius: 16px;
   box-shadow: 
-    5px 5px 12px rgba(180, 165, 148, 0.45), 
-    -5px -5px 12px rgba(255, 255, 255, 0.85);
+    4px 4px 10px rgba(180, 165, 148, 0.35), 
+    -4px -4px 10px rgba(255, 255, 255, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
   color: #2c2440;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .neu-btn-pod:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 107, 107, 0.4);
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(255, 107, 107, 0.5);
   box-shadow: 
-    7px 7px 16px rgba(180, 165, 148, 0.55), 
-    -7px -7px 16px rgba(255, 255, 255, 0.95);
+    6px 6px 14px rgba(180, 165, 148, 0.45), 
+    -6px -6px 14px rgba(255, 255, 255, 0.98),
+    0 0 12px rgba(255, 107, 107, 0.3);
 }
 
 .neu-btn-pod:active {
-  transform: translateY(0) scale(0.95);
+  transform: translateY(0) scale(0.94);
+  background: rgba(240, 236, 230, 0.6);
   box-shadow: 
-    inset 3px 3px 6px rgba(180, 165, 148, 0.5), 
-    inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+    inset 3px 3px 6px rgba(180, 165, 148, 0.4), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8);
 }
 
 /* Pie de página Neumórfico Crema HD */
