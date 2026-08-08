@@ -9,8 +9,8 @@ import { QRCodeCanvas } from 'qrcode.react';
 import {
     ChevronLeft, ArrowLeft, Moon, Sun, Share2, Star, QrCode, ShieldCheck, Clock, IdCard,
     Wallet, CreditCard, ArrowUpRight, ArrowDownRight,
-    CheckCircle, XCircle, Search, User, Store, MapPin, Zap, Lock, Radio,
-    Camera, Edit2, Check, X, Award, Sparkles
+    CheckCircle, CheckCircle2, XCircle, Search, User, Store, MapPin, Zap, Lock, Radio,
+    Camera, Edit2, Check, X, Award, Sparkles, Activity, Wifi, WifiOff
 } from 'lucide-react';
 import { playNeonClick, playSuccessSound } from '../utils/audio';
 import { CyberCircuitBackground } from '../components/CyberCircuitBackground';
@@ -427,63 +427,108 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center px-4 py-6 relative overflow-y-auto selection:bg-cyan-500/30 bg-transparent text-[#2c2440]">
-            {/* Fondo Ciber-Digital de Circuitos Animados (Igual a la Home de la aplicación) */}
+            {/* Estilos de alta precisión para campos de edición */}
+            <style>{`
+                .premium-input {
+                    color: #083344 !important;
+                    background-color: #ffffff !important;
+                    border: 2.5px solid #0891b2 !important;
+                    box-shadow: 0 2px 5px rgba(8, 145, 178, 0.08), inset 0 2px 4px rgba(0,0,0,0.03) !important;
+                    transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+                }
+                .premium-input:focus {
+                    border-color: #083344 !important;
+                    box-shadow: 0 0 0 3.5px rgba(8, 51, 68, 0.15), inset 0 2px 4px rgba(0,0,0,0.03) !important;
+                    outline: none !important;
+                }
+                input, option, select {
+                    color: #083344 !important;
+                    background-color: #ffffff !important;
+                }
+            `}</style>
+
+            {/* Fondo Ciber-Digital de Circuitos Animados */}
             <CyberCircuitBackground />
 
-            {/* HEADER NEUMÓRFICO CON PODS DE CABECERA ELEVADOS */}
-            <div className="w-full max-w-sm relative z-10 flex justify-between items-center mb-5 gap-3">
-                <button 
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                    aria-label="Regresar"
-                >
-                    <ArrowLeft size={18} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
-                </button>
-
-                <div className="flex-1 text-center px-4 py-2 neu-inset-title">
-                    <h1 className="text-base font-black tracking-tight uppercase leading-tight text-[#2c2440]">
-                        Credencial Comerciante
-                    </h1>
-                    <p className="text-[8px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
-                        {formattedTown}
-                    </p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={toggleTheme}
-                        aria-label="Alternar modo de color"
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                    >
-                        {isDayMode ? <Moon size={16} className="text-[#2c2440] group-hover:rotate-12 transition-transform" /> : <Sun size={16} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />}
-                    </button>
+            {/* ══════════════════════════════════════════
+                CABECERA SUPERIOR EN CONTENEDOR NEUMÓRFICO UNIFICADO (PARIDAD TOTAL CON CLIENTES)
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm relative z-10 mb-5 p-3.5 neu-plate flex flex-col items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
+                {/* HEADER NEUMÓRFICO CON PODS DE CABECERA */}
+                <div className="w-full flex justify-between items-center gap-2">
                     <button 
-                        onClick={() => {
-                            playNeonClick();
-                            if (navigator.share) {
-                                navigator.share({
-                                    title: `Credencial VIP de ${selectedShop.name}`,
-                                    text: `Mirá la Credencial VIP de ${selectedShop.name} en ShopDigital`,
-                                    url: window.location.href,
-                                 });
-                            }
-                        }}
-                        className="w-11 h-11 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
-                        aria-label="Compartir"
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
+                        className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group shrink-0"
+                        aria-label="Regresar"
                     >
-                        <Share2 size={16} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                        <ArrowLeft size={16} className="text-[#2c2440] group-hover:-translate-x-0.5 transition-transform" strokeWidth={3} />
                     </button>
-                </div>
-            </div>
 
-            {/* Ari 3D Floating Avatar Section */}
-            <div className="flex flex-col items-center mb-3 mt-1 ari-3d-avatar-container select-none pointer-events-none z-20">
-                <img 
-                    src="/ari-pointing.png" 
-                    alt="ARI Asistente Credencial Comercio" 
-                    className="h-28 w-auto object-contain drop-shadow-[0_8px_16px_rgba(180,165,148,0.4)]" 
-                />
-                <div className="ari-3d-shadow mt-1" />
+                    <div className="flex-1 text-center px-3 py-1 neu-inset-title">
+                        <h1 className="text-xs font-black tracking-tight uppercase leading-tight text-[#2c2440]">
+                            Credencial VIP Comercio
+                        </h1>
+                        <p className="text-[7px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
+                            {formattedTown}
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                            onClick={toggleTheme}
+                            aria-label="Alternar modo de color"
+                            className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                        >
+                            {isDayMode 
+                                ? <Moon size={15} className="text-[#2c2440] group-hover:rotate-12 transition-transform" /> 
+                                : <Sun size={15} className="text-[#ff6b6b] group-hover:rotate-45 transition-transform" />
+                            }
+                        </button>
+                        <button 
+                            onClick={() => {
+                                playNeonClick();
+                                if (navigator.share) {
+                                    navigator.share({
+                                        title: `Credencial VIP de ${selectedShop.name}`,
+                                        text: `Mirá la Credencial VIP de ${selectedShop.name} en ShopDigital`,
+                                        url: window.location.href,
+                                     });
+                                }
+                            }}
+                            className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                            aria-label="Compartir"
+                        >
+                            <Share2 size={15} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Avatar ARI Integrado en Cabecera */}
+                {isDayMode && (
+                    <div className="flex flex-col items-center select-none pointer-events-none my-0.5">
+                        <img 
+                            src="/ari-pointing.png" 
+                            alt="ARI Asistente Credencial Comercio" 
+                            className="h-20 w-auto object-contain drop-shadow-[0_4px_10px_rgba(44,36,64,0.18)] animate-in fade-in duration-700" 
+                        />
+                        <div className="ari-3d-shadow mt-0.5 scale-75" />
+                    </div>
+                )}
+
+                {/* SELLO DE VIDA — TIMESTAMP ANTI-FALSIFICACIÓN INTEGRADO CON LUZ VERDE */}
+                <div className="w-full flex items-center justify-between neu-inset-title px-4 py-2">
+                    <div className="flex items-center gap-2">
+                        <Clock size={12} className="text-[#ff6b6b] animate-spin flex-shrink-0" style={{ animationDuration: '6s' }} />
+                        <p className="text-[9.5px] font-black font-mono tracking-widest tabular-nums text-[#2c2440]">
+                            {formatClock(currentTime)}
+                        </p>
+                    </div>
+                    <div className="h-3.5 w-[1px] bg-[#4a3d6a]/20" />
+                    <div className="flex items-center gap-1.5 font-black text-[9px] uppercase tracking-widest text-emerald-600">
+                        <Wifi size={12} className="animate-pulse text-emerald-600" />
+                        <span>LUZ VERDE ACTIVA</span>
+                    </div>
+                </div>
             </div>
 
             {/* ═══════════ LIVE EVENT TICKER BANNER 🟢🔴 ═══════════ */}
@@ -519,36 +564,50 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 </div>
             )}
 
-            {/* ═══════════ CREDENCIAL COMERCIANTE PRINCIPAL ═══════════ */}
-            <div className="w-full max-w-sm relative z-10">
-                <div className="p-6 flex flex-col items-center relative overflow-hidden transition-all neu-plate">
-                    {/* SELLO DE TIEMPO E INVIOLABILIDAD */}
-                    <div className="w-full flex flex-col items-center justify-center gap-1 mb-5 py-2.5 px-4 relative overflow-hidden transition-all neu-inset-title">
-                        <div className="flex items-center gap-2 relative z-10">
-                            <Clock size={13} className="animate-spin text-[#ff6b6b]" style={{ animationDuration: '6s' }} />
-                            <span className="text-xs font-black font-mono tracking-widest tabular-nums text-[#2c2440]">
-                                {formatClock(currentTime)}
+            {/* ═══════════ CREDENCIAL COMERCIANTE PRINCIPAL NEUMÓRFICA ═══════════ */}
+            <div className="w-full max-w-sm relative z-10 animate-in zoom-in duration-700 delay-100">
+                <div className="neu-plate p-8 pb-10 relative overflow-hidden">
+                    
+                    {/* Top Row: Badge LUZ VERDE + Edit Pod + Star */}
+                    <div className="flex justify-between items-start mb-8">
+                        <div className="px-3 py-1.5 rounded-full flex items-center gap-2 neu-btn-pod border border-emerald-500/30 bg-emerald-500/10">
+                            <Activity size={12} className="animate-pulse text-emerald-600" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-emerald-700">
+                                {isEnterprise ? 'EMPRESA VERIFICADA · LUZ VERDE' : 'COMERCIO VIP ACTIVO · LUZ VERDE'}
                             </span>
                         </div>
-                        <span className="text-[7px] font-black uppercase tracking-widest text-[#ff6b6b]">
-                            SELLO DE VERIFICACIÓN EN TIEMPO REAL
-                        </span>
+                        <div className="flex items-center gap-2">
+                            {isAuthorized && (
+                                <button 
+                                    onClick={() => { playNeonClick(); setIsEditing(true); }}
+                                    className="w-9 h-9 flex items-center justify-center cursor-pointer transition-all neu-btn-pod group"
+                                    title="Editar Comercio"
+                                >
+                                    <Edit2 size={14} className="text-[#2c2440] group-hover:scale-110 transition-transform" />
+                                </button>
+                            )}
+                            <Star size={24} className="text-[#ff6b6b]" style={{ fill: '#ff6b6b', color: '#ff6b6b' }} />
+                        </div>
                     </div>
 
-                    {/* Botón Flotante de Edición del Comercio */}
-                    {isAuthorized && (
-                        <button 
-                            onClick={() => { playNeonClick(); setIsEditing(true); }}
-                            className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center cursor-pointer z-25 transition-all neu-btn-pod group"
-                            title="Editar Comercio"
-                        >
-                            <Edit2 size={14} className="text-[#ff6b6b] group-hover:rotate-12 transition-transform" />
-                        </button>
-                    )}
+                    {/* Nombre / Titular del Local */}
+                    <div className="mb-8 relative">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-1 text-[#4a3d6a]">Comercio Acreditado</p>
+                        <h3 className="text-3xl font-[1000] uppercase tracking-tighter leading-none mb-2 text-[#2c2440]">
+                            {shop?.name || selectedShop.name}
+                        </h3>
+                        <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2 text-[#4a3d6a]">
+                            {shop?.specialty || shop?.category || selectedShop.specialty || selectedShop.category}
+                        </p>
+                        <div className="flex items-center gap-2 text-[#4a3d6a]">
+                            <MapPin size={12} className="text-[#ff6b6b]" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5">{shop?.address || selectedShop.address || formattedTown}</span>
+                        </div>
+                    </div>
 
-                    {/* Foto Propietario / Logo Comercio */}
-                    <div className="relative w-24 h-24 rounded-full p-1 mb-4 flex-shrink-0 group/photo transition-all neu-plate">
-                        <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center relative bg-black/10">
+                    {/* Foto Propietario / Logo Comercio con LUZ VERDE */}
+                    <div className="w-full aspect-square neu-inset-title flex flex-col items-center justify-center p-8 mb-8 relative overflow-hidden group/photo transition-all duration-500">
+                        <div className="relative w-40 h-40 rounded-full border-2 border-[#4a3d6a]/20 p-1 shadow-lg overflow-hidden group-hover/photo:scale-105 transition-transform duration-500 neu-btn-pod">
                             <img 
                                 src={shop?.ownerPhoto || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80"} 
                                 alt={shop?.ownerName} 
@@ -560,87 +619,77 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                     onClick={() => fileInputRef.current?.click()}
                                     className="absolute inset-0 bg-black/60 opacity-0 group-hover/photo:opacity-100 flex flex-col items-center justify-center transition-opacity border-none cursor-pointer rounded-full"
                                 >
-                                    <Camera size={18} className="text-white mb-1" />
-                                    <span className="text-[7px] font-black uppercase tracking-widest text-white">Editar</span>
+                                    <Camera size={32} className="text-white mb-2" />
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-white">Editar Foto</span>
                                 </button>
                             )}
+                            <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
+                            {isUploading && (
+                                <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-full z-10">
+                                    <div className="w-8 h-8 border-3 border-[#4a3d6a]/20 border-t-[#ff6b6b] rounded-full animate-spin" />
+                                </div>
+                            )}
                         </div>
-                        <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
-                        {isUploading && (
-                            <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-full z-10">
-                                <div className="w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                            </div>
-                        )}
-                    </div>
 
-                    {/* Nombre del Comercio */}
-                    <h2 className="text-xl font-black uppercase tracking-tight mb-1 text-center leading-tight text-[#2c2440]">
-                        {shop?.name || selectedShop.name}
-                    </h2>
-                    <p className="text-[9px] font-extrabold uppercase tracking-widest mb-4 text-center text-[#4a3d6a]">
-                        {shop?.specialty || shop?.category || selectedShop.specialty || selectedShop.category}
-                    </p>
-
-                    {/* Insignia de Comercio Verificado (Chip Neumórfico Activo) */}
-                    <div className="flex items-center gap-2 mb-5 px-5 py-2 cursor-default transition-all neu-btn-3d-active">
-                        <ShieldCheck className="w-4 h-4 text-[#ff6b6b]" />
-                        <span className="text-[9px] font-black uppercase tracking-widest text-[#2c2440]">
-                            {isEnterprise ? 'Empresa Industrial Verificada' : 'Comercio Acreditado VIP'}
-                        </span>
+                        <div className="mt-6 px-5 py-2 neu-btn-pod bg-emerald-500/10 border border-emerald-500/30">
+                            <p className="text-[10px] font-black tracking-[0.25em] flex items-center gap-2 text-emerald-700">
+                                <CheckCircle2 size={13} className="text-emerald-600 animate-pulse" /> LUZ VERDE · ACCESO VERIFICADO
+                            </p>
+                        </div>
                     </div>
 
                     {/* Grilla de Datos Neumórfica */}
-                    <div className="w-full grid grid-cols-2 gap-3 mb-5">
-                        <div className="p-3 transition-all neu-inset-title">
-                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 text-[#4a3d6a]">Titular</p>
-                            <p className="text-[11px] font-black uppercase tracking-tight truncate text-[#2c2440]">
-                                {shop?.ownerName || selectedShop.ownerName || 'Sin Registrar'}
-                            </p>
+                    <div className="space-y-4 border-t-2 border-[#4a3d6a]/10 pt-6 mb-6">
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="p-3.5 neu-inset-title">
+                                <p className="text-[7.5px] font-black uppercase tracking-widest mb-1 text-[#4a3d6a]">Titular Propietario</p>
+                                <p className="text-xs font-[1000] uppercase tracking-tight truncate text-[#2c2440]">
+                                    {shop?.ownerName || selectedShop.ownerName || 'Sin Registrar'}
+                                </p>
+                            </div>
+                            
+                            <div className="p-3.5 neu-inset-title">
+                                <p className="text-[7.5px] font-black uppercase tracking-widest mb-1 text-[#4a3d6a]">{isEnterprise ? 'ID Empresa' : 'ID Comercio'}</p>
+                                <p className="text-xs font-[1000] tracking-tight truncate text-[#ff6b6b]">
+                                    {shop?.shopNumber || selectedShop.shopNumber || selectedShop.id.slice(0, 8).toUpperCase()}
+                                </p>
+                            </div>
                         </div>
-                        
-                        <div className="p-3 transition-all neu-inset-title">
-                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 text-[#4a3d6a]">{isEnterprise ? 'ID Empresa' : 'ID Comercio'}</p>
-                            <p className="text-[11px] font-black tracking-tight truncate text-[#ff6b6b]">
-                                {shop?.shopNumber || selectedShop.shopNumber || selectedShop.id.slice(0, 8).toUpperCase()}
-                            </p>
-                        </div>
-                        
-                        <div className="p-3 col-span-2 transition-all neu-inset-title">
-                            <p className="text-[7px] font-extrabold uppercase tracking-widest mb-1 flex items-center gap-1 text-[#4a3d6a]">
-                                <MapPin size={8} className="text-[#ff6b6b]" /> Dirección Física
-                            </p>
-                            <p className="text-[10px] font-bold truncate text-[#2c2440]">{shop?.address || selectedShop.address}</p>
+
+                        <div className="p-3.5 neu-inset-title">
+                            <p className="text-[7.5px] font-black uppercase tracking-widest mb-1 text-[#4a3d6a]">Dirección Física</p>
+                            <p className="text-xs font-bold truncate text-[#2c2440]">{shop?.address || selectedShop.address}</p>
                         </div>
                     </div>
 
-                    {/* QR Code Container */}
-                    <div className="w-full p-5 flex flex-col items-center mb-5 relative group/qr overflow-hidden transition-all neu-plate">
-                        <div className="bg-white p-3.5 rounded-2xl mb-3 shadow-md relative z-10 border border-[#f0ece6]">
+                    {/* Contenedor Código QR */}
+                    <div className="w-full p-5 flex flex-col items-center mb-6 relative group/qr overflow-hidden neu-inset-title">
+                        <div className="bg-white p-4 rounded-2xl mb-3 shadow-md relative z-10 border border-[#f0ece6]">
                             <QRCodeCanvas
                                 value={validationUrl}
-                                size={140}
+                                size={145}
                                 level="H"
                                 includeMargin={false}
                                 imageSettings={{
                                     src: shop?.ownerPhoto || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80',
                                     x: undefined, y: undefined,
-                                    height: 28, width: 28, excavate: true,
+                                    height: 30, width: 30, excavate: true,
                                 }}
                             />
                         </div>
-                        <p className="text-[9px] font-black uppercase tracking-widest text-[#4a3d6a]">
+                        <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#4a3d6a]">
                             Código de Validación QR
                         </p>
                     </div>
 
-                    {/* 🛰️ SINTONIZADOR DE ACCESO / EVENTOS LIVE */}
-                    <div className="w-full p-4 space-y-3 relative overflow-hidden mb-5 z-10 transition-all neu-inset-title">
+                    {/* 🛰️ SINTONIZADOR DE ACCESO / EVENTOS LIVE CON LUZ VERDE */}
+                    <div className="w-full p-4 space-y-3 relative overflow-hidden mb-6 z-10 neu-inset-title">
                         <div className="flex justify-between items-center">
                             <label className="text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 text-[#2c2440]">
                                 <Radio size={12} className="animate-pulse text-[#ff6b6b]" /> Sintonizador B2B
                             </label>
-                            <span className="text-[8px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider neu-btn-3d-active">
-                                LIVE SIGNAL
+                            <span className="text-[8px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider neu-btn-emerald-active text-emerald-800">
+                                LUZ VERDE · LIVE SIGNAL
                             </span>
                         </div>
                         
@@ -652,10 +701,10 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                 <p className="text-[9px] font-bold uppercase tracking-wider text-[#4a3d6a]">
                                     {sintonizadorEventData.details}
                                 </p>
-                                <div className="flex items-center gap-2 px-3 py-1 rounded-xl w-fit bg-emerald-500/10 border border-emerald-500/30">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                                    <span className="text-[8.5px] font-black text-emerald-600 uppercase tracking-widest">
-                                        {sintonizadorEventData.access}
+                                <div className="flex items-center gap-2 px-3 py-1 rounded-xl w-fit bg-emerald-500/15 border border-emerald-500/40">
+                                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                                    <span className="text-[8.5px] font-black text-emerald-700 uppercase tracking-widest">
+                                        {sintonizadorEventData.access} · LUZ VERDE
                                     </span>
                                 </div>
                             </div>
@@ -663,12 +712,19 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     </div>
 
                     {/* Status Membresía */}
-                    <div className="w-full flex justify-between items-center text-[9px] font-black uppercase tracking-widest pt-2">
-                        <span className="text-[#4a3d6a]">Membresía Comercio</span>
-                        <span className={`font-black ${
-                            selectedShop.isActive ? 'text-emerald-600' : 'text-[#ff6b6b]'
+                    <div className="w-full flex justify-between items-center text-[9.5px] font-black uppercase tracking-widest border-t-2 border-[#4a3d6a]/10 pt-4">
+                        <span className="text-[#4a3d6a]">Estado de Membresía</span>
+                        <span className={`font-black flex items-center gap-1 ${
+                            selectedShop.isActive ? 'text-emerald-700' : 'text-[#ff6b6b]'
                         }`}>
-                            {selectedShop.isActive ? '⚡ HABILITADA VIP' : '⏳ EN REVISIÓN'}
+                            {selectedShop.isActive ? (
+                                <>
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                    <span>⚡ HABILITADA VIP · LUZ VERDE</span>
+                                </>
+                            ) : (
+                                <span>⏳ EN REVISIÓN</span>
+                            )}
                         </span>
                     </div>
                 </div>
