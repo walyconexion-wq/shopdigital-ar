@@ -74,7 +74,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
         );
     }
 
-    if (roles && role && !roles.includes(role)) {
+    // 🛡️ FAIL-CLOSED: Si se requieren roles específicos y el usuario
+    // no tiene rol asignado O su rol no está en la lista, DENEGAR acceso.
+    // Fix crítico: antes, role===null cortocircuitaba la condición y dejaba pasar.
+    if (roles && (!role || !roles.includes(role))) {
         return <Navigate to="/" replace state={{ from: location }} />;
     }
 

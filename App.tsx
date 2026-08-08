@@ -11,6 +11,7 @@ import { populateInvoices, rescueEzeizaData } from './dbFix';
 import LoadingScreen from './components/LoadingScreen';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useAuth } from './components/AuthContext';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ✅ CRITICAL PATH — Importaciones síncronas (se necesitan en el primer render)
@@ -134,6 +135,7 @@ const TownController: React.FC = () => {
     const params = useParams<{ townId: string }>();
     const townId = params.townId || 'esteban-echeverria';
     const location = useLocation();
+    const { role } = useAuth();
     
     const [allShops, setAllShops] = useState<Shop[]>([]);
     const [allClients, setAllClients] = useState<Client[]>([]);
@@ -158,8 +160,15 @@ const TownController: React.FC = () => {
     });
 
     // --- REPAIR TRIGGER VIA URL (?repair=true) ---
+    // 🛡️ GATEADO: Solo se ejecuta en modo desarrollo Y con rol admin
     useEffect(() => {
         const params = new URLSearchParams(location.search);
+        
+        // Bloqueo de seguridad: triggers solo en DEV + admin
+        if (!import.meta.env.DEV || role !== 'admin') {
+            return;
+        }
+        
         if (params.get('repair') === 'true') {
             console.log("🛠️ ACTIVADOR MAESTRO DETECTADO: Iniciando reparación de emergencia...");
             migrarDatosLegados(townId)
@@ -188,7 +197,7 @@ const TownController: React.FC = () => {
                     alert("Fallo inyección: " + err.message);
                 });
         }
-    }, [location.search, townId]);
+    }, [location.search, townId, role]);
 
     useEffect(() => {
         // 🧹 LIMPIEZA DE CACHÉ: resetear estado al cambiar de zona para evitar mezcla de datos
@@ -295,8 +304,8 @@ const TownController: React.FC = () => {
                     <Route path="embajador/editar/:shopId" element={<ProtectedRoute roles={['admin', 'ambassador']}><ShopEditPage allShops={allShops} /></ProtectedRoute>} />
                     {/* 🚀 ONBOARDING BLITZKRIEG — Pantalla de Artillería */}
                     <Route path="embajador/onboarding/:shopId" element={<ProtectedRoute roles={['admin', 'ambassador']}><ShopOnboardingPage allShops={allShops} /></ProtectedRoute>} />
-                    <Route path=":categorySlug/:shopSlug/editar" element={<ShopEditPage allShops={allShops} />} />
-                    <Route path="mi-catalogo/editar/:shopId" element={<ShopEditPage allShops={allShops} />} />
+                    <Route path=":categorySlug/:shopSlug/editar" element={<ProtectedRoute roles={['admin', 'ambassador']}><ShopEditPage allShops={allShops} /></ProtectedRoute>} />
+                    <Route path="mi-catalogo/editar/:shopId" element={<ProtectedRoute roles={['admin', 'ambassador']}><ShopEditPage allShops={allShops} /></ProtectedRoute>} />
                     <Route path="embajador/clientes" element={<ProtectedRoute roles={['admin', 'ambassador']}><ClientManagementPage allShops={allShops} allClients={allClients} /></ProtectedRoute>} />
                     <Route path="embajador/ofertas/:target" element={<ProtectedRoute roles={['admin', 'ambassador']}><OfferManagementPage allOffers={allOffers} /></ProtectedRoute>} />
                     <Route path="embajador/ofertas/crear/:target" element={<ProtectedRoute roles={['admin', 'ambassador']}><OfferFormPage /></ProtectedRoute>} />
@@ -328,7 +337,7 @@ const TownController: React.FC = () => {
                     <Route path="embajador/clientes-comerciantes" element={<ProtectedRoute roles={['admin', 'ambassador']}><EnterpriseClientManagementPage allShops={allShops} allClients={allClients} /></ProtectedRoute>} />
                     {/* 💳 POSNET DE CRÉDITOS */}
                     <Route path="embajador/posnet" element={<ProtectedRoute roles={['admin', 'ambassador']}><CreditsPosnetPage /></ProtectedRoute>} />
-                    <Route path="mi-comercio/posnet-virtual" element={<CreditsPosnetPage />} />
+                    <Route path="mi-comercio/posnet-virtual" element={<ProtectedRoute roles={['admin', 'ambassador']}><CreditsPosnetPage /></ProtectedRoute>} />
                     <Route path="*" element={<Navigate to="home" replace />} />
                 </Route>
             </Routes>
@@ -423,23 +432,23 @@ const App: React.FC = () => {
                     <Route path="/embajador/*" element={<Navigate to="/" replace />} />
                     
                     {/* 🛡️ BÚNKER DE MANDO Y TRANSMISIÓN (DIRECTOR) - Fuera de Layout mobile */}
-                    <Route path="/:townId/bunker-waly" element={<DirectorBunkerPage />} />
+                    <Route path="/:townId/bunker-waly" element={<ProtectedRoute roles={['admin']}><DirectorBunkerPage /></ProtectedRoute>} />
                     <Route path="/:townId/director/transmision-en-vivo" element={<ProtectedRoute roles={['admin']}><LiveBroadcastPage /></ProtectedRoute>} />
                     {/* Alias sin townId — redirige al búnker de EE por defecto */}
                     <Route path="/director/transmision-en-vivo" element={<Navigate to="/esteban-echeverria/director/transmision-en-vivo" replace />} />
                     <Route path="/bunker-waly" element={<Navigate to="/esteban-echeverria/bunker-waly" replace />} />
 
-                    {/* 🛡️ BÚNKERS DE CONTROL COMPARTIMENTADO */}
-                    <Route path="/:townId/bunker/administracion" element={<AdminBunkerPage />} />
-                    <Route path="/:townId/bunker/contable-legales" element={<AccountingBunkerPage />} />
-                    <Route path="/:townId/bunker/marketing" element={<MarketingBunkerPage />} />
-                    <Route path="/:townId/bunker/recursos-humanos" element={<HRBunkerPage />} />
-                    <Route path="/:townId/bunker/sistemas" element={<SystemsBunkerPage />} />
-                    <Route path="/:townId/bunker/planificacion-desarrollo" element={<PlanningBunkerPage />} />
-                    <Route path="/:townId/bunker/inversion-exponencial" element={<InvestmentBunkerPage />} />
-                    <Route path="/:townId/bunker/mantenimiento" element={<MaintenanceBunkerPage />} />
-                    <Route path="/:townId/bunker/secops" element={<SecOpsBunkerPage />} />
-                    <Route path="/:townId/bunker/clonacion" element={<CloningBunkerPage />} />
+                    {/* 🛡️ BÚNKERS DE CONTROL COMPARTIMENTADO — Todos blindados con ProtectedRoute */}
+                    <Route path="/:townId/bunker/administracion" element={<ProtectedRoute roles={['admin']}><AdminBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/contable-legales" element={<ProtectedRoute roles={['admin']}><AccountingBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/marketing" element={<ProtectedRoute roles={['admin']}><MarketingBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/recursos-humanos" element={<ProtectedRoute roles={['admin']}><HRBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/sistemas" element={<ProtectedRoute roles={['admin']}><SystemsBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/planificacion-desarrollo" element={<ProtectedRoute roles={['admin']}><PlanningBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/inversion-exponencial" element={<ProtectedRoute roles={['admin']}><InvestmentBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/mantenimiento" element={<ProtectedRoute roles={['admin']}><MaintenanceBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/secops" element={<ProtectedRoute roles={['admin']}><SecOpsBunkerPage /></ProtectedRoute>} />
+                    <Route path="/:townId/bunker/clonacion" element={<ProtectedRoute roles={['admin']}><CloningBunkerPage /></ProtectedRoute>} />
                     <Route path="/:townId/bunker-secops" element={<Navigate to={`/${window.location.pathname.split('/')[1] || 'esteban-echeverria'}/bunker/secops`} replace />} />
 
                     {/* Alias sin townId */}
@@ -459,7 +468,7 @@ const App: React.FC = () => {
                     <Route path="/:townId/tablero-maestro/reclutamiento" element={<ProtectedRoute roles={['admin']}><AmbassadorRecruitmentAdminPage /></ProtectedRoute>} />
 
                     {/* 🏫 ACADEMIA SHOPDIGITAL — Bóveda de Entrenamiento */}
-                    <Route path="/:townId/academia-embajadores" element={<AcademyPage />} />
+                    <Route path="/:townId/academia-embajadores" element={<ProtectedRoute roles={['admin', 'ambassador']}><AcademyPage /></ProtectedRoute>} />
 
                     {/* Ruteo Dinámico Multi-Zona */}
                     <Route path="/:townId/*" element={<TownController />} />

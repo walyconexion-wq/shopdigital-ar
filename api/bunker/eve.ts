@@ -146,6 +146,8 @@ Reglas de Oro:
 `
 };
 
+import { verifyBunkerAccess } from '../_lib/verifyBunkerAccess';
+
 export default async function (req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', ['POST']);
@@ -158,6 +160,10 @@ export default async function (req: VercelRequest, res: VercelResponse) {
         if (!bunkerId || !history || !Array.isArray(history)) {
             return res.status(400).json({ error: "Campos requeridos faltantes: bunkerId, history (array)" });
         }
+
+        // 🛡️ Verificación de sesión + rol + permiso sobre este bunkerId específico
+        const verifiedUser = await verifyBunkerAccess(req, res, bunkerId);
+        if (!verifiedUser) return; // verifyBunkerAccess ya envió la respuesta 401/403
 
         // Obtener prompt base del búnker correspondiente
         const basePrompt = BUNKER_PROMPTS[bunkerId] || BUNKER_PROMPTS['director'];

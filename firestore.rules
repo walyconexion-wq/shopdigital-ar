@@ -6,141 +6,161 @@ service cloud.firestore {
     // 🛡️ PROTOCOLO DOBERMAN 2.0 — FIRESTORE RULES
     // ═══════════════════════════════════════════
     
-    // Comercios: lectura pública (catálogo), creación pública (restringida a inactivos para aprobación) o autenticados (siembra/admin), edición solo autenticados
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/autorizados/$(request.auth.uid)).data;
+    }
+
+    function isActive() {
+      return isSignedIn() && getUserData().status == 'active';
+    }
+
+    function isAdmin() {
+      return isActive() && getUserData().role == 'admin';
+    }
+
+    function isAmbassadorOrAdmin() {
+      return isActive() && (getUserData().role == 'admin' || getUserData().role == 'ambassador');
+    }
+
+    // Comercios: lectura pública (catálogo), creación restringida a inactivos para aprobación salvo que sea staff
     match /comercios/{comercioId} {
       allow read: if true;
-      allow create: if request.auth != null || request.resource.data.isActive == false;
-      allow update, delete: if request.auth != null;
+      allow create: if isAmbassadorOrAdmin() || (isSignedIn() && request.resource.data.isActive == false);
+      allow update, delete: if isAmbassadorOrAdmin();
     }
     
-    // Clientes: creación pública (para registro VIP), lectura/edición solo autenticados
+    // Clientes: creación vinculada al propio UID del usuario o por staff (cierra pre-siembra)
     match /clientes/{clienteId} {
-      allow read: if request.auth != null;
-      allow create: if true;
-      allow update, delete: if request.auth != null;
+      allow read: if isAmbassadorOrAdmin() || (isSignedIn() && request.auth.uid == clienteId);
+      allow create: if isAmbassadorOrAdmin() || (isSignedIn() && request.auth.uid == clienteId);
+      allow update, delete: if isAmbassadorOrAdmin() || (isSignedIn() && request.auth.uid == clienteId);
     }
     
-    // Ofertas: lectura pública, escritura autenticados
+    // Ofertas: lectura pública, escritura staff
     match /ofertas/{ofertaId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAmbassadorOrAdmin();
     }
     
-    // Facturas: solo autenticados
+    // Facturas: solo embajadores o admins
     match /facturas/{facturaId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAmbassadorOrAdmin();
     }
     
-    // Autorizados (roles): solo autenticados
+    // Autorizados (roles): lectura propia o por admin, escritura STRICTLY SOLO ADMIN (evita auto-escalación)
     match /autorizados/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow write: if isAdmin();
     }
     
-    // Config de la app: lectura pública, escritura autenticados
+    // Config de la app: lectura pública, escritura admin
     match /appConfig/{townId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
     
-    // Towns: lectura pública, escritura autenticados
+    // Towns: lectura pública, escritura admin
     match /towns/{townId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
     
-    // Relevamientos (leads): solo autenticados
+    // Relevamientos (leads): solo embajadores o admin
     match /relevamientos/{leadId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAmbassadorOrAdmin();
     }
     
-    // Bitácora de Marketing: solo autenticados
+    // Bitácora de Marketing: solo embajadores o admin
     match /bitacora_marketing/{campaignId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAmbassadorOrAdmin();
     }
     
-    // Broadcast Channel: lectura pública, escritura autenticados
+    // Broadcast Channel: lectura pública, escritura admin
     match /broadcastChannel/{broadcastId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
     
-    // Telemetría: escritura pública (sensores), lectura autenticados
+    // Telemetría: escritura autenticada o estructurada, lectura admin
     match /telemetria_eventos/{eventId} {
-      allow create: if true;
-      allow read: if request.auth != null;
+      allow create: if isSignedIn();
+      allow read: if isAdmin();
       allow update, delete: if false;
     }
     
-    // Logs de seguridad (Doberman): escritura pública, lectura autenticados
+    // Logs de seguridad (Doberman): escritura con tipo válido, lectura admin
     match /logs_seguridad/{logId} {
-      allow create: if true;
-      allow read: if request.auth != null;
+      allow create: if request.resource.data.tipo in ['login_success','login_failed','unauthorized_access','brute_force_detected','suspicious_activity','admin_panel_access'];
+      allow read: if isAdmin();
       allow update, delete: if false;
     }
     
-    // SecurityLogs (Doberman v2): escritura pública, lectura/borrado autenticados
+    // SecurityLogs (Doberman v2): lectura/borrado admin
     match /securityLogs/{logId} {
-      allow create: if true;
-      allow read: if request.auth != null;
-      allow update, delete: if request.auth != null;
+      allow create: if request.resource.data.tipo != null;
+      allow read, update, delete: if isAdmin();
     }
     
-    // Reclutamiento de embajadores: lectura y escritura pública para formularios
+    // Reclutamiento de embajadores: lectura/modificación staff, solicitud autenticada
     match /reclutamiento/{docId} {
-      allow read: if true;
-      allow write: if true;
+      allow read: if isAmbassadorOrAdmin();
+      allow create: if isSignedIn();
+      allow update, delete: if isAmbassadorOrAdmin();
     }
 
-    // Bunker Notes (BTU): solo autenticados
+    // Bunker Notes (BTU): solo admins
     match /bunker_notes/{noteId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
 
-    // Bunker Messages (Frecuencia Directiva): solo autenticados
+    // Bunker Messages (Frecuencia Directiva): solo admins
     match /bunker_messages/{msgId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
 
-    // Matriz de Sincronía (SNC Nivel 3): solo autenticados
+    // Matriz de Sincronía (SNC Nivel 3): solo admins
     match /matriz_sincronia/{msgId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
 
-    // Bunker Directives (SNC): lectura pública, creación por autenticados o API (solo pending_approval), edición/borrado solo autenticados
+    // Bunker Directives (SNC): lectura staff o admin, creación autenticada pendiente
     match /bunker_directives/{directiveId} {
-      allow read: if true;
-      allow create: if request.auth != null || request.resource.data.estado == "pending_approval";
-      allow update, delete: if request.auth != null;
+      allow read: if isAmbassadorOrAdmin();
+      allow create: if isAmbassadorOrAdmin() || (isSignedIn() && request.resource.data.estado == "pending_approval");
+      allow update, delete: if isAdmin();
     }
 
-    // Eventos Live: lectura pública, escritura autenticados
+    // Eventos Live: lectura pública, escritura admin
     match /eventos_live/{eventId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
-    // Regiones: lectura pública, escritura autenticados
+    // Regiones: lectura pública, escritura admin
     match /regiones/{regionId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
       
       match /{allPaths=**} {
         allow read: if true;
-        allow write: if request.auth != null;
+        allow write: if isAdmin();
       }
     }
 
-    // Telemetría de Visitas: escritura pública (sensores), lectura autenticados
+    // Telemetría de Visitas: escritura autenticada o pública de métricas, lectura admin
     match /telemetria_visitas/{visitId} {
       allow create: if true;
-      allow read: if request.auth != null;
+      allow read: if isAdmin();
       allow update, delete: if false;
     }
 
     // Subcolección de créditos por comercio
     match /comercios/{comercioId}/credit_logs/{logId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAmbassadorOrAdmin();
     }
   }
 }

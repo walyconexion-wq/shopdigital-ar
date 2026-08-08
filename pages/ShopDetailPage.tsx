@@ -182,7 +182,8 @@ const ShopDetailPage: React.FC<ShopDetailPageProps> = ({ allShops, globalConfig 
                 url: b.mediaUrl,
                 type: b.mediaType,
                 isBroadcast: true,
-                title: b.title
+                title: b.title,
+                description: b.description || ''
             }));
         // Intercalar: broadcast cada 2 items locales
         const result = [...localItems];
