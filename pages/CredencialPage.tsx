@@ -730,183 +730,199 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                 </div>
             </div>
 
-            {/* ═══════════ POSNET DE CRÉDITOS INTEGRADO (HERO CTA PROTAGONISTA) ═══════════ */}
-            <div className="w-full max-w-sm mt-6 relative z-10 space-y-4">
-                {!posnetOpen ? (
-                    <button
-                        onClick={() => { playNeonClick(); setPosnetOpen(true); }}
-                        className="w-full h-16 text-[11px] font-[1000] uppercase tracking-[0.2em] neu-btn-hero flex items-center justify-center gap-3 shadow-xl cursor-pointer group"
-                    >
-                        <CreditCard size={20} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
-                        <span>Abrir POSNET de Créditos</span>
-                        <Sparkles size={14} className="text-[#ff6b6b] opacity-80 animate-pulse" />
-                    </button>
-                ) : (
-                    <div className="p-6 space-y-4 transition-all neu-plate border-2 border-[#ff6b6b]/40">
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-[11px] font-[1000] uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
-                                <CreditCard size={16} className="text-[#ff6b6b]" /> POSNET de Créditos
-                            </h3>
-                            <button 
-                                onClick={() => { playNeonClick(); setPosnetOpen(false); resetPosnet(); }}
-                                className="w-8 h-8 rounded-full flex items-center justify-center text-xs cursor-pointer neu-btn-pod"
-                            >
-                                ✕
-                            </button>
-                        </div>
-
-                        {/* Selección Cargar / Descontar — Doble Conmutador con Jerarquía Neumórfica */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <button
-                                onClick={() => { playNeonClick(); setPosnetMode('load'); setTxStatus('idle'); }}
-                                className={`py-3.5 rounded-xl font-[1000] uppercase tracking-wider text-[9.5px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
-                                    posnetMode === 'load'
-                                        ? 'neu-btn-emerald-active'
-                                        : 'neu-btn-3d opacity-75 hover:opacity-100'
-                                }`}
-                            >
-                                <ArrowUpRight size={17} className={posnetMode === 'load' ? 'text-emerald-600' : 'text-[#4a3d6a]'} />
-                                Cargar Créditos
-                            </button>
-
-                            <button
-                                onClick={() => { playNeonClick(); setPosnetMode('spend'); setTxStatus('idle'); }}
-                                className={`py-3.5 rounded-xl font-[1000] uppercase tracking-wider text-[9.5px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
-                                    posnetMode === 'spend'
-                                        ? 'neu-btn-3d-active'
-                                        : 'neu-btn-3d opacity-75 hover:opacity-100'
-                                }`}
-                            >
-                                <ArrowDownRight size={17} className={posnetMode === 'spend' ? 'text-[#ff6b6b]' : 'text-[#4a3d6a]'} />
-                                Descontar Créditos
-                            </button>
-                        </div>
-
-                        {/* Búsqueda o Cliente Seleccionado */}
-                        {!selectedClient ? (
-                            <div className="space-y-2">
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={e => setSearchTerm(e.target.value)}
-                                        placeholder="Buscar socio (nombre, DNI, tel)..."
-                                        className="w-full p-3.5 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
-                                        autoFocus
-                                    />
-                                    <Search size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 opacity-40 text-[#2c2440]" />
-                                </div>
-                                {filteredClients.map(c => (
-                                    <button 
-                                        key={c.id}
-                                        onClick={() => { playNeonClick(); setSelectedClient(c); setSearchTerm(''); setTxStatus('idle'); }}
-                                        className="w-full p-3 rounded-xl flex items-center gap-3 text-left cursor-pointer transition-all neu-btn-3d hover:border-[#ff6b6b]"
-                                    >
-                                        <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-                                            {c.photo ? <img src={c.photo} className="w-full h-full object-cover rounded-full" alt="" /> : <User size={12} className="opacity-40" />}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-[10px] font-black uppercase tracking-wider truncate text-[#2c2440]">{c.name}</p>
-                                            <p className="text-[8px] text-[#4a3d6a]">{c.dni || 'Sin DNI'} · 💰 {c.credits || 0} crs</p>
-                                        </div>
-                                    </button>
-                                ))}
+            {/* ══════════════════════════════════════════
+                SECCIÓN FINAL — CONTENEDOR NEUMÓRFICO UNIFICADO (POSNET + BOTONES NAVEGACIÓN + FOOTER)
+                COMPLETAMENTE INTEGRADOS Y COMPACTADOS DENTRO DE LA PLACA NEUMÓRFICA CREMA (PARIDAD 100% CLIENTES)
+            ══════════════════════════════════════════ */}
+            <div className="w-full max-w-sm mt-5 relative z-10 neu-plate p-5 flex flex-col items-center gap-4 animate-in slide-in-from-bottom-4 duration-700">
+                {/* POSNET DE CRÉDITOS (INTEGRADO EN EL CONTENEDOR) */}
+                <div className="w-full">
+                    {!posnetOpen ? (
+                        <button
+                            onClick={() => { playNeonClick(); setPosnetOpen(true); }}
+                            className="w-full h-12 text-[10px] font-[1000] uppercase tracking-[0.18em] neu-btn-hero flex items-center justify-center gap-2.5 shadow-md cursor-pointer group"
+                        >
+                            <CreditCard size={18} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
+                            <span>Abrir POSNET de Créditos</span>
+                            <Sparkles size={13} className="text-[#ff6b6b] opacity-80 animate-pulse" />
+                        </button>
+                    ) : (
+                        <div className="p-4 space-y-3.5 transition-all neu-inset-title border border-[#ff6b6b]/30">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-[10.5px] font-[1000] uppercase tracking-wider flex items-center gap-2 text-[#2c2440]">
+                                    <CreditCard size={15} className="text-[#ff6b6b]" /> POSNET de Créditos
+                                </h3>
+                                <button 
+                                    onClick={() => { playNeonClick(); setPosnetOpen(false); resetPosnet(); }}
+                                    className="w-7 h-7 rounded-full flex items-center justify-center text-xs cursor-pointer neu-btn-pod"
+                                >
+                                    ✕
+                                </button>
                             </div>
-                        ) : (
-                            <div className="space-y-3">
-                                <div className="p-3.5 rounded-xl flex items-center gap-3 relative neu-inset-title">
-                                    <button 
-                                        onClick={() => { playNeonClick(); resetPosnet(); }}
-                                        className="absolute top-2.5 right-2.5 text-xs opacity-50 hover:opacity-100 border-none bg-transparent cursor-pointer"
-                                    >
-                                        ✕
-                                    </button>
-                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-black/10 flex-shrink-0">
-                                        {selectedClient.photo ? <img src={selectedClient.photo} className="w-full h-full object-cover" alt="" /> : <div className="w-full h-full flex items-center justify-center"><User size={16} className="opacity-30" /></div>}
-                                    </div>
-                                    <div className="flex-1 min-w-0 text-left">
-                                        <p className="text-[10px] font-black uppercase tracking-wider truncate text-[#2c2440]">{selectedClient.name}</p>
-                                        <p className="text-[8.5px] text-[#4a3d6a]">Saldo actual: <span className="font-black tabular-nums text-[#2c2440]">{selectedClient.credits || 0}</span> créditos</p>
-                                    </div>
-                                </div>
 
-                                <div className="relative">
-                                    <input
-                                        type="number"
-                                        value={amount}
-                                        onChange={e => setAmount(e.target.value)}
-                                        placeholder="0"
-                                        className="w-full p-3.5 text-2xl font-black tabular-nums text-center focus:outline-none neu-inset-title text-[#2c2440]"
-                                    />
-                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black opacity-50 uppercase tracking-widest text-[#4a3d6a]">CRÉDITOS</span>
-                                </div>
-
-                                {txStatus === 'success' && (
-                                    <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-3">
-                                        <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
-                                        <div className="text-left">
-                                            <p className="text-[10px] font-black text-emerald-700 uppercase tracking-wider">
-                                                {posnetMode === 'load' ? '✅ Créditos Otorgados' : '✅ Descuento Aplicado'}
-                                            </p>
-                                            <p className="text-[8px] text-emerald-800">Nuevo Saldo: {selectedClient.credits} créditos</p>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {txStatus === 'error' && (
-                                    <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/40 flex items-center gap-3">
-                                        <XCircle size={18} className="text-red-500 flex-shrink-0" />
-                                        <p className="text-[9px] font-black text-red-600 text-left">{errorMsg}</p>
-                                    </div>
-                                )}
-
+                            {/* Selector Cargar / Descontar */}
+                            <div className="grid grid-cols-2 gap-2.5">
                                 <button
-                                    onClick={handleTransaction}
-                                    disabled={isProcessing || !amount}
-                                    className={`w-full h-15 text-[10.5px] font-[1000] uppercase tracking-[0.18em] flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer ${
-                                        posnetMode === 'load' ? 'neu-btn-emerald-active' : 'neu-btn-hero'
+                                    onClick={() => { playNeonClick(); setPosnetMode('load'); setTxStatus('idle'); }}
+                                    className={`py-2.5 rounded-xl font-[1000] uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
+                                        posnetMode === 'load' ? 'neu-btn-emerald-active' : 'neu-btn-3d opacity-75 hover:opacity-100'
                                     }`}
                                 >
-                                    {isProcessing ? (
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    ) : (
-                                        <>
-                                            {posnetMode === 'load' ? <ArrowUpRight size={17} /> : <ArrowDownRight size={17} />}
-                                            {posnetMode === 'load' ? 'Otorgar Créditos' : 'Confirmar Descuento'}
-                                        </>
-                                    )}
+                                    <ArrowUpRight size={15} className={posnetMode === 'load' ? 'text-emerald-600' : 'text-[#4a3d6a]'} />
+                                    Cargar Créditos
                                 </button>
 
-                                {txStatus === 'success' && (
-                                    <button 
-                                        onClick={() => { playNeonClick(); resetPosnet(); }}
-                                        className="w-full h-11 text-[8.5px] font-black uppercase tracking-widest cursor-pointer mt-2 neu-btn-3d"
-                                    >
-                                        Nueva Transacción
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => { playNeonClick(); setPosnetMode('spend'); setTxStatus('idle'); }}
+                                    className={`py-2.5 rounded-xl font-[1000] uppercase tracking-wider text-[9px] flex flex-col items-center gap-1 cursor-pointer transition-all ${
+                                        posnetMode === 'spend' ? 'neu-btn-3d-active' : 'neu-btn-3d opacity-75 hover:opacity-100'
+                                    }`}
+                                >
+                                    <ArrowDownRight size={15} className={posnetMode === 'spend' ? 'text-[#ff6b6b]' : 'text-[#4a3d6a]'} />
+                                    Descontar Créditos
+                                </button>
                             </div>
-                        )}
-                    </div>
-                )}
-            </div>
 
-            {/* BOTONES DE NAVEGACIÓN (NIVEL 2 PROTAGONISTAS DE NAVEGACIÓN) */}
-            <div className="w-full max-w-sm mt-5 space-y-3.5 relative z-10">
-                <button
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/${categorySlug}/${shopSlug}/panel-autogestion`); }}
-                    className="w-full h-14 text-[9.5px] font-[1000] uppercase tracking-[0.2em] flex items-center justify-center gap-2.5 cursor-pointer neu-btn-3d group hover:border-[#ff6b6b]/60"
-                >
-                    <Store size={16} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
-                    <span>Panel de Autogestión</span>
-                </button>
-                <button
-                    onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
-                    className="w-full h-14 text-[9.5px] font-[1000] uppercase tracking-[0.2em] flex items-center justify-center gap-2 cursor-pointer neu-btn-3d group"
-                >
-                    <ArrowLeft size={15} className="text-[#4a3d6a] group-hover:-translate-x-1 transition-transform" />
-                    <span>Volver al Inicio</span>
-                </button>
+                            {/* Búsqueda o socio seleccionado */}
+                            {!selectedClient ? (
+                                <div className="space-y-2">
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            value={searchTerm}
+                                            onChange={e => setSearchTerm(e.target.value)}
+                                            placeholder="Buscar socio (nombre, DNI, tel)..."
+                                            className="w-full p-2.5 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
+                                            autoFocus
+                                        />
+                                        <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 text-[#2c2440]" />
+                                    </div>
+                                    {filteredClients.map(c => (
+                                        <button 
+                                            key={c.id}
+                                            onClick={() => { playNeonClick(); setSelectedClient(c); setSearchTerm(''); setTxStatus('idle'); }}
+                                            className="w-full p-2.5 rounded-xl flex items-center gap-2.5 text-left cursor-pointer transition-all neu-btn-3d hover:border-[#ff6b6b]"
+                                        >
+                                            <div className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                                {c.photo ? <img src={c.photo} className="w-full h-full object-cover rounded-full" alt="" /> : <User size={12} className="opacity-40" />}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-[9.5px] font-black uppercase tracking-wider truncate text-[#2c2440]">{c.name}</p>
+                                                <p className="text-[7.5px] text-[#4a3d6a]">{c.dni || 'Sin DNI'} · 💰 {c.credits || 0} crs</p>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="space-y-2.5">
+                                    <div className="p-2.5 rounded-xl flex items-center gap-2.5 relative neu-inset-title">
+                                        <button 
+                                            onClick={() => { playNeonClick(); resetPosnet(); }}
+                                            className="absolute top-2 right-2 text-xs opacity-50 hover:opacity-100 border-none bg-transparent cursor-pointer"
+                                        >
+                                            ✕
+                                        </button>
+                                        <div className="w-9 h-9 rounded-full overflow-hidden bg-black/10 flex-shrink-0">
+                                            {selectedClient.photo ? <img src={selectedClient.photo} className="w-full h-full object-cover" alt="" /> : <div className="w-full h-full flex items-center justify-center"><User size={14} className="opacity-30" /></div>}
+                                        </div>
+                                        <div className="flex-1 min-w-0 text-left">
+                                            <p className="text-[9.5px] font-black uppercase tracking-wider truncate text-[#2c2440]">{selectedClient.name}</p>
+                                            <p className="text-[8px] text-[#4a3d6a]">Saldo actual: <span className="font-black tabular-nums text-[#2c2440]">{selectedClient.credits || 0}</span> créditos</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="relative">
+                                        <input
+                                            type="number"
+                                            value={amount}
+                                            onChange={e => setAmount(e.target.value)}
+                                            placeholder="0"
+                                            className="w-full p-2.5 text-xl font-black tabular-nums text-center focus:outline-none neu-inset-title text-[#2c2440]"
+                                        />
+                                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[7.5px] font-black opacity-50 uppercase tracking-widest text-[#4a3d6a]">CRÉDITOS</span>
+                                    </div>
+
+                                    {txStatus === 'success' && (
+                                        <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-2.5">
+                                            <CheckCircle size={16} className="text-emerald-600 flex-shrink-0" />
+                                            <div className="text-left">
+                                                <p className="text-[9.5px] font-black text-emerald-700 uppercase tracking-wider">
+                                                    {posnetMode === 'load' ? '✅ Créditos Otorgados' : '✅ Descuento Aplicado'}
+                                                </p>
+                                                <p className="text-[7.5px] text-emerald-800">Nuevo Saldo: {selectedClient.credits} créditos</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {txStatus === 'error' && (
+                                        <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/40 flex items-center gap-2.5">
+                                            <XCircle size={16} className="text-red-500 flex-shrink-0" />
+                                            <p className="text-[8.5px] font-black text-red-600 text-left">{errorMsg}</p>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={handleTransaction}
+                                        disabled={isProcessing || !amount}
+                                        className={`w-full h-12 text-[10px] font-[1000] uppercase tracking-[0.18em] flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer ${
+                                            posnetMode === 'load' ? 'neu-btn-emerald-active' : 'neu-btn-hero'
+                                        }`}
+                                    >
+                                        {isProcessing ? (
+                                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                {posnetMode === 'load' ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
+                                                {posnetMode === 'load' ? 'Otorgar Créditos' : 'Confirmar Descuento'}
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {txStatus === 'success' && (
+                                        <button 
+                                            onClick={() => { playNeonClick(); resetPosnet(); }}
+                                            className="w-full h-9 text-[8px] font-black uppercase tracking-widest cursor-pointer mt-1.5 neu-btn-3d"
+                                        >
+                                            Nueva Transacción
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {/* DIVISOR MÍNIMO */}
+                <div className="w-full h-[1px] bg-[#4a3d6a]/10 my-0.5" />
+
+                {/* BOTONES DE NAVEGACIÓN (COMPACTADOS DENTRO DE LA PLACA NEUMÓRFICA) */}
+                <div className="w-full space-y-2.5">
+                    <button
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/${categorySlug}/${shopSlug}/panel-autogestion`); }}
+                        className="w-full h-11 text-[9.5px] font-[1000] uppercase tracking-[0.18em] flex items-center justify-center gap-2.5 cursor-pointer neu-btn-3d group hover:border-[#ff6b6b]/60"
+                    >
+                        <Store size={15} className="text-[#ff6b6b] group-hover:scale-110 transition-transform" />
+                        <span>Panel de Autogestión</span>
+                    </button>
+                    <button
+                        onClick={() => { playNeonClick(); navigate(`/${townId}/home`); }}
+                        className="w-full h-11 text-[9.5px] font-[1000] uppercase tracking-[0.18em] flex items-center justify-center gap-2 cursor-pointer neu-btn-3d group"
+                    >
+                        <ArrowLeft size={14} className="text-[#4a3d6a] group-hover:-translate-x-1 transition-transform" />
+                        <span>Volver al Inicio</span>
+                    </button>
+                </div>
+
+                {/* FOOTER INFO INTEGRADO DENTRO DE LA PLACA */}
+                <div className="w-full pt-1 flex flex-col items-center">
+                    <p className="text-[7.5px] uppercase tracking-[0.3em] font-black text-center text-[#4a3d6a]/60 leading-relaxed mb-2">
+                        Secured Merchant Network · ID: SHOP-{selectedShop.id.slice(0, 8).toUpperCase()}
+                    </p>
+                    <div className="w-full neu-inset-title py-1.5 px-3 flex items-center justify-center gap-1.5 text-[7.5px] font-black uppercase tracking-widest text-[#4a3d6a]">
+                        <ShieldCheck size={10} className="text-[#ff6b6b]" />
+                        ShopDigital · Red Comercial Digital
+                    </div>
+                </div>
             </div>
 
             {/* MODAL NEUMÓRFICO DE EDICIÓN DEL COMERCIO */}
@@ -988,7 +1004,7 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                                     required
                                     value={editForm.address}
                                     onChange={(e) => setEditForm({ ...editForm, address: e.target.value })}
-                                    className="w-full p-3 text-xs rounded-xl focus:outline-none font-bold neu-inset-title text-[#2c2440]"
+                                    className="w-full p-3 text-[#2c2440] text-xs rounded-xl focus:outline-none font-bold neu-inset-title"
                                 />
                             </div>
 
@@ -1026,18 +1042,6 @@ const CredencialPage: React.FC<CredencialPageProps> = ({ allShops }) => {
                     </div>
                 </div>
             )}
-
-            {/* PIE DE PÁGINA NEUMÓRFICO FLOAT */}
-            <div className="mt-8 mb-4 relative z-10">
-                <div className="flex flex-col items-center gap-1.5 text-center transition-all neu-footer">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-[#2c2440]">
-                        ID SEGURIDAD: SHOP-{selectedShop.id.slice(0, 8).toUpperCase()}
-                    </p>
-                    <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-[#4a3d6a]">
-                        ShopDigital.tech · Credencial Oficial
-                    </span>
-                </div>
-            </div>
         </div>
     );
 };
