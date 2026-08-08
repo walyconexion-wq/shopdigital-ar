@@ -103,3 +103,34 @@ Para clonar o replicar la página de beneficios VIP en nuevas localidades, se de
     1. Botón de compartir beneficios VIP (`Share2`).
     2. Botón 3D de "Regresar al inicio" (`ArrowLeft`).
     3. Bloque informativo "Ari dice..." con avatar mini.
+
+---
+
+## 6. Sistema de Diseño Neumórfico Crema HD + Acrílico Violeta Ciber-Digital (Credenciales y Nuevas Interfaces)
+
+> **Regla Maestra de Transferencia**: Cuando el usuario mencione conversaciones o IDs de diseño (ej: `d4af3ab5-dc40-4c64-909a-d2b2ea376320` o `CRED-CLIENTE`), este es el sistema visual definitivo que debe aplicarse uniformemente.
+
+### A. Paleta de Colores Fundamentales (Tokens Visuales)
+*   **Fondo de Pantalla Base:** `CyberCircuitBackground` (Canvas con circuitos y partículas flotantes violeta ciber-digital `#9370db` / `#1a0933`).
+*   **Contenedor Neumórfico Crema HD (`.neu-plate`):** `#f0ece6` (Crema claro mate con relieve 3D).
+*   **Contenedor Hundido / Inset (`.neu-inset-title`):** `#f0ece6` con sombra interna `inset 4px 4px 10px rgba(180, 165, 148, 0.5)`.
+*   **Tinta de Texto Principal:** `#2c2440` (Índigo oscuro profundo para máxima legibilidad).
+*   **Tinta de Texto Secundario / Labels:** `#4a3d6a` (Violeta místico atenuado).
+*   **Acento Coral Vibrante (Hero CTAs & Destacados):** `#ff6b6b` (Coral vibrante con resplandor `rgba(255, 107, 107, 0.45)`).
+
+### B. Sistema de Botones 3D e Interfaces
+1. **Control de Cabecera y Pods (`.neu-btn-pod`):**
+   *   Material: Acrílico / Vidrio Esmerilado Violeta Delicado 3D.
+   *   Estilo: `background: rgba(147, 112, 219, 0.14); backdrop-filter: blur(14px); border: 1.5px solid rgba(168, 130, 235, 0.45); border-radius: 16px;`
+   *   Sombra 3D: `box-shadow: 4px 4px 12px rgba(130, 100, 180, 0.22), -4px -4px 10px rgba(255, 255, 255, 0.95);`
+2. **Botón Principal Hero CTA (`.neu-btn-hero`):**
+   *   Material: Acrílico Violeta con Borde Coral Brillante `#ff6b6b` + Barrido de Luz (*shimmer pass*).
+   *   Uso: Botón de máxima prioridad (ej: *Explorar Beneficios VIP*, *Abrir POSNET*).
+3. **Botón Secundario 3D (`.neu-btn-3d`):**
+   *   Material: Acrílico Esmerilado Violeta Lavanda con relieve 3D (`background: rgba(147, 112, 219, 0.14)`).
+   *   Uso: Navegación de nivel 2 (ej: *Volver al Inicio*, *Panel de Autogestión*).
+4. **Modo Día / Noche:**
+   *   Sincronizado vía `localStorage.getItem('global_home_theme_mode')` y evento global `theme_change`.
+5. **Avatar de Asistencia (ARI):**
+   *   Ilustración 3D flotante (`/ari-pointing.png` o `/ari-avatar.png`) con sombra ovalada pulsante (`.ari-3d-shadow`).
+
