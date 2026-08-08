@@ -219,36 +219,36 @@ const GlobalHomePage: React.FC = () => {
             <CyberCircuitBackground />
             
             {isDayMode ? (
-                <div className="w-full max-w-md mx-auto min-h-screen flex flex-col items-center justify-between p-3 sm:p-5 pt-3 pb-4 sm:justify-center relative z-10">
+                <div className="w-full max-w-md mx-auto h-screen min-h-[100dvh] flex flex-col items-center justify-between p-2.5 sm:p-4 pt-2 pb-2 relative z-10 overflow-hidden">
 
-                    {/* ── Único Contenedor Neumórfico Crema HD Unificado (Estirado Armónico) ── */}
-                    <div className="neu-plate w-full flex flex-col items-center justify-between flex-1 my-auto gap-3.5 sm:gap-4 relative z-10 shadow-[0_15px_40px_rgba(30,10,60,0.35)] py-4 sm:py-5 px-3.5 sm:px-5">
+                    {/* ── Único Contenedor Neumórfico Crema HD Unificado (Ajustado a Pantalla Móvil) ── */}
+                    <div className="neu-plate w-full h-full flex flex-col items-center justify-between gap-2 sm:gap-3 relative z-10 shadow-[0_15px_40px_rgba(30,10,60,0.35)] py-3 sm:py-4 px-3 sm:px-5 overflow-hidden">
                         {/* ── Título Interno Hundido (Inset Neumórfico) ── */}
-                        <div className="neu-inset-title py-3 px-6 text-center w-full max-w-[300px] mx-auto flex flex-col items-center justify-center">
-                            <h1 className="text-[19px] font-[900] uppercase tracking-[0.1em] text-[#2c2440] select-none leading-none">
+                        <div className="neu-inset-title py-2 px-5 text-center w-full max-w-[280px] mx-auto flex flex-col items-center justify-center flex-shrink-0">
+                            <h1 className="text-[17px] font-[900] uppercase tracking-[0.1em] text-[#2c2440] select-none leading-none">
                                 SHOPDIGITAL
                             </h1>
-                            <div className="flex items-center justify-center gap-1 mt-1 select-none">
-                                <span className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-[#4a3d6a]">
+                            <div className="flex items-center justify-center gap-1 mt-0.5 select-none">
+                                <span className="text-[7.5px] font-bold uppercase tracking-[0.18em] text-[#4a3d6a]">
                                     SELECCIONA TU REGIÓN
                                 </span>
-                                <MapPin size={11} className="text-[#4a3d6a]" />
+                                <MapPin size={10} className="text-[#4a3d6a]" />
                             </div>
                         </div>
 
                         {/* ── Fila 1: Selector de Región — botones Neumórficos 3D ── */}
-                        <div className="grid grid-cols-3 gap-2.5 w-full px-0.5">
+                        <div className="grid grid-cols-3 gap-2 w-full px-0.5 flex-shrink-0">
                             {[
                                 { id: 'buenos-aires' as const, label: 'BUENOS AIRES', icon: null },
                                 { id: 'cordoba' as const, label: 'CÓRDOBA', icon: null },
-                                { id: 'patagonia' as const, label: 'PATAGONIA', icon: <Mountain size={13} className="opacity-70 flex-shrink-0" /> }
+                                { id: 'patagonia' as const, label: 'PATAGONIA', icon: <Mountain size={12} className="opacity-70 flex-shrink-0" /> }
                             ].map(reg => {
                                 const isActive = activeRegion === reg.id;
                                 return (
                                     <button
                                         key={reg.id}
                                         onClick={() => { playNeonClick(); setActiveRegion(reg.id); }}
-                                        className={`py-3 px-1 text-[8px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all ${
+                                        className={`py-2 px-1 text-[7.5px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all ${
                                             isActive ? 'neu-btn-3d-active' : 'neu-btn-3d'
                                         }`}
                                     >
@@ -260,7 +260,7 @@ const GlobalHomePage: React.FC = () => {
                         </div>
 
                         {/* ── Fila 2: Localidades — botones Neumórficos 3D ── */}
-                        <div className="grid grid-cols-3 gap-2.5 w-full px-0.5">
+                        <div className="grid grid-cols-3 gap-2 w-full px-0.5 flex-shrink-0">
                             {localitiesForActiveRegion.map(loc => {
                                 const locLower = loc.name.toLowerCase();
                                 const isEzeiza = locLower.includes('ezeiza');
@@ -280,7 +280,7 @@ const GlobalHomePage: React.FC = () => {
                                                 navigate(loc.path);
                                             }
                                         }}
-                                        className="neu-btn-3d py-2.5 px-1 text-[7.5px] leading-tight font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all"
+                                        className="neu-btn-3d py-2 px-1 text-[7px] leading-tight font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 text-center transition-all"
                                     >
                                         <span>
                                             {loc.name === 'Esteban Echeverria' ? (
@@ -293,48 +293,48 @@ const GlobalHomePage: React.FC = () => {
                                                 loc.name
                                             )}
                                         </span>
-                                        {isEzeiza && <Plane size={12} className="opacity-70 flex-shrink-0 ml-0.5" />}
-                                        {isLomas && <Building2 size={12} className="opacity-70 flex-shrink-0 ml-0.5" />}
+                                        {isEzeiza && <Plane size={11} className="opacity-70 flex-shrink-0 ml-0.5" />}
+                                        {isLomas && <Building2 size={11} className="opacity-70 flex-shrink-0 ml-0.5" />}
                                     </button>
                                 );
                             })}
                         </div>
 
-                        {/* ── Avatar Central Animado 3D (Escalado simétrico de cuerpo entero) ── */}
-                        <div className="flex flex-col items-center justify-center flex-1 relative z-0 select-none pointer-events-none my-1 py-1">
-                            <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[220px] sm:max-h-[260px]">
+                        {/* ── Avatar Central Animado 3D (Subido y Escalado para Encajar Perfecto) ── */}
+                        <div className="flex flex-col items-center justify-center flex-1 relative z-0 select-none pointer-events-none my-0 py-0 overflow-hidden">
+                            <div className="ari-3d-avatar-container flex flex-col items-center justify-center max-h-[160px] sm:max-h-[220px]">
                                 <img
                                     src="/ari-saludando.gif"
                                     alt="ARI Asistente Animado"
-                                    className="max-h-[210px] sm:max-h-[250px] h-auto w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(40,10,80,0.22)]"
+                                    className="max-h-[150px] sm:max-h-[210px] h-auto w-auto object-contain filter drop-shadow-[0_6px_16px_rgba(40,10,80,0.2)]"
                                     loading="eager"
                                 />
-                                <div className="ari-3d-shadow mt-1 opacity-40" />
+                                <div className="ari-3d-shadow mt-0.5 opacity-35" />
                             </div>
                         </div>
 
-                        {/* ── Pie de Página Neumórfico Integrado en la base del Contenedor ── */}
-                        <footer className="w-full z-10 pt-1 mt-auto">
-                            <div className="neu-inset-title flex items-center justify-between w-full py-2.5 px-4 sm:py-3 sm:px-6">
+                        {/* ── Pie de Página Neumórfico Integrado (Visible 100% en Pantalla) ── */}
+                        <footer className="w-full z-10 pt-0.5 flex-shrink-0">
+                            <div className="neu-inset-title flex items-center justify-between w-full py-2 px-3 sm:py-2.5 sm:px-5">
                                 <p
                                     onClick={handleCopyrightClick}
-                                    className="text-[8px] font-extrabold uppercase tracking-[0.2em] text-[#2c2440] cursor-pointer select-none active:opacity-100 transition-opacity"
+                                    className="text-[7.5px] font-extrabold uppercase tracking-[0.18em] text-[#2c2440] cursor-pointer select-none active:opacity-100 transition-opacity"
                                 >
                                     © 2026 · SHOPDIGITAL
                                 </p>
-                                <div className="flex items-center gap-2.5 sm:gap-3">
+                                <div className="flex items-center gap-2 sm:gap-2.5">
                                     <button
                                         onClick={() => { playNeonClick(); setShowTermsModal(true); }}
-                                        className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
+                                        className="text-[7px] font-extrabold uppercase tracking-[0.12em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                     >
-                                        <FileText size={11} className="opacity-70" />
+                                        <FileText size={10} className="opacity-70" />
                                         TÉRMINOS
                                     </button>
                                     <button
                                         onClick={() => { playNeonClick(); setShowTermsModal(true); }}
-                                        className="text-[7.5px] font-extrabold uppercase tracking-[0.14em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
+                                        className="text-[7px] font-extrabold uppercase tracking-[0.12em] text-[#2c2440] hover:text-[#ff6b6b] flex items-center gap-1 active:opacity-75 transition-all select-none"
                                     >
-                                        <FileCheck size={11} className="opacity-70" />
+                                        <FileCheck size={10} className="opacity-70" />
                                         CONDICIONES
                                     </button>
                                 </div>
